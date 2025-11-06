@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>关于我们 - 智能展馆多媒体中控系统</title>
+    <!-- 加载Google Analytics -->
+    <div id="google-analytics-placeholder"></div>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <style>
+      :root {
+        --primary-color: #1a5276;
+        --secondary-color: #3498db;
+        --accent-color: #f4d03f;
+        --text-color: #333333;
+        --light-bg: #faf9f7;
+        --border-color: #e0e0e0;
+        --heading-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --body-font: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--body-font);
+        color: var(--text-color);
+        line-height: 1.6;
+        background-color: var(--light-bg);
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* 导航栏样式 */
+      nav {
+        background-color: white;
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--secondary-color);
+      }
+
+      /* 汉堡菜单按钮 */
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: var(--primary-color);
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        font-family: var(--heading-font);
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      h2 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent-color);
+      }
+
+      h3 {
+        font-family: var(--heading-font);
+        color: var(--secondary-color);
+        font-size: 1.6rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+
+      p {
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+      }
+
+      .content {
+        flex: 1;
+        padding: 40px 0;
+      }
+
+      /* 组件样式通过common.css加载 */
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+        /* 响应式样式通过common.css加载 */
+        
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+        }
+      }
+
+      /* 咨询按钮样式 */
+      .consultation-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 82, 118, 0.3);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .consultation-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 82, 118, 0.4);
+      }
+
+      /* 模态框样式 */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: #000;
+      }
+
+      /* 表单样式 */
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 5px rgba(26, 82, 118, 0.3);
+      }
+
+      .submit-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+      }
+
+      /* 团队介绍样式 */
+      .team-section {
+        margin: 40px 0;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .team-member {
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .team-member:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .member-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 5px solid white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .member-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+      }
+
+      .member-title {
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+      }
+
+      /* 公司历程时间线 */
+      .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 40px auto;
+      }
+
+      .timeline::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        background-color: var(--secondary-color);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2px;
+      }
+
+      .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        width: 50%;
+        box-sizing: border-box;
+      }
+
+      .timeline-item:nth-child(odd) {
+        left: 0;
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 50%;
+      }
+
+      .timeline-content {
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--secondary-color);
+      }
+
+      .timeline-item:nth-child(even) .timeline-content {
+        border-left: none;
+        border-right: 4px solid var(--secondary-color);
+      }
+
+      .timeline-date {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .timeline::after {
+          left: 31px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-left: 70px;
+          padding-right: 25px;
+        }
+
+        .timeline-item:nth-child(even) {
+          left: 0%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+          border-right: none;
+          border-left: 4px solid var(--secondary-color);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+      <header>
+        <h1>关于我们</h1>
+        <p>专业的智能展馆解决方案提供商</p>
+      </header>
+
+      <div class="content">
+        <section>
+          <h2>公司简介</h2>
+          <p>我们是一家专注于智能展馆多媒体中控系统研发、生产和销售的高科技企业。凭借多年的行业经验和技术积累，我们致力于为各类展览馆、博物馆、企业展厅等场所提供专业的智能化解决方案。</p>
+          <p>我们的核心团队由行业资深专家组成，拥有丰富的项目实施经验和创新研发能力。通过不断技术创新和产品优化，我们已成功为众多国内外客户提供了高质量的产品和服务，赢得了广泛的市场认可。</p>
+        </section>
+
+        <section>
+          <h2>我们的使命</h2>
+          <p>通过创新技术，打造智能、高效、便捷的展馆多媒体控制体验，助力客户提升展览效果和运营效率，为观众带来沉浸式的参观体验。</p>
+        </section>
+
+        <section>
+          <h2>我们的愿景</h2>
+          <p>成为全球领先的智能展馆解决方案提供商，引领行业技术发展方向，推动展览展示行业的数字化、智能化转型。</p>
+        </section>
+
+        <section class="team-section">
+          <h2>核心团队</h2>
+          <div class="team-grid">
+            <div class="team-member">
+              <img src="https://via.placeholder.com/150" alt="团队成员" class="member-photo">
+              <h4 class="member-name">张三</h4>
+              <p class="member-title">技术总监</p>
+              <p>拥有10年智能控制系统开发经验，曾主导多个大型展馆项目的技术方案设计和实施。</p>
+            </div>
+            <div class="team-member">
+              <img src="https://via.placeholder.com/150" alt="团队成员" class="member-photo">
+              <h4 class="member-name">李四</h4>
+              <p class="member-title">产品经理</p>
+              <p>专注于用户体验研究和产品设计，致力于打造符合客户需求的智能展馆产品。</p>
+            </div>
+            <div class="team-member">
+              <img src="https://via.placeholder.com/150" alt="团队成员" class="member-photo">
+              <h4 class="member-name">王五</h4>
+              <p class="member-title">项目经理</p>
+              <p>负责项目规划、协调和管理，确保项目按时高质量完成，客户满意度达到100%。</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>发展历程</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">2010年</div>
+                <p>公司成立，专注于展览展示行业技术服务。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">2013年</div>
+                <p>推出第一代展馆多媒体控制系统，获得市场认可。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">2016年</div>
+                <p>完成A轮融资，扩大研发团队，加速产品创新。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">2018年</div>
+                <p>推出基于ESP32技术的新一代智能展馆多媒体中控系统。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">2021年</div>
+                <p>成功实施100+大型展馆项目，服务客户遍布全球。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>联系我们</h2>
+          <p>如果您对我们的公司或产品有任何疑问，欢迎随时联系我们。我们将竭诚为您提供专业的咨询和服务。</p>
+          <button class="consultation-btn" onclick="openConsultationForm()">立即咨询</button>
+        </section>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div id="footer-placeholder"></div>
+
+    <!-- 咨询模态框 -->
+    <div id="consultation-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeConsultationForm()">&times;</span>
+        <h3>咨询我们</h3>
+        <form id="consultation-form" action="https://formspree.io/f/xknljwjd" method="POST">
+          <div class="form-group">
+            <label for="name">姓名 *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="country-code">国家/地区代码 *</label>
+            <input type="text" id="country-code" name="country-code" placeholder="例如：86（中国）" required>
+          </div>
+          <div class="form-group">
+            <label for="phone-number">电话号码 *</label>
+            <input type="tel" id="phone-number" name="phone-number" required>
+          </div>
+          <div class="form-group">
+            <label for="email">电子邮箱</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="message">咨询内容 *</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">提交</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 加载通用JavaScript -->
+    <script src="assets/js/common.js"></script>
+  </body>
+</html>
