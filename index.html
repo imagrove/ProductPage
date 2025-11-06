@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智能展馆多媒体中控系统 - 产品描述</title>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-F1FQKJLVJR"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag("js", new Date())
+
+      gtag("config", "G-F1FQKJLVJR")
+    </script>
+    <style>
+      :root {
+        --primary-color: #1a5276;
+        --secondary-color: #3498db;
+        --accent-color: #f4d03f;
+        --text-color: #333333;
+        --light-bg: #faf9f7;
+        --border-color: #e0e0e0;
+        --heading-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --body-font: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--body-font);
+        color: var(--text-color);
+        line-height: 1.6;
+        background-color: var(--light-bg);
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        font-family: var(--heading-font);
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      h2 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent-color);
+      }
+
+      h3 {
+        font-family: var(--heading-font);
+        color: var(--secondary-color);
+        font-size: 1.6rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+
+      p {
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+      }
+
+      ul {
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      .feature-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .feature-card {
+        flex: 1 1 300px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card h4 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      hr {
+        border: none;
+        height: 1px;
+        background-color: var(--border-color);
+        margin: 40px 0;
+      }
+
+      .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .spec-section {
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+        }
+
+        .container {
+          padding: 15px;
+        }
+
+        header {
+          padding: 40px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>智能展馆多媒体中控系统</h1>
+      </header>
+
+      <section>
+        <h2>产品概述</h2>
+        <p>
+          智能展馆多媒体中控系统是一款基于ESP32技术的高性能、高可靠的展馆设备集中控制解决方案。该系统具有以下核心特点：
+        </p>
+        <ol>
+          <li>
+            <strong>精细设备控制</strong
+            >：通过控制面板实现对投影机、电脑主机开关机、照明灯电源、播放器、播放软件和音视频内容的精细控制
+          </li>
+          <li>
+            <strong>独立群组运行</strong
+            >：每个子展项可内部独立成组，无需依赖外网和服务器，实现设备间的本地链接和通讯
+          </li>
+          <li>
+            <strong>灵活群组集成</strong
+            >：当需要集成多个群组（展项）时，可快速接入中央服务器，并通过平板电脑进行集中控制，支持多级权限管理
+          </li>
+          <li>
+            <strong>高性能播放终端</strong
+            >：采用基于Linux的嵌入式播放器，内置画面几何校正和H5页面渲染功能，充分利用GPU和解码器硬件加速能力
+          </li>
+        </ol>
+        <p>
+          该系统通过群组化设计和分布式架构，为观众提供沉浸式、无缝的展览体验，为展馆运营方提供高效、便捷的管理工具。
+        </p>
+      </section>
+
+      <section>
+        <h2>系统架构</h2>
+
+        <h3>多层级分布式设计</h3>
+        <p>系统采用创新的群组化架构，实现了"独立运行与集中管理"的双重优势：</p>
+        <ol>
+          <li>
+            <strong>独立群组结构</strong
+            >：每个子展项作为独立群组，由ESP32Touch面板作为主节点，群组内部通过BLE
+            GATT实现设备间本地通信，无需依赖外网和服务器
+          </li>
+          <li>
+            <strong>群组快速集成</strong
+            >：支持群组的即插即用式接入，通过WiFi连接到中央MQTT服务器，实现跨群组的统一控制
+          </li>
+          <li>
+            <strong>灵活扩展</strong
+            >：可根据展览规模动态调整群组数量和组织结构，支持从单一展项到大型展览馆的全方位覆盖
+          </li>
+        </ol>
+
+        <h3>核心组件</h3>
+        <ul>
+          <li>
+            <strong>中央控制系统</strong
+            >：MQTT服务器作为群组集成核心，支持多展项集中管理和多级权限控制
+          </li>
+          <li>
+            <strong>群组主节点</strong
+            >：ESP32Touch面板，作为每个子展项的控制中心和人机交互界面，实现对所有设备的精细化控制
+          </li>
+          <li>
+            <strong>设备控制节点</strong
+            >：ESP32继电器模块（控制电源开关）、ESP32
+            RS232模块（控制串口设备）、ESP32 HID模块（模拟键盘鼠标）等
+          </li>
+          <li>
+            <strong>智能播放终端</strong
+            >：基于Linux的嵌入式播放器，内置GPU硬件加速和硬件解码器，支持画面几何校正和H5页面渲染
+          </li>
+          <li>
+            <strong>移动控制终端</strong
+            >：平板电脑APP，提供直观的集中控制界面和权限管理功能
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>主要功能</h2>
+
+        <div class="feature-list">
+          <div class="feature-card">
+            <h4>智能设备控制</h4>
+            <ul>
+              <li>
+                全设备精细控制：实现对投影仪（开关、信号切换、亮度调节）、电脑主机（开关机、休眠唤醒）、照明灯电源（开关、亮度、色温）、播放器（开关、音量调节）、播放软件（启动关闭、模式切换）和音视频内容（播放、暂停、切换）的精细化控制
+              </li>
+              <li>
+                多协议统一控制：通过RS232串口、USB
+                HID模拟键盘鼠标、蓝牙HID、继电器等多种方式实现设备的统一管理
+              </li>
+              <li>
+                一键场景切换：预设多种展览场景，一键触发相关设备的联动控制
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>高性能播放与渲染</h4>
+            <ul>
+              <li>
+                嵌入式Linux播放器：基于Linux系统的专用播放终端，确保系统稳定运行
+              </li>
+              <li>
+                硬件加速渲染：充分利用GPU硬件加速能力，支持复杂H5页面和WebGL内容的流畅展示
+              </li>
+              <li>
+                专业画面处理：内置画面几何校正功能，解决不规则投影面的图像失真问题
+              </li>
+              <li>
+                硬件解码器：配备专用视频解码器，支持4K/8K高清内容的流畅播放
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>群组管理与权限控制</h4>
+            <ul>
+              <li>
+                独立群组运行：每个子展项可在无外网、无服务器的情况下独立运行，确保基础功能正常
+              </li>
+              <li>
+                集中控制平台：通过平板电脑APP实现对多个群组（展项）的集中管理
+              </li>
+              <li>
+                多级权限管理：支持设置不同级别的操作权限，确保系统安全和管理规范
+              </li>
+              <li>
+                快速群组集成：支持新群组的快速添加和配置，无需复杂的网络设置
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>技术特色</h2>
+
+        <div class="feature-list">
+          <div class="feature-card">
+            <h4>高性能播放与渲染</h4>
+            <ul>
+              <li>
+                嵌入式Linux架构：采用稳定可靠的Linux操作系统，确保长时间稳定运行
+              </li>
+              <li>
+                GPU硬件加速：充分利用硬件GPU进行图形渲染，提升H5和WebGL内容的展示效果
+              </li>
+              <li>
+                专用解码器：配备硬件视频解码器，支持多种编码格式，确保高清内容的流畅播放
+              </li>
+              <li>
+                几何校正技术：内置专业的画面几何校正算法，解决异形投影面的图像问题
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>独立运行与灵活集成</h4>
+            <ul>
+              <li>
+                本地通信架构：群组内部通过BLE
+                GATT实现设备间的本地通信，无需依赖外部网络
+              </li>
+              <li>
+                自组织网络：设备能够自动发现并连接到群组，简化安装和配置流程
+              </li>
+              <li>
+                即插即用扩展：支持设备的热插拔和自动识别，便于系统维护和升级
+              </li>
+              <li>
+                快速集成中央系统：需要集中控制时，可迅速接入中央服务器，实现跨群组管理
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>精细控制与权限管理</h4>
+            <ul>
+              <li>
+                多协议兼容：同时支持RS232串口、USB
+                HID、蓝牙HID、继电器等多种控制协议
+              </li>
+              <li>
+                设备状态实时监控：实时监测各设备的运行状态，提供故障预警和报警功能
+              </li>
+              <li>
+                多级权限控制：基于角色的访问控制，支持管理员、操作员等不同级别的权限设置
+              </li>
+              <li>操作日志记录：详细记录所有操作，便于系统审计和问题追溯</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>应用场景</h2>
+        <ul>
+          <li>
+            <strong>数字展馆与博物馆</strong
+            >：为各类展览提供精细化的设备控制和高质量的媒体展示，通过独立群组运行确保展览的稳定性，同时支持多展项的集中管理，提升观众体验和管理效率。
+          </li>
+          <li>
+            <strong>企业展厅与品牌中心</strong
+            >：提供企业形象和产品的全方位展示解决方案，支持一键切换不同展示场景，实现对所有设备的精细控制，通过多级权限管理确保系统安全。
+          </li>
+          <li>
+            <strong>临时展览与活动空间</strong
+            >：对于需要快速部署的临时展览，系统的独立群组运行能力和快速集成特性尤为重要，可在无外网环境下正常工作，同时支持灵活的设备扩展。
+          </li>
+          <li>
+            <strong>异形投影与沉浸式空间</strong
+            >：针对非标准投影面，系统内置的几何校正功能和高性能渲染能力，能够实现精准的图像还原，创造沉浸式的展示体验。
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>产品优势</h2>
+        <ol>
+          <li>
+            <strong>独立运行与集中管理兼备</strong
+            >：每个展项可独立运行，确保基础功能稳定；又能快速集成到中央系统，实现统一管理
+          </li>
+          <li>
+            <strong>全方位设备精细控制</strong
+            >：覆盖从电源开关到软件控制、内容播放的完整控制链条，实现真正的一键式管理
+          </li>
+          <li>
+            <strong>高性能媒体处理</strong
+            >：基于Linux的嵌入式播放器配合GPU硬件加速，确保高清内容和复杂H5页面的流畅播放
+          </li>
+          <li>
+            <strong>几何校正专业能力</strong
+            >：内置专业的画面几何校正功能，解决异形投影面的图像失真问题
+          </li>
+          <li>
+            <strong>灵活部署与扩展</strong
+            >：支持从单一展项到大型展览馆的灵活扩展，适应不同规模和需求的展览场景
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>系统规格</h2>
+
+        <div class="spec-grid">
+          <div class="spec-section">
+            <h3>硬件规格</h3>
+            <ul>
+              <li><strong>主控设备</strong>：</li>
+              <ul>
+                <li>ESP32双核处理器，支持BLE 5.0和WiFi 4/5</li>
+                <li>触摸控制面板，提供直观的操作界面</li>
+              </ul>
+              <li><strong>控制节点</strong>：</li>
+              <ul>
+                <li>ESP32继电器模块：控制电源开关和通断</li>
+                <li>ESP32 RS232模块：支持标准串口设备通信</li>
+                <li>ESP32 HID模块：模拟键盘鼠标操作</li>
+              </ul>
+              <li><strong>播放终端</strong>：</li>
+              <ul>
+                <li>基于高性能SoC的Linux嵌入式播放器</li>
+                <li>内置GPU加速和硬件视频解码器</li>
+                <li>支持4K/8K内容播放</li>
+                <li>存储容量不低于128GB</li>
+                <li>支持多HDMI输出，每接口支持4K分辨率</li>
+              </ul>
+              <li><strong>接口规格</strong>：</li>
+              <ul>
+                <li>控制接口：RS232、USB、蓝牙、WiFi</li>
+                <li>音频输出：3.5mm音频接口</li>
+                <li>电源要求：支持220V交流输入</li>
+              </ul>
+            </ul>
+          </div>
+
+          <div class="spec-section">
+            <h3>软件规格</h3>
+            <ul>
+              <li><strong>操作系统</strong>：Linux嵌入式系统</li>
+              <li><strong>核心功能</strong>：</li>
+              <ul>
+                <li>内置画面几何校正算法</li>
+                <li>支持复杂H5页面渲染</li>
+                <li>硬件加速的媒体播放</li>
+              </ul>
+              <li><strong>通信协议</strong>：</li>
+              <ul>
+                <li>本地通信：BLE GATT</li>
+                <li>网络通信：MQTT、WiFi</li>
+              </ul>
+              <li><strong>权限管理</strong>：基于角色的多级权限控制</li>
+              <li><strong>移动控制</strong>：支持平板电脑APP集中控制</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <hr />
+
+      <footer>
+        <p style="text-align: center; color: #666; font-style: italic">
+          智能展馆多媒体中控系统，为您的展览空间提供全方位的智能解决方案，助力打造令人难忘的参观体验。
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
