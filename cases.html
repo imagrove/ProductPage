@@ -734,7 +734,7 @@
       // 项目案例分类筛选功能
       document.addEventListener('DOMContentLoaded', function() {
         // 等待组件加载完成
-        setTimeout(function() {
+        const initPage = function() {
           // 项目分类筛选
           function filterCases(category) {
             const caseCards = document.querySelectorAll('.case-card');
@@ -769,7 +769,19 @@
           document.getElementById('category-library').addEventListener('click', () => filterCases('library'));
           document.getElementById('category-education').addEventListener('click', () => filterCases('education'));
           document.getElementById('category-government').addEventListener('click', () => filterCases('government'));
-        }, 500);
+        };
+        
+        // 检查导航栏是否已加载
+        const checkNavbarLoaded = function() {
+          const navbar = document.querySelector('nav');
+          if (navbar && navbar.innerHTML.trim() !== '') {
+            initPage();
+          } else {
+            setTimeout(checkNavbarLoaded, 100);
+          }
+        };
+        
+        checkNavbarLoaded();
       });
     </script>
   </body>

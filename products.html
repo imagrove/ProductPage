@@ -758,7 +758,7 @@
       // 产品分类筛选功能
       document.addEventListener('DOMContentLoaded', function() {
         // 等待组件加载完成
-        setTimeout(function() {
+        const initPage = function() {
           // 产品分类筛选
           function filterProducts(category) {
             const productCards = document.querySelectorAll('.product-card');
@@ -791,7 +791,19 @@
           document.getElementById('category-display').addEventListener('click', () => filterProducts('display'));
           document.getElementById('category-audio').addEventListener('click', () => filterProducts('audio'));
           document.getElementById('category-software').addEventListener('click', () => filterProducts('software'));
-        }, 500);
+        };
+        
+        // 检查导航栏是否已加载
+        const checkNavbarLoaded = function() {
+          const navbar = document.querySelector('nav');
+          if (navbar && navbar.innerHTML.trim() !== '') {
+            initPage();
+          } else {
+            setTimeout(checkNavbarLoaded, 100);
+          }
+        };
+        
+        checkNavbarLoaded();
       });
     </script>
   </body>
