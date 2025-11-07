@@ -745,11 +745,12 @@
               btn.classList.remove('active');
             });
             
-            if (category !== 'all') {
-              document.getElementById(`category-${category}`).classList.add('active');
-            } else {
-              document.getElementById('category-all').classList.add('active');
-            }
+            // 找到当前点击的按钮并激活
+            categoryButtons.forEach(btn => {
+              if (btn.getAttribute('onclick') === `filterCategory('${category}')`) {
+                btn.classList.add('active');
+              }
+            });
             
             // 筛选案例
             caseCards.forEach(card => {
@@ -762,19 +763,23 @@
           }
           
           // 添加筛选按钮点击事件
-          document.getElementById('category-all').addEventListener('click', () => filterCases('all'));
-          document.getElementById('category-museum').addEventListener('click', () => filterCases('museum'));
-          document.getElementById('category-exhibition').addEventListener('click', () => filterCases('exhibition'));
-          document.getElementById('category-enterprise').addEventListener('click', () => filterCases('enterprise'));
-          document.getElementById('category-library').addEventListener('click', () => filterCases('library'));
-          document.getElementById('category-education').addEventListener('click', () => filterCases('education'));
-          document.getElementById('category-government').addEventListener('click', () => filterCases('government'));
+          const categoryButtons = document.querySelectorAll('.category-btn');
+          categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+              const category = this.getAttribute('onclick').match(/filterCategory\('(.*?)'\)/)[1];
+              filterCases(category);
+            });
+          });
         };
         
         // 检查导航栏是否已加载
         const checkNavbarLoaded = function() {
           const navbar = document.querySelector('nav');
           if (navbar && navbar.innerHTML.trim() !== '') {
+            // 确保移动端菜单初始化完成
+            if (typeof initMobileMenu === 'function') {
+              initMobileMenu();
+            }
             initPage();
           } else {
             setTimeout(checkNavbarLoaded, 100);
