@@ -42,7 +42,7 @@ function loadSharedComponents() {
 
 // 导航菜单切换功能
 function toggleMenu() {
-  const navLinks = document.getElementById('navLinks')
+  const navLinks = document.querySelector('.nav-links')
   if (navLinks) {
     navLinks.classList.toggle('active')
   }
@@ -97,19 +97,62 @@ function smoothScroll() {
 
 // 页面加载完成后执行
 window.addEventListener('DOMContentLoaded', function() {
-  // 加载共享组件
+  // 立即显示导航栏占位符内容
+  const navbarPlaceholder = document.getElementById('navbar-placeholder')
+  if (navbarPlaceholder) {
+    // 创建简单的导航栏结构，避免空白期
+    navbarPlaceholder.innerHTML = `
+      <nav>
+        <div class="nav-container">
+          <a href="#" onclick="loadPage('index.html')" class="logo">智能展馆多媒体中控系统</a>
+          <button class="hamburger" onclick="toggleMenu()">☰</button>
+          <ul class="nav-links">
+            <li><a href="#" onclick="loadPage('index.html')">首页</a></li>
+            <li><a href="#" onclick="loadPage('about.html')">关于我们</a></li>
+            <li><a href="#" onclick="loadPage('products.html')">产品</a></li>
+            <li><a href="#" onclick="loadPage('cases.html')">项目案例</a></li>
+            <li><a href="#" onclick="loadPage('contact.html')">联系方式</a></li>
+          </ul>
+        </div>
+      </nav>
+    `
+  }
+  
+  // 加载共享组件（异步更新导航栏样式等）
   loadSharedComponents()
   
-  // 等待组件加载完成后执行其他功能
-  setTimeout(function() {
-    validateContactForm()
-    smoothScroll()
-  }, 500)
+  // 立即执行其他功能，无需等待
+  validateContactForm()
+  smoothScroll()
+  
+  // 如果是首页，初始化单页应用
+  if (window.location.pathname.endsWith('index.html') || 
+      window.location.pathname === '/' || 
+      window.location.pathname.endsWith('/')) {
+    // 初始化页面内容
+    const pageContent = document.getElementById('page-content')
+    if (pageContent) {
+      // 保存首页原始内容
+      const originalContent = pageContent.innerHTML
+      
+      // 监听浏览器前进后退按钮
+      window.addEventListener('popstate', function() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html'
+        if (currentPage === 'index.html' || currentPage === '') {
+          // 如果是首页，显示原始内容
+          pageContent.innerHTML = originalContent
+        } else {
+          // 加载其他页面
+          loadPage(currentPage)
+        }
+      })
+    }
+  }
 })
 
 // 窗口大小改变时关闭移动端菜单
 window.addEventListener('resize', function() {
-  const navLinks = document.getElementById('navLinks')
+  const navLinks = document.querySelector('.nav-links')
   if (navLinks && window.innerWidth > 768) {
     navLinks.classList.remove('active')
   }
