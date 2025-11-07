@@ -2,7 +2,7 @@
 
 // 组件加载函数
 function loadComponent(url, targetId) {
-  fetch(url)
+  return fetch(url)
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -11,9 +11,11 @@ function loadComponent(url, targetId) {
     })
     .then(data => {
       document.getElementById(targetId).innerHTML = data
+      return data // 返回数据以便链式调用
     })
     .catch(error => {
       console.error(`Error loading component ${url}:`, error)
+      throw error // 重新抛出错误以便链式调用
     })
 }
 
@@ -21,7 +23,10 @@ function loadComponent(url, targetId) {
 function loadSharedComponents() {
   // 加载导航栏
   if (document.getElementById('navbar-placeholder')) {
-    loadComponent('components/navbar.html', 'navbar-placeholder')
+    loadComponent('components/navbar.html', 'navbar-placeholder').then(() => {
+      // 导航栏加载完成后，初始化移动端菜单功能
+      initMobileMenu()
+    })
   }
   
   // 加载页脚
@@ -40,11 +45,57 @@ function loadSharedComponents() {
   }
 }
 
+// 初始化移动端菜单功能
+function initMobileMenu() {
+  const hamburger = document.querySelector('.hamburger')
+  const navLinks = document.querySelector('.nav-links')
+  
+  if (hamburger && navLinks) {
+    // 确保汉堡按钮有正确的点击事件
+    hamburger.onclick = toggleMenu
+    
+    // 为移动端菜单链接添加点击事件，点击后关闭菜单
+    const mobileLinks = navLinks.querySelectorAll('a')
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        // 在移动端，点击链接后关闭菜单
+        if (window.innerWidth <= 768) {
+          navLinks.classList.remove('active')
+          document.removeEventListener('click', closeMenuOnOutsideClick)
+        }
+      })
+    })
+  }
+}
+
 // 导航菜单切换功能
 function toggleMenu() {
   const navLinks = document.querySelector('.nav-links')
   if (navLinks) {
     navLinks.classList.toggle('active')
+    
+    // 添加点击外部关闭菜单的功能
+    if (navLinks.classList.contains('active')) {
+      // 添加点击事件监听器，点击菜单外部关闭菜单
+      document.addEventListener('click', closeMenuOnOutsideClick)
+    } else {
+      // 移除点击事件监听器
+      document.removeEventListener('click', closeMenuOnOutsideClick)
+    }
+  }
+}
+
+// 点击菜单外部关闭菜单
+function closeMenuOnOutsideClick(event) {
+  const navLinks = document.querySelector('.nav-links')
+  const hamburger = document.querySelector('.hamburger')
+  
+  // 如果点击的不是菜单链接或汉堡按钮，则关闭菜单
+  if (navLinks && hamburger && 
+      !navLinks.contains(event.target) && 
+      !hamburger.contains(event.target)) {
+    navLinks.classList.remove('active')
+    document.removeEventListener('click', closeMenuOnOutsideClick)
   }
 }
 
