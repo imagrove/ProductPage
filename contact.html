@@ -583,16 +583,16 @@
     <!-- 确保联系方式标签激活 -->
     <script>
       // 页面加载完成后执行
-      window.addEventListener("DOMContentLoaded", function () {
-        console.log("页面DOM加载完成，开始加载共享组件")
-
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('页面DOM加载完成，开始加载共享组件')
+        
         // 加载共享组件
-        if (typeof loadSharedComponents === "function") {
+        if (typeof loadSharedComponents === 'function') {
           loadSharedComponents()
         }
-
+        
         // 设置联系方式标签激活状态
-        const setContactActive = function () {
+        const setContactActive = function() {
           const navLinks = document.querySelectorAll(".nav-links a")
           navLinks.forEach((link) => {
             link.classList.remove("active")
@@ -621,20 +621,20 @@
             }
           }, 100)
         }
-
+        
         // 确保loadSharedComponents函数存在并调用
-        if (typeof loadSharedComponents === "function") {
-          console.log("Calling loadSharedComponents for contact page")
-          loadSharedComponents()
+        if (typeof loadSharedComponents === 'function') {
+          console.log('Calling loadSharedComponents for contact page');
+          loadSharedComponents();
         } else {
-          console.error("loadSharedComponents function not available!")
+          console.error('loadSharedComponents function not available!');
         }
-
+        
         // 使用统一的导航栏初始化函数
-        initNavbar()
-
+        initNavbar();
+        
         // 设置联系方式标签激活状态
-        setContactActive()
+        setContactActive();
       })
     </script>
   </body>

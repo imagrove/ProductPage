@@ -854,17 +854,17 @@
     <script src="assets/js/common.js"></script>
     <script>
       // 页面加载完成后执行
-      window.addEventListener("DOMContentLoaded", function () {
-        console.log("页面DOM加载完成，开始加载共享组件")
-
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('页面DOM加载完成，开始加载共享组件')
+        
         // 加载共享组件
-        if (typeof loadSharedComponents === "function") {
-          console.log("调用loadSharedComponents函数...")
+        if (typeof loadSharedComponents === 'function') {
+          console.log('调用loadSharedComponents函数...')
           loadSharedComponents()
         } else {
-          console.error("loadSharedComponents函数未定义！")
+          console.error('loadSharedComponents函数未定义！')
         }
-
+        
         // 产品分类筛选功能
         const initPage = function () {
           // 产品分类筛选
@@ -911,21 +911,21 @@
         // 使用统一的导航栏初始化函数
         // 确保在导航栏加载完成后初始化移动端菜单
         setTimeout(() => {
-          if (typeof initNavbar === "function") {
-            initNavbar()
+          if (typeof initNavbar === 'function') {
+            initNavbar();
           } else {
             // 如果initNavbar函数不存在，直接调用initMobileMenu
-            if (typeof initMobileMenu === "function") {
-              setTimeout(initMobileMenu, 500)
+            if (typeof initMobileMenu === 'function') {
+              setTimeout(initMobileMenu, 500);
             }
           }
-        }, 500)
+        }, 500);
 
         // 延迟执行页面初始化，确保菜单事件绑定完成
         setTimeout(() => {
           initPage()
         }, 100)
-      })
+      });
     </script>
   </body>
 </html>
