@@ -28,6 +28,7 @@ node_modules/  # 若有 Node 依赖（纯 HTML 项目通常没有，Hugo 项目�
 # 本地测试文件、备份文件
 test/  # 本地测试文件夹
 backup/  # 备份文件夹
+0-docs/  # 项目文档文件夹
 *.bak  # 备份文件（如 index.html.bak）
 
 # ------------- Hugo 项目额外忽略（后续迁移用）-------------
