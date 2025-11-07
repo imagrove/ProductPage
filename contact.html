@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>联系方式 - 智能展馆多媒体中控系统</title>
-  <!-- 加载Google Analytics -->
-  <div id="google-analytics-placeholder"></div>
-  <link rel="stylesheet" href="assets/css/common.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>联系方式 - 智能展馆多媒体中控系统</title>
+    <!-- 加载Google Analytics -->
+    <div id="google-analytics-placeholder"></div>
+    <link rel="stylesheet" href="assets/css/common.css" />
     <style>
       :root {
         --primary-color: #1a5276;
@@ -43,61 +43,6 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-      }
-
-      /* 导航栏样式 */
-      nav {
-        background-color: white;
-        border-bottom: 1px solid var(--border-color);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 80px;
-      }
-
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        text-decoration: none;
-      }
-
-      .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 30px;
-      }
-
-      .nav-links a {
-        color: var(--text-color);
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        transition: color 0.3s ease;
-      }
-
-      .nav-links a:hover {
-        color: var(--secondary-color);
-      }
-
-      /* 汉堡菜单按钮 */
-      .hamburger {
-        display: none;
-        cursor: pointer;
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: var(--primary-color);
       }
 
       header {
@@ -186,7 +131,11 @@
       }
 
       .contact-icon {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         color: white;
         width: 40px;
         height: 40px;
@@ -230,7 +179,11 @@
         justify-content: center;
         width: 45px;
         height: 45px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         border-radius: 50%;
         color: white;
         text-decoration: none;
@@ -427,7 +380,7 @@
       }
 
       .footer-column h3::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
@@ -513,7 +466,7 @@
   </head>
   <body>
     <!-- 导航栏 -->
-  <div id="navbar-placeholder"></div>
+    <div id="navbar-placeholder"></div>
 
     <div class="container">
       <header>
@@ -526,8 +479,10 @@
           <!-- 联系信息 -->
           <div class="contact-info">
             <h3>联系方式</h3>
-            <p>感谢您对我们的关注。无论您是需要产品咨询、技术支持还是商务合作，我们的团队都会为您提供专业、高效的服务。</p>
-            
+            <p>
+              感谢您对我们的关注。无论您是需要产品咨询、技术支持还是商务合作，我们的团队都会为您提供专业、高效的服务。
+            </p>
+
             <div class="contact-details">
               <div class="contact-item">
                 <div class="contact-icon">🏢</div>
@@ -536,20 +491,23 @@
                   <p>北京市海淀区中关村科技园区8号楼</p>
                 </div>
               </div>
-              
+
               <div class="contact-item">
                 <div class="contact-icon">📞</div>
                 <div class="contact-content">
                   <h4>电话咨询</h4>
-                  <p>400-123-4567<br>工作时间：周一至周五 9:00-18:00</p>
+                  <p>400-123-4567<br />工作时间：周一至周五 9:00-18:00</p>
                 </div>
               </div>
-              
+
               <div class="contact-item">
                 <div class="contact-icon">✉️</div>
                 <div class="contact-content">
                   <h4>电子邮箱</h4>
-                  <p>sales@example.com (销售咨询)<br>support@example.com (技术支持)</p>
+                  <p>
+                    sales@example.com (销售咨询)<br />support@example.com
+                    (技术支持)
+                  </p>
                 </div>
               </div>
             </div>
@@ -567,15 +525,17 @@
             <div class="map-container">
               <h4>地图位置</h4>
               <div class="map-placeholder">
-                <p>地图加载中...<br><br>
-                实际使用时，这里将显示公司的地理位置地图。<br>
-                北京市海淀区中关村科技园区8号楼</p>
+                <p>
+                  地图加载中...<br /><br />
+                  实际使用时，这里将显示公司的地理位置地图。<br />
+                  北京市海淀区中关村科技园区8号楼
+                </p>
               </div>
             </div>
           </div>
 
           <!-- 联系表单 -->
-      <div id="contact-form-placeholder"></div>
+          <div id="contact-form-placeholder"></div>
         </div>
 
         <!-- 常见问题 -->
@@ -584,22 +544,30 @@
           <div class="faq-container">
             <div class="faq-item">
               <h3>如何获取产品报价？</h3>
-              <p>您可以通过联系表单提交需求，或者直接拨打我们的销售热线400-123-4567，我们的销售团队会根据您的具体需求提供详细报价。</p>
+              <p>
+                您可以通过联系表单提交需求，或者直接拨打我们的销售热线400-123-4567，我们的销售团队会根据您的具体需求提供详细报价。
+              </p>
             </div>
-            
+
             <div class="faq-item">
               <h3>产品支持哪些地区的服务？</h3>
-              <p>我们的服务覆盖全国各地区，同时也支持海外项目的实施和维护。具体服务内容可以根据项目需求进行定制。</p>
+              <p>
+                我们的服务覆盖全国各地区，同时也支持海外项目的实施和维护。具体服务内容可以根据项目需求进行定制。
+              </p>
             </div>
-            
+
             <div class="faq-item">
               <h3>售后服务包含哪些内容？</h3>
-              <p>我们提供7×24小时技术支持热线、远程协助、定期维护保养、系统升级服务等全方位的售后支持，确保系统稳定运行。</p>
+              <p>
+                我们提供7×24小时技术支持热线、远程协助、定期维护保养、系统升级服务等全方位的售后支持，确保系统稳定运行。
+              </p>
             </div>
-            
+
             <div class="faq-item">
               <h3>项目实施周期是多久？</h3>
-              <p>项目实施周期根据项目规模和复杂程度而定，一般来说，小型项目1-2周，中型项目1-2个月，大型项目2-6个月。我们会在项目开始前提供详细的时间规划。</p>
+              <p>
+                项目实施周期根据项目规模和复杂程度而定，一般来说，小型项目1-2周，中型项目1-2个月，大型项目2-6个月。我们会在项目开始前提供详细的时间规划。
+              </p>
             </div>
           </div>
         </section>
@@ -609,7 +577,42 @@
     <!-- 页脚 -->
     <div id="footer-placeholder"></div>
 
-  <!-- 加载通用JavaScript -->
-  <script src="assets/js/common.js"></script>
+    <!-- 加载通用JavaScript -->
+    <script src="assets/js/common.js"></script>
+
+    <!-- 确保联系方式标签激活 -->
+    <script>
+      // 页面加载完成后立即设置激活状态
+      document.addEventListener("DOMContentLoaded", function () {
+        // 直接设置联系方式标签为激活状态
+        const navLinks = document.querySelectorAll(".nav-links a")
+        navLinks.forEach((link) => {
+          link.classList.remove("active")
+          if (link.getAttribute("href") === "contact.html") {
+            link.classList.add("active")
+            console.log("✅ 联系方式标签已激活")
+          }
+        })
+
+        // 延迟再次检查，确保激活状态正确设置
+        setTimeout(() => {
+          const activeLink = document.querySelector(".nav-links a.active")
+          if (
+            activeLink &&
+            activeLink.getAttribute("href") === "contact.html"
+          ) {
+            console.log("✅ 确认联系方式标签激活状态正确")
+          } else {
+            console.log("❌ 联系方式标签激活状态异常，重新设置")
+            navLinks.forEach((link) => {
+              link.classList.remove("active")
+              if (link.getAttribute("href") === "contact.html") {
+                link.classList.add("active")
+              }
+            })
+          }
+        }, 100)
+      })
+    </script>
   </body>
 </html>

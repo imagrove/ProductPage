@@ -52,6 +52,24 @@ nav {
   color: var(--primary-color);
 }
 
+/* 导航栏激活标签横线指示器 */
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
 .hamburger {
   display: none;
   background: none;
@@ -295,6 +313,13 @@ footer {
   
   .nav-links.active {
     left: 0;
+  }
+  
+  /* 移动端导航栏激活标签横线指示器 */
+  .nav-links li a.active::after {
+    bottom: -3px;
+    width: 60%;
+    height: 2px;
   }
   
   /* 页脚响应式 */

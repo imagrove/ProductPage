@@ -48,6 +48,47 @@ function toggleMenu() {
   }
 }
 
+// 导航栏激活状态管理
+function setActiveNavLink() {
+  // 获取当前页面路径
+  let currentPage = window.location.pathname.split('/').pop()
+  
+  // 处理各种路径情况
+  if (!currentPage || currentPage === '' || currentPage === 'index.html') {
+    currentPage = 'index.html'
+  }
+  
+  const navLinks = document.querySelectorAll('.nav-links a')
+  
+  console.log('当前页面路径:', window.location.pathname)
+  console.log('当前页面:', currentPage)
+  
+  navLinks.forEach(link => {
+    // 移除所有激活状态
+    link.classList.remove('active')
+    
+    // 根据当前页面设置激活状态
+    const href = link.getAttribute('href')
+    console.log('检查链接:', href)
+    
+    // 精确匹配页面路径
+    if (href === currentPage) {
+      link.classList.add('active')
+      console.log('✅ 激活标签:', href)
+    } else {
+      console.log('❌ 不匹配:', href, 'vs', currentPage)
+    }
+  })
+  
+  console.log('激活状态设置完成')
+}
+
+// 为导航栏链接添加点击事件（已移除，让浏览器正常处理页面跳转）
+function setupNavLinkClickEvents() {
+  // 不再需要点击事件处理，让浏览器正常跳转页面
+  // 激活状态会在页面加载时通过 setActiveNavLink() 正确设置
+}
+
 // 表单验证功能
 function validateContactForm() {
   const form = document.getElementById('contact-form')
@@ -97,57 +138,22 @@ function smoothScroll() {
 
 // 页面加载完成后执行
 window.addEventListener('DOMContentLoaded', function() {
-  // 立即显示导航栏占位符内容
-  const navbarPlaceholder = document.getElementById('navbar-placeholder')
-  if (navbarPlaceholder) {
-    // 创建简单的导航栏结构，避免空白期
-    navbarPlaceholder.innerHTML = `
-      <nav>
-        <div class="nav-container">
-          <a href="#" onclick="loadPage('index.html')" class="logo">智能展馆多媒体中控系统</a>
-          <button class="hamburger" onclick="toggleMenu()">☰</button>
-          <ul class="nav-links">
-            <li><a href="#" onclick="loadPage('index.html')">首页</a></li>
-            <li><a href="#" onclick="loadPage('about.html')">关于我们</a></li>
-            <li><a href="#" onclick="loadPage('products.html')">产品</a></li>
-            <li><a href="#" onclick="loadPage('cases.html')">项目案例</a></li>
-            <li><a href="#" onclick="loadPage('contact.html')">联系方式</a></li>
-          </ul>
-        </div>
-      </nav>
-    `
-  }
-  
-  // 加载共享组件（异步更新导航栏样式等）
+  // 立即加载共享组件
   loadSharedComponents()
   
-  // 立即执行其他功能，无需等待
+  // 立即执行其他功能
   validateContactForm()
   smoothScroll()
   
-  // 如果是首页，初始化单页应用
-  if (window.location.pathname.endsWith('index.html') || 
-      window.location.pathname === '/' || 
-      window.location.pathname.endsWith('/')) {
-    // 初始化页面内容
-    const pageContent = document.getElementById('page-content')
-    if (pageContent) {
-      // 保存首页原始内容
-      const originalContent = pageContent.innerHTML
-      
-      // 监听浏览器前进后退按钮
-      window.addEventListener('popstate', function() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html'
-        if (currentPage === 'index.html' || currentPage === '') {
-          // 如果是首页，显示原始内容
-          pageContent.innerHTML = originalContent
-        } else {
-          // 加载其他页面
-          loadPage(currentPage)
-        }
-      })
-    }
-  }
+  // 延迟设置导航栏激活状态，确保导航栏组件已加载
+  setTimeout(() => {
+    setActiveNavLink()
+  }, 100)
+  
+  // 再次延迟检查，确保激活状态正确应用
+  setTimeout(() => {
+    setActiveNavLink()
+  }, 500)
 })
 
 // 窗口大小改变时关闭移动端菜单
