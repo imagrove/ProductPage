@@ -6,7 +6,7 @@
     <title>产品中心 - 智能展馆多媒体中控系统</title>
     <!-- 加载Google Analytics -->
     <div id="google-analytics-placeholder"></div>
-    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/common.css" />
     <style>
       :root {
         --primary-color: #1a5276;
@@ -44,8 +44,6 @@
         display: flex;
         flex-direction: column;
       }
-
-
 
       header {
         background: linear-gradient(
@@ -209,7 +207,11 @@
       }
 
       .btn-primary {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         color: white;
       }
 
@@ -332,7 +334,7 @@
       }
 
       .footer-column h3::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
@@ -527,8 +529,6 @@
           transition: transform 0.3s ease;
         }
 
-
-
         h1 {
           font-size: 2rem;
         }
@@ -555,7 +555,7 @@
   </head>
   <body>
     <!-- 导航栏 -->
-  <div id="navbar-placeholder"></div>
+    <div id="navbar-placeholder"></div>
 
     <div class="container">
       <header>
@@ -566,21 +566,37 @@
       <div class="content">
         <!-- 产品分类 -->
         <div class="product-categories">
-          <button class="category-btn active" onclick="filterCategory('all')">全部产品</button>
-          <button class="category-btn" onclick="filterCategory('control')">控制系统</button>
-          <button class="category-btn" onclick="filterCategory('display')">显示设备</button>
-          <button class="category-btn" onclick="filterCategory('terminal')">播放终端</button>
-          <button class="category-btn" onclick="filterCategory('app')">移动应用</button>
+          <button class="category-btn active" onclick="filterCategory('all')">
+            全部产品
+          </button>
+          <button class="category-btn" onclick="filterCategory('control')">
+            控制系统
+          </button>
+          <button class="category-btn" onclick="filterCategory('display')">
+            显示设备
+          </button>
+          <button class="category-btn" onclick="filterCategory('terminal')">
+            播放终端
+          </button>
+          <button class="category-btn" onclick="filterCategory('app')">
+            移动应用
+          </button>
         </div>
 
         <!-- 产品展示 -->
         <div class="product-grid">
           <!-- 产品1 -->
           <div class="product-card" data-category="control">
-            <img src="https://via.placeholder.com/600x400?text=智能+展馆+中控+系统" alt="智能展馆中控系统" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=智能+展馆+中控+系统"
+              alt="智能展馆中控系统"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">智能展馆多媒体中控系统</h3>
-              <p class="product-description">基于ESP32技术的高性能、高可靠的展馆设备集中控制解决方案。</p>
+              <p class="product-description">
+                基于ESP32技术的高性能、高可靠的展馆设备集中控制解决方案。
+              </p>
               <ul class="product-features">
                 <li>精细设备控制</li>
                 <li>独立群组运行</li>
@@ -588,18 +604,31 @@
                 <li>高性能播放终端</li>
               </ul>
               <div class="product-actions">
-                <a href="product.html" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <a href="product.html" class="product-btn btn-primary"
+                  >查看详情</a
+                >
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 产品2 -->
           <div class="product-card" data-category="control">
-            <img src="https://via.placeholder.com/600x400?text=ESP32+控制面板" alt="ESP32控制面板" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=ESP32+控制面板"
+              alt="ESP32控制面板"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">ESP32智能控制面板</h3>
-              <p class="product-description">采用ESP32芯片的高性能触摸控制面板，支持多设备控制和场景切换。</p>
+              <p class="product-description">
+                采用ESP32芯片的高性能触摸控制面板，支持多设备控制和场景切换。
+              </p>
               <ul class="product-features">
                 <li>7英寸高清触摸屏</li>
                 <li>WiFi + BLE双重通信</li>
@@ -608,17 +637,28 @@
               </ul>
               <div class="product-actions">
                 <a href="#" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 产品3 -->
           <div class="product-card" data-category="display">
-            <img src="https://via.placeholder.com/600x400?text=智能+投影+系统" alt="智能投影系统" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=智能+投影+系统"
+              alt="智能投影系统"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">智能投影系统</h3>
-              <p class="product-description">支持几何校正和边缘融合的高性能投影系统，适用于各类展览展示场所。</p>
+              <p class="product-description">
+                支持几何校正和边缘融合的高性能投影系统，适用于各类展览展示场所。
+              </p>
               <ul class="product-features">
                 <li>4K超高清分辨率</li>
                 <li>自动几何校正</li>
@@ -627,17 +667,28 @@
               </ul>
               <div class="product-actions">
                 <a href="#" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 产品4 -->
           <div class="product-card" data-category="terminal">
-            <img src="https://via.placeholder.com/600x400?text=嵌入式+播放+终端" alt="嵌入式播放终端" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=嵌入式+播放+终端"
+              alt="嵌入式播放终端"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">嵌入式播放终端</h3>
-              <p class="product-description">基于Linux的高性能嵌入式播放器，内置GPU硬件加速和H5页面渲染功能。</p>
+              <p class="product-description">
+                基于Linux的高性能嵌入式播放器，内置GPU硬件加速和H5页面渲染功能。
+              </p>
               <ul class="product-features">
                 <li>支持4K视频解码</li>
                 <li>硬件加速渲染</li>
@@ -646,17 +697,28 @@
               </ul>
               <div class="product-actions">
                 <a href="#" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 产品5 -->
           <div class="product-card" data-category="app">
-            <img src="https://via.placeholder.com/600x400?text=平板+控制+应用" alt="平板控制应用" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=平板+控制+应用"
+              alt="平板控制应用"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">平板控制应用</h3>
-              <p class="product-description">专为展览管理人员设计的平板电脑控制应用，支持多展项集中管理。</p>
+              <p class="product-description">
+                专为展览管理人员设计的平板电脑控制应用，支持多展项集中管理。
+              </p>
               <ul class="product-features">
                 <li>直观的可视化界面</li>
                 <li>多级权限管理</li>
@@ -665,17 +727,28 @@
               </ul>
               <div class="product-actions">
                 <a href="#" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 产品6 -->
           <div class="product-card" data-category="control">
-            <img src="https://via.placeholder.com/600x400?text=智能+设备+控制+模块" alt="智能设备控制模块" class="product-image">
+            <img
+              src="https://via.placeholder.com/600x400?text=智能+设备+控制+模块"
+              alt="智能设备控制模块"
+              class="product-image"
+            />
             <div class="product-info">
               <h3 class="product-name">智能设备控制模块</h3>
-              <p class="product-description">用于控制各类展览设备的智能模块，支持多种通信协议。</p>
+              <p class="product-description">
+                用于控制各类展览设备的智能模块，支持多种通信协议。
+              </p>
               <ul class="product-features">
                 <li>继电器电源控制</li>
                 <li>RS232串口控制</li>
@@ -684,7 +757,12 @@
               </ul>
               <div class="product-actions">
                 <a href="#" class="product-btn btn-primary">查看详情</a>
-                <button class="product-btn btn-secondary" onclick="openConsultationForm()">咨询</button>
+                <button
+                  class="product-btn btn-secondary"
+                  onclick="openConsultationForm()"
+                >
+                  咨询
+                </button>
               </div>
             </div>
           </div>
@@ -696,15 +774,21 @@
           <div class="feature-list">
             <div class="feature-card">
               <h4>技术领先</h4>
-              <p>基于ESP32技术平台，采用最新的物联网通信技术，确保系统的稳定性和扩展性。</p>
+              <p>
+                基于ESP32技术平台，采用最新的物联网通信技术，确保系统的稳定性和扩展性。
+              </p>
             </div>
             <div class="feature-card">
               <h4>易于部署</h4>
-              <p>模块化设计，即插即用，无需复杂的网络布线，大幅降低施工难度和成本。</p>
+              <p>
+                模块化设计，即插即用，无需复杂的网络布线，大幅降低施工难度和成本。
+              </p>
             </div>
             <div class="feature-card">
               <h4>高效管理</h4>
-              <p>集中式管理平台，实时监控设备状态，快速响应异常情况，提高运营效率。</p>
+              <p>
+                集中式管理平台，实时监控设备状态，快速响应异常情况，提高运营效率。
+              </p>
             </div>
           </div>
         </section>
@@ -712,8 +796,12 @@
         <!-- 咨询部分 -->
         <section>
           <h2>联系我们</h2>
-          <p>如果您对我们的产品有任何疑问或需要定制解决方案，请随时联系我们的销售团队。</p>
-          <button class="consultation-btn" onclick="openConsultationForm()">立即咨询</button>
+          <p>
+            如果您对我们的产品有任何疑问或需要定制解决方案，请随时联系我们的销售团队。
+          </p>
+          <button class="consultation-btn" onclick="openConsultationForm()">
+            立即咨询
+          </button>
         </section>
       </div>
     </div>
@@ -726,22 +814,32 @@
       <div class="modal-content">
         <span class="close" onclick="closeConsultationForm()">&times;</span>
         <h3>咨询我们</h3>
-        <form id="consultation-form" action="https://formspree.io/f/xknljwjd" method="POST">
+        <form
+          id="consultation-form"
+          action="https://formspree.io/f/xknljwjd"
+          method="POST"
+        >
           <div class="form-group">
             <label for="name">姓名 *</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required />
           </div>
           <div class="form-group">
             <label for="country-code">国家/地区代码 *</label>
-            <input type="text" id="country-code" name="country-code" placeholder="例如：86（中国）" required>
+            <input
+              type="text"
+              id="country-code"
+              name="country-code"
+              placeholder="例如：86（中国）"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="phone-number">电话号码 *</label>
-            <input type="tel" id="phone-number" name="phone-number" required>
+            <input type="tel" id="phone-number" name="phone-number" required />
           </div>
           <div class="form-group">
             <label for="email">电子邮箱</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" />
           </div>
           <div class="form-group">
             <label for="message">咨询内容 *</label>
@@ -755,63 +853,79 @@
     <!-- 加载通用JavaScript -->
     <script src="assets/js/common.js"></script>
     <script>
-      // 产品分类筛选功能
-      document.addEventListener('DOMContentLoaded', function() {
-        // 等待组件加载完成
-        const initPage = function() {
+      // 页面加载完成后执行
+      window.addEventListener("DOMContentLoaded", function () {
+        console.log("页面DOM加载完成，开始加载共享组件")
+
+        // 加载共享组件
+        if (typeof loadSharedComponents === "function") {
+          console.log("调用loadSharedComponents函数...")
+          loadSharedComponents()
+        } else {
+          console.error("loadSharedComponents函数未定义！")
+        }
+
+        // 产品分类筛选功能
+        const initPage = function () {
           // 产品分类筛选
           function filterProducts(category) {
-            const productCards = document.querySelectorAll('.product-card');
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            
+            const productCards = document.querySelectorAll(".product-card")
+            const categoryButtons = document.querySelectorAll(".category-btn")
+
             // 更新按钮样式
-            categoryButtons.forEach(btn => {
-              btn.classList.remove('active');
-            });
-            
+            categoryButtons.forEach((btn) => {
+              btn.classList.remove("active")
+            })
+
             // 找到当前点击的按钮并激活
-            categoryButtons.forEach(btn => {
-              if (btn.getAttribute('onclick') === `filterCategory('${category}')`) {
-                btn.classList.add('active');
+            categoryButtons.forEach((btn) => {
+              if (
+                btn.getAttribute("onclick") === `filterCategory('${category}')`
+              ) {
+                btn.classList.add("active")
               }
-            });
-            
+            })
+
             // 筛选产品
-            productCards.forEach(card => {
-              if (category === 'all' || card.dataset.category === category) {
-                card.style.display = 'block';
+            productCards.forEach((card) => {
+              if (category === "all" || card.dataset.category === category) {
+                card.style.display = "block"
               } else {
-                card.style.display = 'none';
+                card.style.display = "none"
               }
-            });
+            })
           }
-          
+
           // 添加筛选按钮点击事件
-          const categoryButtons = document.querySelectorAll('.category-btn');
-          categoryButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-              const category = this.getAttribute('onclick').match(/filterCategory\('(.*?)'\)/)[1];
-              filterProducts(category);
-            });
-          });
-        };
-        
-        // 检查导航栏是否已加载
-        const checkNavbarLoaded = function() {
-          const navbar = document.querySelector('nav');
-          if (navbar && navbar.innerHTML.trim() !== '') {
-            // 确保移动端菜单初始化完成
-            if (typeof initMobileMenu === 'function') {
-              initMobileMenu();
-            }
-            initPage();
+          const categoryButtons = document.querySelectorAll(".category-btn")
+          categoryButtons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const category = this.getAttribute("onclick").match(
+                /filterCategory\('(.*?)'\)/
+              )[1]
+              filterProducts(category)
+            })
+          })
+        }
+
+        // 使用统一的导航栏初始化函数
+        // 确保在导航栏加载完成后初始化移动端菜单
+        setTimeout(() => {
+          if (typeof initNavbar === "function") {
+            initNavbar()
           } else {
-            setTimeout(checkNavbarLoaded, 100);
+            // 如果initNavbar函数不存在，直接调用initMobileMenu
+            if (typeof initMobileMenu === "function") {
+              setTimeout(initMobileMenu, 500)
+            }
           }
-        };
-        
-        checkNavbarLoaded();
-      });
+        }, 500)
+
+        // 延迟执行页面初始化，确保菜单事件绑定完成
+        setTimeout(() => {
+          initPage()
+        }, 100)
+      })
     </script>
   </body>
 </html>

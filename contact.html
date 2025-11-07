@@ -582,36 +582,59 @@
 
     <!-- 确保联系方式标签激活 -->
     <script>
-      // 页面加载完成后立即设置激活状态
-      document.addEventListener("DOMContentLoaded", function () {
-        // 直接设置联系方式标签为激活状态
-        const navLinks = document.querySelectorAll(".nav-links a")
-        navLinks.forEach((link) => {
-          link.classList.remove("active")
-          if (link.getAttribute("href") === "contact.html") {
-            link.classList.add("active")
-            console.log("✅ 联系方式标签已激活")
-          }
-        })
+      // 页面加载完成后执行
+      window.addEventListener("DOMContentLoaded", function () {
+        console.log("页面DOM加载完成，开始加载共享组件")
 
-        // 延迟再次检查，确保激活状态正确设置
-        setTimeout(() => {
-          const activeLink = document.querySelector(".nav-links a.active")
-          if (
-            activeLink &&
-            activeLink.getAttribute("href") === "contact.html"
-          ) {
-            console.log("✅ 确认联系方式标签激活状态正确")
-          } else {
-            console.log("❌ 联系方式标签激活状态异常，重新设置")
-            navLinks.forEach((link) => {
-              link.classList.remove("active")
-              if (link.getAttribute("href") === "contact.html") {
-                link.classList.add("active")
-              }
-            })
-          }
-        }, 100)
+        // 加载共享组件
+        if (typeof loadSharedComponents === "function") {
+          loadSharedComponents()
+        }
+
+        // 设置联系方式标签激活状态
+        const setContactActive = function () {
+          const navLinks = document.querySelectorAll(".nav-links a")
+          navLinks.forEach((link) => {
+            link.classList.remove("active")
+            if (link.getAttribute("href") === "contact.html") {
+              link.classList.add("active")
+              console.log("✅ 联系方式标签已激活")
+            }
+          })
+
+          // 延迟再次检查，确保激活状态正确设置
+          setTimeout(() => {
+            const activeLink = document.querySelector(".nav-links a.active")
+            if (
+              activeLink &&
+              activeLink.getAttribute("href") === "contact.html"
+            ) {
+              console.log("✅ 确认联系方式标签激活状态正确")
+            } else {
+              console.log("❌ 联系方式标签激活状态异常，重新设置")
+              navLinks.forEach((link) => {
+                link.classList.remove("active")
+                if (link.getAttribute("href") === "contact.html") {
+                  link.classList.add("active")
+                }
+              })
+            }
+          }, 100)
+        }
+
+        // 确保loadSharedComponents函数存在并调用
+        if (typeof loadSharedComponents === "function") {
+          console.log("Calling loadSharedComponents for contact page")
+          loadSharedComponents()
+        } else {
+          console.error("loadSharedComponents function not available!")
+        }
+
+        // 使用统一的导航栏初始化函数
+        initNavbar()
+
+        // 设置联系方式标签激活状态
+        setContactActive()
       })
     </script>
   </body>

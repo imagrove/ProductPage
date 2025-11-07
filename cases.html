@@ -6,7 +6,7 @@
     <title>项目案例 - 智能展馆多媒体中控系统</title>
     <!-- 加载Google Analytics -->
     <div id="google-analytics-placeholder"></div>
-    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/common.css" />
     <style>
       :root {
         --primary-color: #1a5276;
@@ -44,8 +44,6 @@
         display: flex;
         flex-direction: column;
       }
-
-
 
       header {
         background: linear-gradient(
@@ -194,7 +192,11 @@
       .case-btn {
         display: inline-block;
         padding: 10px 20px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         color: white;
         border-radius: 5px;
         text-decoration: none;
@@ -301,7 +303,7 @@
       }
 
       .footer-column h3::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
@@ -496,8 +498,6 @@
           transition: transform 0.3s ease;
         }
 
-
-
         h1 {
           font-size: 2rem;
         }
@@ -528,7 +528,7 @@
   </head>
   <body>
     <!-- 导航栏 -->
-  <div id="navbar-placeholder"></div>
+    <div id="navbar-placeholder"></div>
 
     <div class="container">
       <header>
@@ -539,11 +539,21 @@
       <div class="content">
         <!-- 案例分类 -->
         <div class="case-categories">
-          <button class="category-btn active" onclick="filterCategory('all')">全部案例</button>
-          <button class="category-btn" onclick="filterCategory('museum')">博物馆</button>
-          <button class="category-btn" onclick="filterCategory('enterprise')">企业展厅</button>
-          <button class="category-btn" onclick="filterCategory('science')">科技馆</button>
-          <button class="category-btn" onclick="filterCategory('culture')">文化馆</button>
+          <button class="category-btn active" onclick="filterCategory('all')">
+            全部案例
+          </button>
+          <button class="category-btn" onclick="filterCategory('museum')">
+            博物馆
+          </button>
+          <button class="category-btn" onclick="filterCategory('enterprise')">
+            企业展厅
+          </button>
+          <button class="category-btn" onclick="filterCategory('science')">
+            科技馆
+          </button>
+          <button class="category-btn" onclick="filterCategory('culture')">
+            文化馆
+          </button>
         </div>
 
         <!-- 案例展示 -->
@@ -551,7 +561,11 @@
           <!-- 案例1 -->
           <div class="case-card" data-category="museum">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=国家+博物馆+数字化+改造" alt="国家博物馆数字化改造项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=国家+博物馆+数字化+改造"
+                alt="国家博物馆数字化改造项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">国家博物馆数字化改造项目</h3>
@@ -559,7 +573,9 @@
                 <span>博物馆</span>
                 <span>2022年</span>
               </div>
-              <p class="case-description">为国家博物馆提供智能展馆多媒体中控系统，实现了20个展厅的设备集中控制和智能化管理。</p>
+              <p class="case-description">
+                为国家博物馆提供智能展馆多媒体中控系统，实现了20个展厅的设备集中控制和智能化管理。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -567,7 +583,11 @@
           <!-- 案例2 -->
           <div class="case-card" data-category="enterprise">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=科技+企业+展厅" alt="科技企业展厅项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=科技+企业+展厅"
+                alt="科技企业展厅项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">科技企业展厅项目</h3>
@@ -575,7 +595,9 @@
                 <span>企业展厅</span>
                 <span>2023年</span>
               </div>
-              <p class="case-description">为某知名科技企业打造现代化展厅，集成了多媒体展示、互动体验和智能控制系统。</p>
+              <p class="case-description">
+                为某知名科技企业打造现代化展厅，集成了多媒体展示、互动体验和智能控制系统。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -583,7 +605,11 @@
           <!-- 案例3 -->
           <div class="case-card" data-category="science">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=科技馆+互动+展区" alt="科技馆互动展区项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=科技馆+互动+展区"
+                alt="科技馆互动展区项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">科技馆互动展区项目</h3>
@@ -591,7 +617,9 @@
                 <span>科技馆</span>
                 <span>2023年</span>
               </div>
-              <p class="case-description">为科技馆打造沉浸式互动展区，通过智能中控系统实现多设备联动和场景切换。</p>
+              <p class="case-description">
+                为科技馆打造沉浸式互动展区，通过智能中控系统实现多设备联动和场景切换。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -599,7 +627,11 @@
           <!-- 案例4 -->
           <div class="case-card" data-category="culture">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=文化+艺术中心" alt="文化艺术中心项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=文化+艺术中心"
+                alt="文化艺术中心项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">文化艺术中心项目</h3>
@@ -607,7 +639,9 @@
                 <span>文化馆</span>
                 <span>2022年</span>
               </div>
-              <p class="case-description">为文化艺术中心提供多媒体展示解决方案，支持各类文化活动和艺术展览的灵活举办。</p>
+              <p class="case-description">
+                为文化艺术中心提供多媒体展示解决方案，支持各类文化活动和艺术展览的灵活举办。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -615,7 +649,11 @@
           <!-- 案例5 -->
           <div class="case-card" data-category="enterprise">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=汽车+品牌+体验+中心" alt="汽车品牌体验中心项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=汽车+品牌+体验+中心"
+                alt="汽车品牌体验中心项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">汽车品牌体验中心项目</h3>
@@ -623,7 +661,9 @@
                 <span>企业展厅</span>
                 <span>2023年</span>
               </div>
-              <p class="case-description">为知名汽车品牌打造数字化体验中心，集成了多媒体展示、互动体验和智能导览系统。</p>
+              <p class="case-description">
+                为知名汽车品牌打造数字化体验中心，集成了多媒体展示、互动体验和智能导览系统。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -631,7 +671,11 @@
           <!-- 案例6 -->
           <div class="case-card" data-category="museum">
             <div class="case-image-container">
-              <img src="https://via.placeholder.com/600x400?text=历史+博物馆" alt="历史博物馆项目" class="case-image">
+              <img
+                src="https://via.placeholder.com/600x400?text=历史+博物馆"
+                alt="历史博物馆项目"
+                class="case-image"
+              />
             </div>
             <div class="case-info">
               <h3 class="case-name">历史博物馆项目</h3>
@@ -639,7 +683,9 @@
                 <span>博物馆</span>
                 <span>2021年</span>
               </div>
-              <p class="case-description">为历史博物馆提供智能化改造，实现文物展示的数字化和互动化，提升观众体验。</p>
+              <p class="case-description">
+                为历史博物馆提供智能化改造，实现文物展示的数字化和互动化，提升观众体验。
+              </p>
               <a href="#" class="case-btn">查看详情</a>
             </div>
           </div>
@@ -651,7 +697,9 @@
           <div class="testimonials">
             <div class="testimonial-card">
               <div class="testimonial-content">
-                <p>"智能展馆多媒体中控系统极大地提升了我们博物馆的运营效率，系统稳定可靠，操作简便，观众体验也得到了显著提升。"</p>
+                <p>
+                  "智能展馆多媒体中控系统极大地提升了我们博物馆的运营效率，系统稳定可靠，操作简便，观众体验也得到了显著提升。"
+                </p>
                 <div class="testimonial-author">
                   <strong>张馆长</strong> - 国家博物馆
                 </div>
@@ -659,7 +707,9 @@
             </div>
             <div class="testimonial-card">
               <div class="testimonial-content">
-                <p>"感谢团队为我们打造的现代化展厅解决方案，系统的灵活性和可扩展性让我们能够快速响应不同的展示需求。"</p>
+                <p>
+                  "感谢团队为我们打造的现代化展厅解决方案，系统的灵活性和可扩展性让我们能够快速响应不同的展示需求。"
+                </p>
                 <div class="testimonial-author">
                   <strong>李经理</strong> - 科技企业
                 </div>
@@ -671,13 +721,16 @@
         <!-- 咨询部分 -->
         <section>
           <h2>联系我们</h2>
-          <p>如果您对我们的项目案例有任何疑问，或者需要定制解决方案，请随时联系我们的团队。</p>
-          <button class="consultation-btn" onclick="openConsultationForm()">立即咨询</button>
+          <p>
+            如果您对我们的项目案例有任何疑问，或者需要定制解决方案，请随时联系我们的团队。
+          </p>
+          <button class="consultation-btn" onclick="openConsultationForm()">
+            立即咨询
+          </button>
         </section>
       </div>
     </div>
 
-    <!-- 页脚 -->
     <!-- 页脚 -->
     <div id="footer-placeholder"></div>
 
@@ -686,33 +739,43 @@
       <div class="modal-content">
         <span class="close" onclick="closeConsultationForm()">&times;</span>
         <h3>咨询我们</h3>
-        <form id="consultation-form" action="https://formspree.io/f/xknljwjd" method="POST">
-           <!-- 1. 隐藏字段：防止垃圾邮件（可选但推荐） -->
-            <input type="hidden" name="_subject" value="新的产品咨询！" />
-            <!-- TODO:还没有配置好提交后跳转页面 -->
-            <!-- <input
+        <form
+          id="consultation-form"
+          action="https://formspree.io/f/xknljwjd"
+          method="POST"
+        >
+          <!-- 1. 隐藏字段：防止垃圾邮件（可选但推荐） -->
+          <input type="hidden" name="_subject" value="新的产品咨询！" />
+          <!-- TODO:还没有配置好提交后跳转页面 -->
+          <!-- <input
               type="hidden"
               name="_next"
               value="https://www.imagrove.com/thanks.html"
             /> -->
-            <!-- 提交后跳转页面 -->
-            <input type="hidden" name="_captcha" value="true" />
-            <!-- 开启默认验证码 -->
+          <!-- 提交后跳转页面 -->
+          <input type="hidden" name="_captcha" value="true" />
+          <!-- 开启默认验证码 -->
           <div class="form-group">
             <label for="name">姓名 *</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required />
           </div>
           <div class="form-group">
             <label for="country-code">国家/地区代码 *</label>
-            <input type="text" id="country-code" name="country-code" placeholder="例如：86（中国）" required>
+            <input
+              type="text"
+              id="country-code"
+              name="country-code"
+              placeholder="例如：86（中国）"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="phone-number">电话号码 *</label>
-            <input type="tel" id="phone-number" name="phone-number" required>
+            <input type="tel" id="phone-number" name="phone-number" required />
           </div>
           <div class="form-group">
             <label for="email">电子邮箱</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" />
           </div>
           <div class="form-group">
             <label for="message">咨询内容 *</label>
@@ -720,10 +783,10 @@
           </div>
           <button type="submit" class="submit-btn">提交</button>
           <!-- 2. 在表单结束标签后添加 reCAPTCHA 脚本 配合开启默认验证码 -->
-            <script
-              src="https://js.formspree.io/v2/formbutton-v3.js"
-              defer
-            ></script>
+          <script
+            src="https://js.formspree.io/v2/formbutton-v3.js"
+            defer
+          ></script>
         </form>
       </div>
     </div>
@@ -731,63 +794,79 @@
     <!-- 加载通用JavaScript -->
     <script src="assets/js/common.js"></script>
     <script>
-      // 项目案例分类筛选功能
-      document.addEventListener('DOMContentLoaded', function() {
-        // 等待组件加载完成
-        const initPage = function() {
+      // 页面加载完成后执行
+      window.addEventListener("DOMContentLoaded", function () {
+        console.log("页面DOM加载完成，开始加载共享组件")
+
+        // 加载共享组件
+        if (typeof loadSharedComponents === "function") {
+          console.log("调用loadSharedComponents函数...")
+          loadSharedComponents()
+        } else {
+          console.error("loadSharedComponents函数未定义！")
+        }
+
+        // 项目案例分类筛选功能
+        const initPage = function () {
           // 项目分类筛选
           function filterCases(category) {
-            const caseCards = document.querySelectorAll('.case-card');
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            
+            const caseCards = document.querySelectorAll(".case-card")
+            const categoryButtons = document.querySelectorAll(".category-btn")
+
             // 更新按钮样式
-            categoryButtons.forEach(btn => {
-              btn.classList.remove('active');
-            });
-            
+            categoryButtons.forEach((btn) => {
+              btn.classList.remove("active")
+            })
+
             // 找到当前点击的按钮并激活
-            categoryButtons.forEach(btn => {
-              if (btn.getAttribute('onclick') === `filterCategory('${category}')`) {
-                btn.classList.add('active');
+            categoryButtons.forEach((btn) => {
+              if (
+                btn.getAttribute("onclick") === `filterCategory('${category}')`
+              ) {
+                btn.classList.add("active")
               }
-            });
-            
+            })
+
             // 筛选案例
-            caseCards.forEach(card => {
-              if (category === 'all' || card.dataset.category === category) {
-                card.style.display = 'block';
+            caseCards.forEach((card) => {
+              if (category === "all" || card.dataset.category === category) {
+                card.style.display = "block"
               } else {
-                card.style.display = 'none';
+                card.style.display = "none"
               }
-            });
+            })
           }
-          
+
           // 添加筛选按钮点击事件
-          const categoryButtons = document.querySelectorAll('.category-btn');
-          categoryButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-              const category = this.getAttribute('onclick').match(/filterCategory\('(.*?)'\)/)[1];
-              filterCases(category);
-            });
-          });
-        };
-        
-        // 检查导航栏是否已加载
-        const checkNavbarLoaded = function() {
-          const navbar = document.querySelector('nav');
-          if (navbar && navbar.innerHTML.trim() !== '') {
-            // 确保移动端菜单初始化完成
-            if (typeof initMobileMenu === 'function') {
-              initMobileMenu();
-            }
-            initPage();
+          const categoryButtons = document.querySelectorAll(".category-btn")
+          categoryButtons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const category = this.getAttribute("onclick").match(
+                /filterCategory\('(.*?)'\)/
+              )[1]
+              filterCases(category)
+            })
+          })
+        }
+
+        // 使用统一的导航栏初始化函数
+        // 确保在导航栏加载完成后初始化移动端菜单
+        setTimeout(() => {
+          if (typeof initNavbar === "function") {
+            initNavbar()
           } else {
-            setTimeout(checkNavbarLoaded, 100);
+            // 如果initNavbar函数不存在，直接调用initMobileMenu
+            if (typeof initMobileMenu === "function") {
+              setTimeout(initMobileMenu, 500)
+            }
           }
-        };
-        
-        checkNavbarLoaded();
-      });
+        }, 500)
+
+        // 延迟执行页面初始化，确保菜单事件绑定完成
+        setTimeout(() => {
+          initPage()
+        }, 100)
+      })
     </script>
   </body>
 </html>
