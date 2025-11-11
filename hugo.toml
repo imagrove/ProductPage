@@ -1,0 +1,24 @@
+# 基础配置
+baseURL = "https://www.imagrove.com/"  # 你的 Vercel 自定义域名（必须正确，否则资源路径出错）
+languageCode = "zh-CN"
+title = "Imagrove 智能硬件"  # 网站标题（可修改）
+theme = "PaperMod"  # 启用刚才添加的主题
+
+# 静态资源配置（让 Hugo 识别原有 CSS/JS/图片）
+[module]
+  [[module.mounts]]
+    source = "static"  # Hugo 默认静态资源目录
+    target = "static"
+  [[module.mounts]]
+    source = "assets/css"  # 原有 css 文件夹 → 映射为 Hugo 静态资源
+    target = "static/css"
+  [[module.mounts]]
+    source = "assets/images"  # 原有 images 文件夹 → 映射为 Hugo 静态资源
+    target = "static/images"
+  [[module.mounts]]
+    source = "assets/js"  # 原有 js 文件夹 → 映射为 Hugo 静态资源
+    target = "static/js"
+
+# 自定义参数（后续模板中可调用）
+[params]
+  description = "智能硬件跨境电商平台"  # 网站描述
