@@ -94,12 +94,30 @@ function initMobileMenu() {
 }
 
 // 移动端菜单链接点击处理函数
-function handleMobileLinkClick() {
+function handleMobileLinkClick(e) {
   const navLinks = document.querySelector('.nav-links')
+  const hamburger = document.querySelector('.hamburger')
+  const navOverlay = document.querySelector('.nav-overlay')
+  
   // 在移动端，点击链接后关闭菜单
   if (window.innerWidth <= 768 && navLinks) {
+    // 添加平滑过渡效果
+    navLinks.style.transition = 'all 0.3s ease'
+    
+    // 移除所有激活状态
     navLinks.classList.remove('active')
+    hamburger.classList.remove('active')
+    navOverlay.classList.remove('active')
+    
+    // 移除外部点击监听器
     document.removeEventListener('click', closeMenuOnOutsideClick)
+    
+    // 添加视觉反馈效果
+    e.target.style.transform = 'scale(0.95)'
+    setTimeout(() => {
+      e.target.style.transform = ''
+    }, 150)
+    
     console.log('移动端菜单链接点击，关闭菜单')
   }
 }
@@ -136,9 +154,7 @@ function toggleMenu(event) {
       // 直接通过JavaScript设置z-index，确保样式正确应用
       navLinks.style.zIndex = '998'
       // 强制设置top值，确保菜单显示在导航栏下方
-      navLinks.style.setProperty('top', '80px', 'important')
-      // 使用transform作为备用方案，确保菜单显示在正确位置
-      navLinks.style.setProperty('transform', 'translateY(0)', 'important')
+      navLinks.style.top = '80px'
       console.log('菜单已展开，添加外部点击监听器')
       // 添加点击事件监听器，点击菜单外部关闭菜单
       document.addEventListener('click', closeMenuOnOutsideClick)
@@ -168,6 +184,10 @@ function toggleMenu(event) {
       }, 100)
     } else {
       navLinks.style.zIndex = ''
+      // 移除汉堡按钮的active类
+      hamburger.classList.remove('active')
+      // 隐藏背景遮罩
+      navOverlay.classList.remove('active')
       console.log('菜单已收起，移除外部点击监听器')
       // 移除点击事件监听器
       document.removeEventListener('click', closeMenuOnOutsideClick)
@@ -181,12 +201,15 @@ function toggleMenu(event) {
 function closeMenuOnOutsideClick(event) {
   const navLinks = document.querySelector('.nav-links')
   const hamburger = document.querySelector('.hamburger')
+  const navOverlay = document.querySelector('.nav-overlay')
   
   // 如果点击的不是菜单链接或汉堡按钮，则关闭菜单
-  if (navLinks && hamburger && 
+  if (navLinks && hamburger && navOverlay &&
       !navLinks.contains(event.target) && 
       !hamburger.contains(event.target)) {
     navLinks.classList.remove('active')
+    hamburger.classList.remove('active')
+    navOverlay.classList.remove('active')
     document.removeEventListener('click', closeMenuOnOutsideClick)
   }
 }
@@ -273,7 +296,7 @@ function smoothScroll() {
         window.scrollTo({
           top: target.offsetTop - 80,
           behavior: 'smooth'
-          })
+        })
       }
     })
   })
@@ -351,17 +374,4 @@ function initNavbar() {
       setTimeout(() => clearInterval(checkInterval), 5000);
     }
   }, 300);
-}
-
-// 修复移动端菜单点击不显示的问题
-function fixMobileMenu() {
-  console.log('尝试修复移动端菜单...');
-  
-  // 确保在DOM完全加载后执行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileMenu);
-  } else {
-    // DOM已经加载完成，直接执行
-    initMobileMenu();
-  }
 }

@@ -528,7 +528,7 @@
   </head>
   <body>
     <!-- 导航栏 -->
-    <div id="navbar-placeholder"></div>
+  <div id="navbar-placeholder"></div>
 
     <div class="container">
       <header>
@@ -678,6 +678,7 @@
     </div>
 
     <!-- 页脚 -->
+    <!-- 页脚 -->
     <div id="footer-placeholder"></div>
 
     <!-- 咨询模态框 -->
@@ -782,17 +783,7 @@
         };
         
         // 使用统一的导航栏初始化函数
-        // 确保在导航栏加载完成后初始化移动端菜单
-        setTimeout(() => {
-          if (typeof initNavbar === 'function') {
-            initNavbar();
-          } else {
-            // 如果initNavbar函数不存在，直接调用initMobileMenu
-            if (typeof initMobileMenu === 'function') {
-              setTimeout(initMobileMenu, 500);
-            }
-          }
-        }, 500);
+        initNavbar();
         
         // 延迟执行页面初始化，确保菜单事件绑定完成
         setTimeout(() => {
