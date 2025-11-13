@@ -9,6 +9,7 @@ ehthumbs.db
 Desktop.ini
 
 # IDEs and editors
+.next/
 .vscode/
 .idea/
 *.swp
