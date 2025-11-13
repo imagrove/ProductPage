@@ -26,3 +26,6 @@ Desktop.ini
 # Build directories
 build/
 dist/
+
+# Dependencies
+node_modules/
