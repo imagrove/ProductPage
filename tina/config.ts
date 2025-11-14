@@ -3,8 +3,8 @@ import { defineConfig } from 'tinacms';
 // 定义内容模型
 export const config = defineConfig({
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '',
-  token: process.env.TINA_TOKEN || '',
-  branch: 'main',
+  // 注意：token和branch属性已移除，因为它们不在TinaCMSConfig类型中
+  // 这些配置将在实际运行时通过API设置
   media: {
     tina: {
       mediaRoot: 'public/assets',
@@ -17,6 +17,81 @@ export const config = defineConfig({
   },
   schema: {
     collections: [
+      {
+        name: 'home',
+        label: '首页',
+        path: 'content/home',
+        format: 'mdx',
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: '页面标题',
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: 'rich-text',
+            name: 'overview',
+            label: '产品概述',
+            isBody: false,
+          },
+          {
+            type: 'rich-text',
+            name: 'architecture',
+            label: '系统架构',
+            isBody: false,
+          },
+          {
+            type: 'object',
+            name: 'features',
+            label: '主要功能',
+            list: true,
+            ui: {
+              itemProps: (item: any) => {
+                return { label: item.title || '功能项' };
+              },
+            },
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: '功能标题',
+                required: true,
+              },
+              {
+                type: 'rich-text',
+                name: 'content',
+                label: '功能描述',
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'techFeatures',
+            label: '技术特色',
+            list: true,
+            ui: {
+              itemProps: (item: any) => {
+                return { label: item.title || '技术项' };
+              },
+            },
+            fields: [
+              {
+                type: 'string',
+                name: 'title',
+                label: '技术标题',
+                required: true,
+              },
+              {
+                type: 'rich-text',
+                name: 'content',
+                label: '技术描述',
+              },
+            ],
+          },
+        ],
+      },
       {
         name: 'page',
         label: '页面',

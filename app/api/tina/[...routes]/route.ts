@@ -1,16 +1,45 @@
-// 简化的TinaCMS API路由处理
-// 在开发环境中，我们可以使用一个基本的路由处理器
+import { NextRequest, NextResponse } from 'next/server';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function GET(request: Request) {
-  return new Response(JSON.stringify({ message: "TinaCMS API endpoint" }), {
-    headers: { "Content-Type": "application/json" },
+// 为TinaCMS API实现正确的路由处理
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  
+  // 检查是否是预览请求
+  if (url.pathname.includes('/preview')) {
+    try {
+      // 从查询参数中获取编辑模式标志
+      const editMode = url.searchParams.get('edit');
+      
+      // 重定向到首页并带上编辑参数
+      const redirectUrl = editMode 
+        ? '/?edit=true'
+        : '/';
+      
+      return NextResponse.redirect(new URL(redirectUrl, request.url));
+    } catch (error) {
+      console.error('预览路由处理错误:', error);
+      return NextResponse.json(
+        { error: '预览功能暂时不可用' },
+        { status: 500 }
+      );
+    }
+  }
+  
+  // 其他API请求的处理
+  return NextResponse.json({
+    message: 'TinaCMS API endpoint',
+    path: url.pathname,
+    method: 'GET'
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function POST(request: Request) {
-  return new Response(JSON.stringify({ message: "TinaCMS API endpoint" }), {
-    headers: { "Content-Type": "application/json" },
+export async function POST(request: NextRequest) {
+  const url = new URL(request.url);
+  
+  // 处理其他POST请求
+  return NextResponse.json({
+    message: 'TinaCMS API endpoint',
+    path: url.pathname,
+    method: 'POST'
   });
 }

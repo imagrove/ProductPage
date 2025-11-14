@@ -36,8 +36,8 @@ export default function RootLayout({
           <main className="min-h-screen">
             {children}
           </main>
+          <Footer />
         </Suspense>
-        <Footer />
         
         {/* Snipcart integration - 暂时注释掉，等待有效的API密钥
         <div id="snipcart" data-api-key="YOUR_SNIPCART_TEST_KEY" style={{ display: 'none' }}></div>
