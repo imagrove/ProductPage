@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_TINA_CLIENT_ID": "@tina-client-id",
+    "TINA_TOKEN": "@tina-token",
+    "NEXT_PUBLIC_SNIPCART_API_KEY": "@snipcart-api-key",
+    "NEXT_PUBLIC_FORMSPREE_ENDPOINT": "@formspree-endpoint",
+    "NEXT_PUBLIC_GA_TRACKING_ID": "@ga-tracking-id",
+    "ALIPAY_APP_ID": "@alipay-app-id",
+    "ALIPAY_PRIVATE_KEY": "@alipay-private-key",
+    "ALIPAY_PUBLIC_KEY": "@alipay-public-key"
+  }
+}

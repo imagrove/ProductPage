@@ -1,8 +1,0 @@
-#忽略 0-docs/ 文件夹
-0-docs/
-
-#忽略 .gitignore 文件
-.gitignore
-
-*.md
-*.md~
