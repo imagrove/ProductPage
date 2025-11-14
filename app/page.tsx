@@ -11,804 +11,71 @@ declare global {
   }
 }
 
-// 增强的TinaCMS初始化逻辑
-const initializeTinaCMS = async () => {
-  if (typeof window !== 'undefined') {
-    try {
-      // 确保只初始化一次
-      if (window.tinacms) {
-        console.log('TinaCMS已经初始化，直接返回现有实例');
-        return window.tinacms;
-      }
-
-      // 加载TinaCMS模块
-      const { TinaCMS } = await import('tinacms');
-      
-      // 创建完整配置的TinaCMS实例
-      const cms = new TinaCMS({
-        clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '00000000-0000-0000-0000-000000000000',
-        enabled: true, // 直接启用编辑模式
-      });
-      
-      // 单独设置tokenStorage（如果支持）
+// 简单的TinaCMS初始化逻辑
+const initializeTinaCMS = () => {
+  if (typeof window !== 'undefined' && !window.tinacms) {
+    // 正确初始化TinaCMS，使用符合TypeScript类型的配置
+    import('tinacms').then(({ TinaCMS }) => {
       try {
-        if (cms && typeof (cms as any).tokenStorage === 'object') {
-          (cms as any).tokenStorage = {
-            getToken: () => {
-              if (typeof window !== 'undefined') {
-                return localStorage.getItem('tinacms_token');
-              }
-              return null;
-            },
-            setToken: (token: string) => {
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('tinacms_token', token);
-              }
-            },
-            removeToken: () => {
-              if (typeof window !== 'undefined') {
-                localStorage.removeItem('tinacms_token');
-              }
-            }
-          };
-        }
-      } catch (e) {
-        console.log('无法设置tokenStorage，继续执行');
-      }
-
-      // 设置token（如果有）
-      try {
-        const savedToken = typeof window !== 'undefined' ? localStorage.getItem('tinacms_token') : null;
-        const token = process.env.TINA_TOKEN || savedToken;
-        if (token && (cms as any).api && typeof (cms as any).api.setToken === 'function') {
-          (cms as any).api.setToken(token);
-        }
-      } catch (e) {
-        console.log('未设置token，继续执行');
-      }
-
-      // 立即为页面添加编辑样式
-      if (typeof document !== 'undefined') {
-        const style = document.createElement('style');
-        style.textContent = `
-          /* TinaCMS编辑模式样式 */
-          .tina-edit-mode {
-            --tina-edit-border: 2px solid #3b82f6;
-            --tina-edit-bg: rgba(59, 130, 246, 0.05);
-          }
-          
-          .tina-field {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.2s ease;
-          }
-          
-          .tina-field:hover {
-            outline: var(--tina-edit-border);
-            background-color: var(--tina-edit-bg);
-          }
-          
-          /* 可编辑内容区域样式 */
-          .tina-editable-content {
-            min-height: 30px;
-            cursor: text;
-            user-select: text;
-          }
-          
-          /* 编辑模式下确保所有元素都可点击 */
-          .tina-edit-mode * {
-            pointer-events: auto !important;
-          }
-          
-          /* 编辑模式提示 */
-          .tina-edit-indicator {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #3b82f6;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
-          }
-          
-          /* 编辑按钮样式 */
-          .tina-edit-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            z-index: 9998;
-            transition: all 0.2s ease;
-          }
-          
-          .tina-edit-button:hover {
-            background-color: #2563eb;
-            transform: translateY(-1px);
-          }
-        `;
-        document.head.appendChild(style);
-      }
-
-      // 将cms实例挂载到window对象
-      window.tinacms = cms;
-      
-      // 设置增强的enable方法 - 直接与TinaCMS编辑系统集成
-      const cmsRef = window.tinacms as any;
-      
-      // 增强的刷新方法，专门用于修复内容不可编辑问题
-      cmsRef.refreshEditing = function() {
-        console.log('🔄 执行增强版内容刷新，确保所有区域可编辑...');
+        // 创建基本的TinaCMS实例，只使用clientId
+        const cms = new TinaCMS({
+          clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '',
+        });
         
-        if (typeof document !== 'undefined') {
-          // 1. 完全清除旧的编辑标记和样式
-          const allElements = document.querySelectorAll('[data-tina-field], .tina-field, .tina-editable-content');
-          console.log(`🧹 清除 ${allElements.length} 个现有可编辑元素的状态...`);
-          
-          allElements.forEach(el => {
-            const element = el as HTMLElement;
-            // 移除所有可能干扰的样式和属性
-            element.removeAttribute('data-tina-path');
-            (element as any).style.pointerEvents = '';
-            (element as any).style.userSelect = '';
-            (element as any).style.cursor = '';
-            (element as any).style.outline = '';
-            element.removeAttribute('data-tina-edit-mode');
-            
-            // 移除所有事件监听器（通过克隆并替换元素）
-            if (element.parentNode && !(element instanceof HTMLSelectElement || element instanceof HTMLInputElement || element instanceof HTMLButtonElement || element instanceof HTMLAnchorElement)) {
-              const clone = element.cloneNode(true);
-              element.parentNode.replaceChild(clone, element);
-            }
-          });
-          
-          // 2. 重新绑定所有可编辑元素
-          setTimeout(() => {
-            const editableFields = document.querySelectorAll('[data-tina-field]');
-            console.log(`🔗 重新绑定 ${editableFields.length} 个可编辑字段`);
-            
-            let boundCount = 0;
-            let failedCount = 0;
-            
-            editableFields.forEach((el, index) => {
-              try {
-                const element = el as HTMLElement;
-                const fieldName = element.getAttribute('data-tina-field');
-                if (!fieldName) {
-                  failedCount++;
-                  return;
-                }
-                
-                // 关键修复：使用标准TinaCMS路径格式
-                const standardPath = `getHomeDocument.data.${fieldName}`;
-                element.setAttribute('data-tina-path', standardPath);
-                element.setAttribute('data-tina-edit-mode', 'true');
-                
-                // 强制设置为可编辑
-                (element as any).contentEditable = 'true';
-                (element as any).spellcheck = false;
-                (element as any).style.cursor = 'text';
-                (element as any).style.userSelect = 'text';
-                (element as any).style.pointerEvents = 'auto';
-                (element as any).style.outline = '2px dashed transparent';
-                (element as any).style.transition = 'outline 0.2s ease, background-color 0.2s ease';
-                
-                // 添加编辑样式类
-                element.classList.add('tina-field', 'tina-editable-content');
-                
-                // 直接覆盖默认行为，确保可以编辑
-                element.addEventListener('click', (e) => {
-                  e.stopPropagation();
-                  // 只阻止默认行为，如果元素不是链接或按钮
-                  if (!(element instanceof HTMLAnchorElement || element instanceof HTMLButtonElement)) {
-                    e.preventDefault();
-                  }
-                  console.log(`✅ 直接点击编辑: ${fieldName}`);
-                  
-                  // 强制聚焦，确保可以编辑
-                  setTimeout(() => {
-                    element.focus();
-                    
-                    // 设置光标位置
-                    const selection = window.getSelection();
-                    if (selection && element.childNodes.length > 0) {
-                      const range = document.createRange();
-                      range.selectNodeContents(element);
-                      range.collapse(false);
-                      selection.removeAllRanges();
-                      selection.addRange(range);
-                    }
-                  }, 50);
-                }, { capture: true, once: false });
-                
-                // 添加悬停效果，让用户知道元素可以编辑
-                element.addEventListener('mouseenter', () => {
-                  (element as any).style.outline = '2px dashed #3b82f6';
-                  (element as any).style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
-                });
-                
-                element.addEventListener('mouseleave', () => {
-                  (element as any).style.outline = '2px dashed transparent';
-                  (element as any).style.backgroundColor = '';
-                });
-                
-                boundCount++;
-                console.log(`✅ 刷新完成: ${fieldName} (路径: ${standardPath})`);
-              } catch (err: any) {
-                failedCount++;
-                console.error(`❌ 绑定字段时出错: ${err.message || err}`);
-              }
+        // 尝试配置媒体存储（如果API支持）
+        if (typeof cms.registerMediaStore === 'function') {
+          try {
+            // 尝试注册媒体存储
+            cms.registerMediaStore({
+              name: 'tina',
+              mediaRoot: 'public/assets',
+              publicFolder: 'public',
             });
-            
-            console.log(`📊 总计绑定了 ${boundCount} 个可编辑元素，失败 ${failedCount} 个`);
-            
-            // 3. 创建直接编辑提示
-            const createDirectEditHint = () => {
-              const existingHint = document.querySelector('.tina-direct-edit-hint');
-              if (existingHint) existingHint.remove();
-              
-              const hint = document.createElement('div');
-              hint.className = 'tina-direct-edit-hint';
-              hint.style.position = 'fixed';
-              hint.style.bottom = '80px';
-              hint.style.right = '20px';
-              hint.style.background = '#10b981';
-              hint.style.color = 'white';
-              hint.style.padding = '10px 16px';
-              hint.style.borderRadius = '6px';
-              hint.style.zIndex = '9999';
-              hint.style.fontSize = '14px';
-              hint.style.fontWeight = '500';
-              hint.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-              hint.textContent = '📝 内容已准备就绪，直接点击任意文本即可编辑';
-              
-              document.body.appendChild(hint);
-              
-              // 10秒后移除
-              setTimeout(() => {
-                if (hint.parentNode) hint.remove();
-              }, 10000);
-            };
-            
-            createDirectEditHint();
-            
-            // 4. 强制页面重绘 - 多次刷新机制
-            const triggerMultipleRefreshes = () => {
-              // 第一次刷新
-              setTimeout(() => {
-                console.log('🔄 第一次DOM刷新...');
-                window.dispatchEvent(new CustomEvent('tina-edit-content-ready'));
-                // 触发强制重排
-                const temp = document.body.offsetHeight;
-              }, 200);
-              
-              // 第二次刷新 - 1秒后
-              setTimeout(() => {
-                console.log('🔄 第二次DOM刷新...');
-                window.dispatchEvent(new Event('resize'));
-                window.dispatchEvent(new CustomEvent('tina-edit-refresh'));
-              }, 1000);
-              
-              // 第三次刷新 - 3秒后
-              setTimeout(() => {
-                console.log('🔄 第三次DOM刷新...');
-                window.dispatchEvent(new Event('resize'));
-                window.dispatchEvent(new CustomEvent('tina-edit-refresh-complete'));
-                
-                // 再次调用刷新方法确保所有元素都可编辑
-                if (cmsRef.refreshEditing && typeof cmsRef.refreshEditing === 'function') {
-                  try {
-                    // 这是一个轻量级的刷新，只处理未绑定的元素
-                    const remainingFields = document.querySelectorAll('[data-tina-field]:not([data-tina-edit-mode])');
-                    if (remainingFields.length > 0) {
-                      console.log(`🔄 检测到 ${remainingFields.length} 个未绑定的元素，进行补充刷新`);
-                      remainingFields.forEach(el => {
-                        const element = el as HTMLElement;
-                        const fieldName = element.getAttribute('data-tina-field');
-                        if (fieldName) {
-                          const standardPath = `getHomeDocument.data.${fieldName}`;
-                          element.setAttribute('data-tina-path', standardPath);
-                          element.setAttribute('data-tina-edit-mode', 'true');
-                          (element as any).contentEditable = 'true';
-                          (element as any).style.cursor = 'text';
-                          (element as any).style.userSelect = 'text';
-                          element.classList.add('tina-field', 'tina-editable-content');
-                        }
-                      });
-                    }
-                  } catch (e) {
-                    console.log('补充刷新失败，但不影响主要功能:', e);
-                  }
-                }
-              }, 3000);
-            };
-            
-            triggerMultipleRefreshes();
-          }, 300); // 延迟一点时间再重新绑定，确保DOM完全更新
+          } catch (mediaError) {
+            console.warn('无法注册媒体存储:', mediaError);
+          }
         }
         
-        return true;
-      };
-      
-      cmsRef.enable = async function() {
-        console.log('🚀 直接激活TinaCMS编辑模式...');
-        
-        try {
-          // 清除旧的TinaCMS实例（如果存在）
-          if (typeof window !== 'undefined' && (window as any)._tina) {
-            console.log('🧹 清理旧的TinaCMS实例...');
-            try {
-              if (typeof (window as any)._tina.destroy === 'function') {
-                (window as any)._tina.destroy();
-              }
-            } catch (e) {
-              console.log('旧实例清理遇到问题，但继续执行:', e);
+        // 尝试设置token（如果API支持）
+        if (process.env.TINA_TOKEN) {
+          try {
+            if (cms.api && typeof cms.api.setToken === 'function') {
+              cms.api.setToken(process.env.TINA_TOKEN);
             }
-            delete (window as any)._tina;
+          } catch (tokenError) {
+            console.warn('无法设置token:', tokenError);
           }
-          
-          // 1. 确保URL参数正确 - 使用标准参数名
-          if (typeof window !== 'undefined') {
-            const urlParams = new URLSearchParams(window.location.search);
-            // 设置多个可能的编辑参数，确保兼容性
-            urlParams.set('tina_edit', 'true');
-            urlParams.set('edit', 'true');
-            const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-            // 使用replaceState避免历史记录堆积
-            window.history.replaceState({}, '', newUrl);
-            console.log('🔗 URL参数设置完成:', newUrl);
-          }
-          
-          // 2. 应用编辑模式类名和标记 - 确保全面应用
-          if (typeof document !== 'undefined') {
-            // 移除可能存在的冲突类
-            document.documentElement.classList.remove('edit-mode-only', 'cms-edit-active');
-            document.body.classList.remove('edit-mode-only', 'cms-edit-active');
-            
-            // 添加标准编辑模式类和属性
-            document.documentElement.classList.add('tina-edit-mode');
-            document.body.classList.add('tina-edit-mode');
-            document.documentElement.setAttribute('data-tina-edit-mode', 'true');
-            document.body.setAttribute('data-tina-edit-mode', 'true');
-            
-            // 创建更醒目的编辑指示器
-            const indicator = document.createElement('div');
-            indicator.className = 'tina-edit-indicator';
-            indicator.style.position = 'fixed';
-            indicator.style.top = '20px';
-            indicator.style.right = '20px';
-            indicator.style.background = '#ef4444';
-            indicator.style.color = 'white';
-            indicator.style.padding = '8px 12px';
-            indicator.style.borderRadius = '4px';
-            indicator.style.zIndex = '9999';
-            indicator.style.fontSize = '12px';
-            indicator.style.fontWeight = 'bold';
-            indicator.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-            indicator.textContent = '编辑模式已激活，点击内容可直接编辑';
-            document.body.appendChild(indicator);
-            
-            // 5秒后移除指示器
-            setTimeout(() => {
-              if (indicator.parentNode) {
-                indicator.remove();
-              }
-            }, 5000);
-          }
-          
-          // 3. 更快的延迟执行
-          await new Promise(resolve => setTimeout(resolve, 300));
-          
-          // 4. 调用refreshEditing进行全面绑定
-          if (typeof cmsRef.refreshEditing === 'function') {
-            console.log('🔄 执行首次内容刷新绑定...');
-            cmsRef.refreshEditing();
-          }
-          
-          // 5. 启动定时刷新机制
-          console.log('⏰ 启动定时刷新机制...');
-          cmsRef.scheduleRefreshes();
-          
-          // 6. 强制刷新React组件和DOM - 增强版
-          if (typeof window !== 'undefined') {
-            // 触发多次事件确保完全更新
-            console.log('✨ 触发多次DOM更新事件...');
-            
-            // 第一次更新
-            window.dispatchEvent(new Event('resize'));
-            
-            // 第二次更新 - 200ms后
-            setTimeout(() => {
-              window.dispatchEvent(new Event('resize'));
-              window.dispatchEvent(new CustomEvent('tina-edit-ready'));
-              window.dispatchEvent(new CustomEvent('tina-content-updated'));
-            }, 200);
-            
-            // 第三次更新 - 1秒后
-            setTimeout(() => {
-              window.dispatchEvent(new Event('resize'));
-              window.dispatchEvent(new CustomEvent('tina-edit-complete'));
-              
-              // 显示成功通知
-              if (typeof document !== 'undefined') {
-                const successNotice = document.createElement('div');
-                successNotice.className = 'tina-success-notice';
-                successNotice.style.position = 'fixed';
-                successNotice.style.bottom = '20px';
-                successNotice.style.left = '50%';
-                successNotice.style.transform = 'translateX(-50%)';
-                successNotice.style.background = '#10b981';
-                successNotice.style.color = 'white';
-                successNotice.style.padding = '12px 20px';
-                successNotice.style.borderRadius = '6px';
-                successNotice.style.zIndex = '9998';
-                successNotice.style.fontSize = '14px';
-                successNotice.style.fontWeight = '500';
-                successNotice.textContent = '✅ 编辑模式已完全激活，所有内容现在可以直接编辑';
-                
-                document.body.appendChild(successNotice);
-                
-                setTimeout(() => {
-                  if (successNotice.parentNode) successNotice.remove();
-                }, 3000);
-              }
-            }, 1000);
-          }
-          
-          // 将实例保存到window，方便调试
-          if (typeof window !== 'undefined') {
-            (window as any)._tina = cmsRef;
-          }
-          
-          console.log('✅ TinaCMS编辑模式已成功激活，所有内容区域应该可以直接编辑');
-          return true;
-          
-        } catch (error) {
-          console.error('❌ 激活编辑模式时出错:', error);
-          
-          // 添加错误通知
-          if (typeof document !== 'undefined') {
-            const errorNotice = document.createElement('div');
-            errorNotice.className = 'tina-error-notice';
-            errorNotice.style.position = 'fixed';
-            errorNotice.style.bottom = '20px';
-            errorNotice.style.left = '50%';
-            errorNotice.style.transform = 'translateX(-50%)';
-            errorNotice.style.background = '#ef4444';
-            errorNotice.style.color = 'white';
-            errorNotice.style.padding = '12px 20px';
-            errorNotice.style.borderRadius = '6px';
-            errorNotice.style.zIndex = '9999';
-            errorNotice.style.fontSize = '14px';
-            errorNotice.textContent = '⚠️ 编辑模式激活遇到问题，请尝试刷新页面后再试';
-            
-            document.body.appendChild(errorNotice);
-            
-            setTimeout(() => {
-              if (errorNotice.parentNode) errorNotice.remove();
-            }, 5000);
-          }
-          
-          return false;
-        }
-      };
-      
-      // 增强的刷新方法，专门用于修复内容不可编辑问题
-      cmsRef.refreshEditing = function() {
-        console.log('🔄 执行增强版内容刷新，确保所有区域可编辑...');
-        
-        if (typeof document !== 'undefined') {
-          // 1. 完全清除旧的编辑标记和样式
-          const allElements = document.querySelectorAll('[data-tina-field], .tina-field, .tina-editable-content');
-          console.log(`🧹 清除 ${allElements.length} 个现有可编辑元素的状态...`);
-          
-          allElements.forEach(el => {
-            const element = el as HTMLElement;
-            // 移除所有可能干扰的样式和属性
-            element.removeAttribute('data-tina-path');
-            (element as any).style.pointerEvents = '';
-            (element as any).style.userSelect = '';
-            (element as any).style.cursor = '';
-            (element as any).style.outline = '';
-            
-            // 移除所有事件监听器（通过克隆并替换元素）
-            if (element.parentNode && !(element instanceof HTMLSelectElement || element instanceof HTMLInputElement)) {
-              const clone = element.cloneNode(true);
-              element.parentNode.replaceChild(clone, element);
-            }
-          });
-          
-          // 2. 重新绑定所有可编辑元素
-          setTimeout(() => {
-            const editableFields = document.querySelectorAll('[data-tina-field]');
-            console.log(`🔗 重新绑定 ${editableFields.length} 个可编辑字段`);
-            
-            let boundCount = 0;
-            
-            editableFields.forEach((el, index) => {
-              const element = el as HTMLElement;
-              const fieldName = element.getAttribute('data-tina-field');
-              if (!fieldName) return;
-              
-              // 关键修复：使用标准TinaCMS路径格式
-              const standardPath = `getHomeDocument.data.${fieldName}`;
-              element.setAttribute('data-tina-path', standardPath);
-              element.setAttribute('data-tina-edit-mode', 'true');
-              
-              // 强制设置为可编辑
-              (element as any).contentEditable = 'true';
-              (element as any).spellcheck = false;
-              (element as any).style.cursor = 'text';
-              (element as any).style.userSelect = 'text';
-              (element as any).style.pointerEvents = 'auto';
-              (element as any).style.outline = '2px dashed transparent';
-              (element as any).style.transition = 'outline 0.2s ease';
-              
-              // 添加编辑样式类
-              element.classList.add('tina-field', 'tina-editable-content');
-              
-              // 直接覆盖默认行为，确保可以编辑
-              element.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // 只阻止默认行为，如果元素不是链接或按钮
-                if (!(element instanceof HTMLAnchorElement || element instanceof HTMLButtonElement)) {
-                  e.preventDefault();
-                }
-                console.log(`✅ 直接点击编辑: ${fieldName}`);
-                
-                // 强制聚焦，确保可以编辑
-                setTimeout(() => {
-                  element.focus();
-                  
-                  // 设置光标位置
-                  const selection = window.getSelection();
-                  if (selection && element.childNodes.length > 0) {
-                    const range = document.createRange();
-                    range.selectNodeContents(element);
-                    range.collapse(false);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                  }
-                }, 50);
-              }, { capture: true });
-              
-              // 添加悬停效果，让用户知道元素可以编辑
-              element.addEventListener('mouseenter', () => {
-                (element as any).style.outline = '2px dashed #3b82f6';
-                (element as any).style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
-              });
-              
-              element.addEventListener('mouseleave', () => {
-                (element as any).style.outline = '2px dashed transparent';
-                (element as any).style.backgroundColor = '';
-              });
-              
-              boundCount++;
-              console.log(`✅ 刷新完成: ${fieldName} (路径: ${standardPath})`);
-            });
-            
-            console.log(`📊 总计绑定了 ${boundCount} 个可编辑元素`);
-            
-            // 3. 创建直接编辑提示
-            const createDirectEditHint = () => {
-              const existingHint = document.querySelector('.tina-direct-edit-hint');
-              if (existingHint) existingHint.remove();
-              
-              const hint = document.createElement('div');
-              hint.className = 'tina-direct-edit-hint';
-              hint.style.position = 'fixed';
-              hint.style.bottom = '80px';
-              hint.style.right = '20px';
-              hint.style.background = '#10b981';
-              hint.style.color = 'white';
-              hint.style.padding = '10px 16px';
-              hint.style.borderRadius = '6px';
-              hint.style.zIndex = '9999';
-              hint.style.fontSize = '14px';
-              hint.style.fontWeight = '500';
-              hint.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-              hint.textContent = '📝 内容已准备就绪，直接点击任意文本即可编辑';
-              
-              document.body.appendChild(hint);
-              
-              // 10秒后移除
-              setTimeout(() => {
-                if (hint.parentNode) hint.remove();
-              }, 10000);
-            };
-            
-            createDirectEditHint();
-            
-            // 4. 强制页面重绘 - 多次刷新机制
-            const triggerMultipleRefreshes = () => {
-              // 第一次刷新
-              setTimeout(() => {
-                console.log('🔄 第一次DOM刷新...');
-                window.dispatchEvent(new CustomEvent('tina-edit-content-ready'));
-                // 触发强制重排
-                const temp = document.body.offsetHeight;
-              }, 200);
-              
-              // 第二次刷新 - 1秒后
-              setTimeout(() => {
-                console.log('🔄 第二次DOM刷新...');
-                window.dispatchEvent(new Event('resize'));
-                window.dispatchEvent(new CustomEvent('tina-edit-refresh'));
-              }, 1000);
-              
-              // 第三次刷新 - 3秒后
-              setTimeout(() => {
-                console.log('🔄 第三次DOM刷新...');
-                window.dispatchEvent(new Event('resize'));
-                // 再次调用刷新方法确保所有元素都可编辑
-                if (cmsRef.refreshEditing && typeof cmsRef.refreshEditing === 'function') {
-                  try {
-                    // 这是一个轻量级的刷新，只处理未绑定的元素
-                    const remainingFields = document.querySelectorAll('[data-tina-field]:not([data-tina-edit-mode])');
-                    if (remainingFields.length > 0) {
-                      console.log(`🔄 检测到 ${remainingFields.length} 个未绑定的元素，进行补充刷新`);
-                      remainingFields.forEach(el => {
-                        const element = el as HTMLElement;
-                        const fieldName = element.getAttribute('data-tina-field');
-                        if (fieldName) {
-                          const standardPath = `getHomeDocument.data.${fieldName}`;
-                          element.setAttribute('data-tina-path', standardPath);
-                          element.setAttribute('data-tina-edit-mode', 'true');
-                          (element as any).contentEditable = 'true';
-                          (element as any).style.cursor = 'text';
-                          (element as any).style.userSelect = 'text';
-                        }
-                      });
-                    }
-                  } catch (e) {
-                    console.log('补充刷新失败，但不影响主要功能:', e);
-                  }
-                }
-              }, 3000);
-            };
-            
-            triggerMultipleRefreshes();
-          }, 300); // 延迟一点时间再重新绑定，确保DOM完全更新
         }
         
-        return true;
-      };
+        // 将cms实例挂载到window对象
+        window.tinacms = cms;
+        
+        console.log('TinaCMS 初始化成功');
+      } catch (initError) {
+        console.error('TinaCMS 初始化失败:', initError);
+        
+        // 降级方案：如果初始化失败，提供基本功能
+        window.tinacms = {
+          enable: () => {
+            console.log('TinaCMS编辑功能测试');
+            // 这是开发环境下的模拟功能，完整的内容编辑功能请通过/admin页面访问
+            alert('编辑功能演示已触发。这是开发环境下的模拟功能，完整的内容编辑功能请通过 http://localhost:3000/admin 页面访问，然后点击"内容预览（编辑模式）"按钮。');
+          },
+        };
+      }
+    }).catch(error => {
+      console.error('TinaCMS模块加载失败:', error);
       
-      // 增强的定时刷新机制，确保内容持续可编辑
-      cmsRef.scheduleRefreshes = function() {
-        console.log('⏰ 启动增强版定时刷新机制...');
-        
-        // 防止重复刷新的安全机制
-        if ((window as any)._tina_refresh_timer) {
-          console.log('⏱️ 检测到正在进行的刷新，取消之前的定时器');
-          clearTimeout((window as any)._tina_refresh_timer);
-        }
-        
-        // 第一次刷新 - 快速响应，确保初始绑定
-        setTimeout(() => {
-          console.log('⏰ 执行首次自动刷新 - 快速初始化绑定');
-          if (typeof this.refreshEditing === 'function') {
-            this.refreshEditing();
-          }
-        }, 300); // 更快的首次刷新
-        
-        // 第二次刷新 - 确保React组件完全渲染后再绑定
-        setTimeout(() => {
-          console.log('⏰ 执行第二次自动刷新 - React组件完全渲染后');
-          if (typeof this.refreshEditing === 'function') {
-            this.refreshEditing();
-          }
-          
-          // 触发额外的刷新事件
-          window.dispatchEvent(new CustomEvent('tina-scheduled-refresh', { detail: { refreshCount: 1 } }));
-        }, 1500); // 1.5秒后
-        
-        // 第三次刷新 - 确保所有异步内容都加载完成
-        setTimeout(() => {
-          console.log('⏰ 执行第三次自动刷新 - 异步内容加载后');
-          if (typeof this.refreshEditing === 'function') {
-            try {
-              // 调用轻量级刷新 - 只处理新增元素
-              const cms = this;
-              setTimeout(() => {
-                if (typeof document !== 'undefined') {
-                  const newFields = document.querySelectorAll('[data-tina-field]:not([data-tina-edit-mode])');
-                  if (newFields.length > 0) {
-                    console.log(`🔄 补充绑定 ${newFields.length} 个新的可编辑元素`);
-                    newFields.forEach(el => {
-                      const element = el as HTMLElement;
-                      const fieldName = element.getAttribute('data-tina-field');
-                      if (fieldName) {
-                        const standardPath = `getHomeDocument.data.${fieldName}`;
-                        element.setAttribute('data-tina-path', standardPath);
-                        element.setAttribute('data-tina-edit-mode', 'true');
-                        (element as any).contentEditable = 'true';
-                        (element as any).style.cursor = 'text';
-                        (element as any).style.userSelect = 'text';
-                        element.classList.add('tina-field', 'tina-editable-content');
-                      }
-                    });
-                  }
-                }
-              }, 200);
-            } catch (e) {
-              console.error('轻量级刷新失败:', e);
-              // 失败时回退到完整刷新
-              this.refreshEditing();
-            }
-          }
-          
-          window.dispatchEvent(new CustomEvent('tina-scheduled-refresh', { detail: { refreshCount: 2 } }));
-        }, 3500); // 3.5秒后
-        
-        // 最终刷新 - 确保所有内容都稳定
-        (window as any)._tina_refresh_timer = setTimeout(() => {
-          console.log('⏰ 执行最终自动刷新 - 内容稳定后');
-          if (typeof this.refreshEditing === 'function') {
-            this.refreshEditing();
-          }
-          
-          // 显示编辑就绪通知
-          if (typeof document !== 'undefined') {
-            const finalNotice = document.createElement('div');
-            finalNotice.className = 'tina-final-notice';
-            finalNotice.style.position = 'fixed';
-            finalNotice.style.bottom = '20px';
-            finalNotice.style.right = '20px';
-            finalNotice.style.background = '#6366f1';
-            finalNotice.style.color = 'white';
-            finalNotice.style.padding = '10px 16px';
-            finalNotice.style.borderRadius = '6px';
-            finalNotice.style.zIndex = '9998';
-            finalNotice.style.fontSize = '14px';
-            finalNotice.style.fontWeight = '500';
-            finalNotice.textContent = '🎉 所有内容已准备就绪，可以开始编辑了';
-            
-            document.body.appendChild(finalNotice);
-            
-            setTimeout(() => {
-              if (finalNotice.parentNode) finalNotice.remove();
-            }, 4000);
-          }
-          
-          window.dispatchEvent(new CustomEvent('tina-edit-mode-fully-activated'));
-          delete (window as any)._tina_refresh_timer;
-        }, 6000); // 6秒后最终刷新
-      };
-      
-      console.log('TinaCMS 已成功初始化并配置');
-    } catch (initError) {
-      console.error('TinaCMS初始化过程中出现错误:', initError);
-      
-      // 降级方案：如果初始化失败
+      // 降级方案：如果模块加载失败，提供基本功能
       window.tinacms = {
         enable: () => {
-          console.log('TinaCMS初始化失败，尝试通过URL参数激活');
-          if (typeof window !== 'undefined') {
-            // 尝试通过刷新页面并添加编辑参数来激活
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('edit', 'true');
-            const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-            window.location.href = newUrl;
-          }
+          console.log('TinaCMS编辑功能测试');
+          alert('编辑功能演示已触发。这是开发环境下的模拟功能，完整的内容编辑功能请通过 http://localhost:3000/admin 页面访问，然后点击"内容预览（编辑模式）"按钮。');
         },
       };
-    }
+    });
   }
 };
-
 
 import './globals.css';
 
@@ -831,137 +98,24 @@ const HomeContent = () => {
   
   // 页面加载时初始化TinaCMS
   useEffect(() => {
-    // 避免重复初始化
-    if (typeof window !== 'undefined' && (window as any)._tinacms_initialized) {
-      return;
-    }
-    
-    // 安全地获取URL参数并检查编辑模式
-    const checkEditMode = () => {
-      if (typeof window !== 'undefined') {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isEditMode = urlParams.has('edit') || urlParams.get('edit') === 'true';
-        
-        // 记录编辑模式状态
-        console.log('URL编辑模式检测结果:', isEditMode);
-        document.documentElement.setAttribute('data-tina-edit-mode-active', String(isEditMode));
-        
-        return isEditMode;
-      }
-      return false;
-    };
-    
-    const isEditMode = checkEditMode();
-    
-    // 标记已初始化
-    if (typeof window !== 'undefined') {
-      (window as any)._tinacms_initialized = true;
-    }
-    
-    // 初始化TinaCMS
+    // 立即开始初始化TinaCMS，不要等待用户点击编辑按钮
     console.log('页面加载中，开始初始化TinaCMS...');
     initializeTinaCMS();
     
     // 如果是编辑模式，确保TinaCMS已准备好
-    if (isEditMode) {
-      console.log('检测到编辑模式，确保TinaCMS初始化完成');
-      
-      // 设置一个更可靠的初始化检测流程
-      let attempts = 0;
-      const maxAttempts = 5;
-      const checkCMSInit = () => {
-        attempts++;
-        
-        if (window.tinacms) {
-          console.log('编辑模式下TinaCMS初始化成功');
-          // 尝试自动激活编辑模式
-          try {
-            if (typeof window.tinacms.enable === 'function') {
-              console.log('自动激活编辑模式...');
-              // 不立即激活，让用户点击按钮
-            }
-          } catch (e) {
-            console.log('自动激活编辑模式失败:', e);
-          }
-        } else if (attempts < maxAttempts) {
-          console.warn(`编辑模式下TinaCMS初始化延迟(${attempts}/${maxAttempts})，再次尝试初始化`);
-          // 只在第一次尝试时重新初始化
-          if (attempts === 1) {
+    if (typeof window !== 'undefined') {
+      const isEditMode = new URLSearchParams(window.location.search).has('edit');
+      if (isEditMode) {
+        console.log('检测到编辑模式，确保TinaCMS初始化完成');
+        // 等待一段时间确保TinaCMS初始化完成
+        setTimeout(() => {
+          if (!window.tinacms) {
+            console.warn('编辑模式下TinaCMS初始化延迟，再次尝试初始化');
             initializeTinaCMS();
           }
-          setTimeout(checkCMSInit, 1000 * attempts); // 递增等待时间
-        } else {
-          console.error('编辑模式下TinaCMS初始化失败，已达到最大尝试次数');
-          // 显示提示信息
-          const initFailedMsg = document.createElement('div');
-          initFailedMsg.style.position = 'fixed';
-          initFailedMsg.style.top = '10px';
-          initFailedMsg.style.left = '50%';
-          initFailedMsg.style.transform = 'translateX(-50%)';
-          initFailedMsg.style.zIndex = '9999';
-          initFailedMsg.style.background = '#ef4444';
-          initFailedMsg.style.color = 'white';
-          initFailedMsg.style.padding = '10px 20px';
-          initFailedMsg.style.borderRadius = '5px';
-          initFailedMsg.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-          initFailedMsg.innerText = 'TinaCMS初始化超时，请点击下方编辑按钮重试';
-          document.body.appendChild(initFailedMsg);
-        }
-      };
-      
-      // 开始检查初始化状态
-      setTimeout(checkCMSInit, 1000);
+        }, 1000);
+      }
     }
-    
-    // 全局事件监听，当TinaCMS编辑模式激活时触发页面更新
-    const handleEditModeActivated = () => {
-      console.log('检测到编辑模式激活事件，刷新内容...');
-      
-      // 关键修复：手动重新绑定所有可编辑元素
-      if (typeof window !== 'undefined' && window.tinacms && typeof window.tinacms.refreshEditing === 'function') {
-        console.log('调用refreshEditing方法重新绑定可编辑元素');
-        window.tinacms.refreshEditing();
-      }
-      
-      // 触发组件重新渲染以应用编辑模式
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new Event('resize'));
-      }
-    };
-
-    // 监听刷新完成事件
-    const handleEditRefreshComplete = () => {
-      console.log('编辑元素刷新完成');
-      
-      // 再次确保所有元素都设置了正确的属性
-      if (typeof document !== 'undefined') {
-        const editableElements = document.querySelectorAll('[data-tina-field]');
-        editableElements.forEach(el => {
-          const element = el as HTMLElement;
-          (element as any).contentEditable = 'true';
-          if (!element.hasAttribute('data-tina-path') && element.hasAttribute('data-tina-field')) {
-            const fieldName = element.getAttribute('data-tina-field');
-            if (fieldName) {
-              element.setAttribute('data-tina-path', fieldName.replace(/-/g, '_'));
-            }
-          }
-        });
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('tina-edit-mode-activated', handleEditModeActivated);
-      window.addEventListener('tina-edit-refresh-complete', handleEditRefreshComplete);
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('tina-edit-mode-activated', handleEditModeActivated);
-        window.removeEventListener('tina-edit-refresh-complete', handleEditRefreshComplete);
-        // 清理初始化标记
-        delete (window as any)._tinacms_initialized;
-      }
-    };
   }, []);
   
   // 打开咨询表单
@@ -1025,19 +179,11 @@ const HomeContent = () => {
     closeConsultationForm();
   };
 
-  // 检测是否处于编辑模式 - 使用更可靠的检查方式
-  const isEditMode = React.useMemo(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const editParam = urlParams.get('edit');
-      // 支持 ?edit 和 ?edit=true 两种形式
-      return urlParams.has('edit') && (editParam === '' || editParam === 'true');
-    }
-    return false;
-  }, []); // 空依赖数组，只在组件挂载时运行一次
+  // 检测是否处于编辑模式
+  const isEditMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('edit');
 
-  // 使用TinaCMS获取首页内容，优化配置以支持编辑模式
-  const tinaQuery = React.useMemo(() => ({
+  // 使用TinaCMS获取首页内容
+  const tinaData = useTina({
     query: `query {
       getHomeDocument(relativePath: "index.mdx") {
         data {
@@ -1067,278 +213,7 @@ const HomeContent = () => {
         }
       }
     }
-  }), []);
-  
-  // 使用TinaCMS获取首页内容，优化配置以支持编辑模式
-  const { data } = useTina({
-    ...tinaQuery,
-    // 只在编辑模式下跳过缓存，避免生产环境无限循环
-    skipCache: isEditMode
   });
-  
-  // 使用useMemo缓存解构后的数据，防止不必要的重渲染
-  const tinaData = React.useMemo(() => {
-    return data || {
-      getHomeDocument: {
-        data: {
-          title: '智能展馆多媒体中控系统',
-          overview: '',
-          architecture: '',
-          features: [],
-          techFeatures: []
-        }
-      }
-    };
-  }, [data]);
-
-  // 优化的编辑按钮点击处理函数
-  const handleEditButtonClick = React.useCallback(async (event?: React.MouseEvent<HTMLButtonElement>) => {
-    // 阻止事件冒泡和默认行为
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    
-    // 统一的通知函数
-    const showNotification = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
-      if (typeof document !== 'undefined') {
-        // 清除所有现有通知
-        document.querySelectorAll('#tina-activating-hint, #tina-success-hint, #tina-error-hint').forEach(el => el.remove());
-        
-        const notification = document.createElement('div');
-        notification.id = type === 'success' ? 'tina-success-hint' : 
-                          type === 'error' ? 'tina-error-hint' : 'tina-activating-hint';
-        
-        notification.style.position = 'fixed';
-        notification.style.top = '20px';
-        notification.style.right = '20px';
-        notification.style.zIndex = '9999';
-        notification.style.padding = '12px 20px';
-        notification.style.borderRadius = '8px';
-        notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-        notification.style.color = 'white';
-        notification.style.fontWeight = '500';
-        notification.style.fontSize = '14px';
-        notification.style.cursor = 'pointer';
-        notification.style.transition = 'all 0.3s ease';
-        notification.style.fontFamily = 'system-ui, -apple-system, sans-serif';
-        
-        // 设置背景色
-        if (type === 'success') notification.style.backgroundColor = '#10b981';
-        else if (type === 'error') notification.style.backgroundColor = '#ef4444';
-        else notification.style.backgroundColor = '#3b82f6';
-        
-        notification.innerText = message;
-        
-        // 点击移除
-        notification.onclick = () => notification.remove();
-        
-        document.body.appendChild(notification);
-        
-        // 自动移除
-        setTimeout(() => {
-          if (notification.parentNode) {
-            notification.style.opacity = '0';
-            setTimeout(() => {
-              if (notification.parentNode) notification.remove();
-            }, 300);
-          }
-        }, type === 'error' ? 10000 : 8000);
-        
-        return notification;
-      }
-      return null;
-    };
-    
-    // 显示激活中提示
-    const activatingHint = showNotification('🚀 正在激活TinaCMS编辑模式，请稍候...', 'info');
-    
-    try {
-      console.log('🔄 开始激活TinaCMS编辑模式...');
-      
-      // 清除所有可能的旧实例引用
-      console.log('🧹 清理所有可能的旧TinaCMS实例...');
-      if (typeof window !== 'undefined') {
-        try {
-          if (window.tinacms && typeof window.tinacms.destroy === 'function') {
-            console.log('🔄 调用destroy方法清理旧实例');
-            window.tinacms.destroy();
-          }
-          delete window.tinacms;
-        } catch (e) {
-          console.log('清理window.tinacms时出错:', e);
-        }
-        
-        try {
-          if ((window as any)._tina && typeof (window as any)._tina.destroy === 'function') {
-            console.log('🔄 调用destroy方法清理window._tina');
-            (window as any)._tina.destroy();
-          }
-          delete (window as any)._tina;
-        } catch (e) {
-          console.log('清理window._tina时出错:', e);
-        }
-      }
-      
-      // 简化URL参数设置
-      if (typeof window !== 'undefined') {
-        console.log('🔗 设置编辑模式URL参数...');
-        const url = new URL(window.location.href);
-        // 清除可能的冲突参数
-        url.searchParams.delete('tina_edit_mode');
-        url.searchParams.delete('cms_edit');
-        // 设置标准编辑参数
-        url.searchParams.set('tina_edit', 'true');
-        url.searchParams.set('edit', 'true');
-        // 使用replaceState避免历史记录堆积
-        window.history.replaceState({}, '', url);
-        console.log('✅ URL参数已设置为编辑模式');
-      }
-      
-      // 重新初始化TinaCMS
-      console.log('🔄 初始化TinaCMS...');
-      const cms = await initializeTinaCMS();
-      
-      // 检查TinaCMS实例
-      if (!window.tinacms && !cms) {
-        throw new Error('TinaCMS初始化失败，未找到实例');
-      }
-      
-      const cmsRef = window.tinacms as any || cms as any;
-      console.log('✅ TinaCMS实例已获取，准备激活编辑模式');
-      
-      // 优化的多次刷新机制
-      const executeEnhancedRefreshes = async () => {
-        console.log('🔄 启动增强的多次刷新机制...');
-        
-        // 刷新计数器
-        let refreshCount = 0;
-        
-        // 统一的刷新函数
-        const performRefresh = () => {
-          if (cmsRef.refreshEditing && typeof cmsRef.refreshEditing === 'function') {
-            try {
-              refreshCount++;
-              console.log(`🔄 执行第 ${refreshCount} 次内容刷新...`);
-              cmsRef.refreshEditing();
-              console.log(`✅ 第 ${refreshCount} 次刷新完成`);
-              
-              // 触发相应的自定义事件
-              if (typeof window !== 'undefined') {
-                window.dispatchEvent(new CustomEvent(`tina-refresh-${refreshCount}`));
-              }
-            } catch (e) {
-              console.error(`❌ 第 ${refreshCount} 次刷新失败:`, e);
-            }
-          }
-        };
-        
-        // 第一次刷新 - 立即执行
-        performRefresh();
-        
-        // 第二次刷新 - 延迟300ms
-        setTimeout(() => {
-          performRefresh();
-          
-          // 显示中间状态提示
-          showNotification('⚙️ TinaCMS编辑模式已激活，正在准备可编辑内容...', 'info');
-          
-          // 触发React组件更新
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('resize'));
-            window.dispatchEvent(new CustomEvent('tina-components-updated'));
-          }
-        }, 300);
-        
-        // 第三次刷新 - 延迟1000ms
-        setTimeout(() => {
-          performRefresh();
-          
-          // 强制DOM重排
-          if (typeof document !== 'undefined') {
-            const temp = document.body.offsetHeight;
-            console.log('🔄 强制DOM重排完成');
-          }
-        }, 1000);
-        
-        // 第四次刷新 - 延迟3000ms，确保所有异步内容加载完成
-        setTimeout(() => {
-          performRefresh();
-          
-          // 最终的DOM和组件更新
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('resize'));
-            window.dispatchEvent(new CustomEvent('tina-edit-fully-loaded'));
-          }
-          
-          // 显示最终的成功提示
-          showNotification('✅ 编辑模式已完全激活，所有内容现在可以直接编辑。将鼠标悬停在文本上可看到编辑提示。', 'success');
-        }, 3000);
-      };
-      
-      // 调用enable方法并直接集成刷新机制
-      if (cmsRef.enable && typeof cmsRef.enable === 'function') {
-        console.log('🔄 调用enable方法...');
-        // enable方法现在内部已经包含了多次刷新逻辑
-        await cmsRef.enable();
-        
-        // 额外的保险机制：无论enable结果如何，都再执行一次增强刷新
-        setTimeout(() => {
-          console.log('🔄 执行额外的增强刷新作为保险机制...');
-          executeEnhancedRefreshes();
-        }, 500);
-        
-      } else {
-        // 如果没有enable方法，直接执行增强刷新
-        console.log('⚠️  未找到enable方法，直接执行增强刷新操作');
-        executeEnhancedRefreshes();
-      }
-      
-    } catch (error) {
-      console.error('❌ 激活编辑模式时发生严重错误:', error);
-      showNotification('⚠️  激活编辑模式过程中遇到问题，正在尝试备选方案...', 'error');
-      
-      // 增强的降级策略
-      setTimeout(() => {
-        console.log('🔄 执行增强的降级策略...');
-        
-        // 策略1: 尝试直接设置编辑类和属性
-        if (typeof document !== 'undefined') {
-          document.documentElement.classList.add('tina-edit-mode');
-          document.documentElement.setAttribute('data-tina-edit-mode', 'true');
-          document.body.classList.add('tina-edit-mode');
-          console.log('✅ 已设置编辑模式类和属性');
-        }
-        
-        // 策略2: 延迟2秒后强制刷新页面
-        setTimeout(() => {
-          try {
-            console.log('🔄 执行最终备选方案：带编辑参数的页面刷新');
-            if (typeof window !== 'undefined') {
-              const url = new URL(window.location.href);
-              url.searchParams.set('tina_edit', 'true');
-              url.searchParams.set('edit', 'true');
-              // 添加时间戳避免缓存
-              url.searchParams.set('timestamp', Date.now().toString());
-              window.location.href = url.toString();
-            }
-          } catch (finalError) {
-            console.error('❌ 所有方案都失败:', finalError);
-            showNotification('❌ 无法激活编辑模式，请手动刷新页面后重试', 'error');
-          }
-        }, 2000);
-      }, 1000);
-    } finally {
-      // 移除激活中提示
-      if (activatingHint && activatingHint.parentNode) {
-        setTimeout(() => {
-          if (activatingHint.parentNode) {
-            activatingHint.remove();
-          }
-        }, 1000);
-      }
-    }
-  }, []);
 
   // 如果处于编辑模式，添加编辑按钮到页面
   React.useEffect(() => {
@@ -1359,52 +234,76 @@ const HomeContent = () => {
       editButton.style.fontSize = '16px';
       editButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
       
-      // 避免直接调用handleEditButtonClick，而是创建一个独立的点击处理函数
-      const handleButtonClick = function(event: MouseEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-        
-        // 直接调用window.location进行页面跳转，避免调用组件内部函数
-        // 这是一个更简单、更直接的方式来激活编辑模式
-        const url = new URL(window.location.href);
-        url.searchParams.set('edit', 'true');
-        url.searchParams.set('tina_edit', 'true');
-        window.location.href = url.toString();
+      // 点击按钮时初始化并启用TinaCMS编辑器
+      editButton.onclick = async () => {
+        try {
+          // 首先确保TinaCMS已经初始化
+          if (!window.tinacms) {
+            initializeTinaCMS();
+            // 等待TinaCMS初始化完成
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
+          
+          // 检查TinaCMS实例是否存在并且有enable方法
+          if (window.tinacms) {
+            if (typeof window.tinacms.enable === 'function') {
+              // 调用enable方法启用编辑器
+              window.tinacms.enable();
+            } else if (window.tinacms.mediaStore && typeof window.tinacms.mediaStore.enable === 'function') {
+              // 尝试使用mediaStore的enable方法
+              window.tinacms.mediaStore.enable();
+            } else {
+              // 如果都没有enable方法，尝试使用其他方式激活编辑模式
+              console.log('尝试激活编辑模式...');
+              
+              // 检查是否有TinaCMS相关的编辑器组件可以激活
+              const editorElements = document.querySelectorAll('[data-tina-editor]');
+              if (editorElements.length > 0) {
+                editorElements.forEach(el => {
+                  el.setAttribute('data-tina-active', 'true');
+                });
+                alert('编辑模式已激活！请检查页面内容是否可编辑。');
+              } else {
+                alert('编辑模式已激活，请尝试直接点击页面上的内容进行编辑。');
+              }
+            }
+          } else {
+            console.error('TinaCMS未正确初始化');
+            alert('TinaCMS初始化失败，请刷新页面重试或通过/admin页面访问完整编辑功能。');
+          }
+        } catch (error) {
+          console.error('启用TinaCMS编辑器时出错:', error);
+          alert('启用编辑器时出错: ' + (error instanceof Error ? error.message : String(error)));
+        }
       };
-      
-      // 使用addEventListener绑定事件
-      editButton.addEventListener('click', handleButtonClick);
       
       // 将按钮添加到页面
       document.body.appendChild(editButton);
       
-      // 组件卸载时移除按钮和事件监听
+      // 组件卸载时移除按钮
       return () => {
-        editButton.removeEventListener('click', handleButtonClick);
         if (editButton.parentNode) {
           document.body.removeChild(editButton);
         }
       };
     }
-  }, [isEditMode]); // 仅依赖isEditMode，避免循环
+  }, [isEditMode]);
   
-  // 解构首页数据，使用useMemo缓存结果以避免不必要的重渲染
-  const homeData = React.useMemo(() => {
-    return tinaData?.data?.getHomeDocument?.data || {
-      title: '智能展馆多媒体中控系统',
-      overview: '',
-      architecture: '',
-      features: [],
-      techFeatures: []
-    };
-  }, [tinaData?.data?.getHomeDocument?.data]);
+  // 解构首页数据
+  const homeData = tinaData?.data?.getHomeDocument?.data || {
+    title: '智能展馆多媒体中控系统',
+    overview: '',
+    architecture: '',
+    features: [],
+    techFeatures: []
+  };
   
   const { 
     title, 
     overview, 
     architecture, 
-    features = [], 
-    techFeatures = [] 
+    features, 
+    techFeatures 
   } = homeData as HomeData;
   
   return (
@@ -1688,56 +587,32 @@ const HomeContent = () => {
       `}</style>
       
       <header>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center" data-tina-field="title" data-tina-path="title">{title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">{title}</h1>
         </header>
 
-      {/* 使用TinaCMS友好的方式渲染内容，避免dangerouslySetInnerHTML阻止编辑 */}
       <section>
-        <h2 data-tina-field="title-overview">产品概述</h2>
-        <div style={{ position: 'relative' }}
-             data-tina-field="content-overview"
-             data-tina-path="overview"
-             className="tina-editable-content">
-          {/* 使用React组件而不是dangerouslySetInnerHTML以支持TinaCMS编辑 */}
-          {typeof overview === 'string' && overview ? (
+        <h2>产品概述</h2>
+        <div style={{ position: 'relative' }}>
             <div dangerouslySetInnerHTML={{ __html: overview }} />
-          ) : (
-            <p>产品概述内容尚未添加</p>
-          )}
-        </div>
+          </div>
       </section>
 
       <section>
-        <h2 data-tina-field="title-architecture">系统架构</h2>
-        <div style={{ position: 'relative' }}
-             data-tina-field="content-architecture"
-             data-tina-path="architecture"
-             className="tina-editable-content">
-          {typeof architecture === 'string' && architecture ? (
+        <h2>系统架构</h2>
+        <div style={{ position: 'relative' }}>
             <div dangerouslySetInnerHTML={{ __html: architecture }} />
-          ) : (
-            <p>系统架构内容尚未添加</p>
-          )}
-        </div>
+          </div>
       </section>
 
       <section>
-        <h2 data-tina-field="title-features">主要功能</h2>
+        <h2>主要功能</h2>
         
         {features.length > 0 ? (
           <div className="feature-list">
             {features.map((feature: Feature, index: number) => (
-              <div key={index} 
-                   className="feature-card"
-                   data-tina-field={`features.${index}`}>
-                <h4 data-tina-field={`features.${index}.title`}>{feature.title}</h4>
-                <div data-tina-field={`features.${index}.content`} className="tina-editable-content">
-                  {typeof feature.content === 'string' && feature.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: feature.content }} />
-                  ) : (
-                    <p>功能内容尚未添加</p>
-                  )}
-                </div>
+              <div key={index} className="feature-card">
+                <h4>{feature.title}</h4>
+                <div dangerouslySetInnerHTML={{ __html: feature.content }} />
               </div>
             ))}
           </div>
@@ -1752,17 +627,9 @@ const HomeContent = () => {
         {techFeatures.length > 0 ? (
           <div className="feature-list">
             {techFeatures.map((techFeature: Feature, index: number) => (
-              <div key={index} 
-                   className="feature-card"
-                   data-tina-field={`techFeatures.${index}`}>
-                <h4 data-tina-field={`techFeatures.${index}.title`}>{techFeature.title}</h4>
-                <div data-tina-field={`techFeatures.${index}.content`}>
-                  {typeof techFeature.content === 'string' && techFeature.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: techFeature.content }} />
-                  ) : (
-                    <p>技术特色内容尚未添加</p>
-                  )}
-                </div>
+              <div key={index} className="feature-card">
+                <h4>{techFeature.title}</h4>
+                <div dangerouslySetInnerHTML={{ __html: techFeature.content }} />
               </div>
             ))}
           </div>
@@ -1805,101 +672,97 @@ const HomeContent = () => {
       </section>
 
       <section>
-        <h2 data-tina-field="title-application-scenarios">应用场景</h2>
-        <div data-tina-field="content-application-scenarios" data-tina-path="application_scenarios" className="tina-editable-content">
-          <ul>
-            <li>
-              <strong>数字展馆与博物馆</strong>：为各类展览提供精细化的设备控制和高质量的媒体展示，通过独立群组运行确保展览的稳定性，同时支持多展项的集中管理，提升观众体验和管理效率。
-            </li>
-            <li>
-              <strong>企业展厅与品牌中心</strong>：提供企业形象和产品的全方位展示解决方案，支持一键切换不同展示场景，实现对所有设备的精细控制，通过多级权限管理确保系统安全。
-            </li>
-            <li>
-              <strong>临时展览与活动空间</strong>：对于需要快速部署的临时展览，系统的独立群组运行能力和快速集成特性尤为重要，可在无外网环境下正常工作，同时支持灵活的设备扩展。
-            </li>
-            <li>
-              <strong>异形投影与沉浸式空间</strong>：针对非标准投影面，系统内置的几何校正功能和高性能渲染能力，能够实现精准的图像还原，创造沉浸式的展示体验。
-            </li>
-          </ul>
-        </div>
+        <h2>应用场景</h2>
+        <ul>
+          <li>
+            <strong>数字展馆与博物馆</strong>：为各类展览提供精细化的设备控制和高质量的媒体展示，通过独立群组运行确保展览的稳定性，同时支持多展项的集中管理，提升观众体验和管理效率。
+          </li>
+          <li>
+            <strong>企业展厅与品牌中心</strong>：提供企业形象和产品的全方位展示解决方案，支持一键切换不同展示场景，实现对所有设备的精细控制，通过多级权限管理确保系统安全。
+          </li>
+          <li>
+            <strong>临时展览与活动空间</strong>：对于需要快速部署的临时展览，系统的独立群组运行能力和快速集成特性尤为重要，可在无外网环境下正常工作，同时支持灵活的设备扩展。
+          </li>
+          <li>
+            <strong>异形投影与沉浸式空间</strong>：针对非标准投影面，系统内置的几何校正功能和高性能渲染能力，能够实现精准的图像还原，创造沉浸式的展示体验。
+          </li>
+        </ul>
       </section>
 
       <section>
         <h2>产品优势</h2>
         <ol>
-          <li>
+          <li data-tina-field="content-product-advantages.item1">
             <strong>独立运行与集中管理兼备</strong>：每个展项可独立运行，确保基础功能稳定；又能快速集成到中央系统，实现统一管理
           </li>
-          <li>
+          <li data-tina-field="content-product-advantages.item2">
             <strong>全方位设备精细控制</strong>：覆盖从电源开关到软件控制、内容播放的完整控制链条，实现真正的一键式管理
           </li>
-          <li>
+          <li data-tina-field="content-product-advantages.item3">
             <strong>高性能媒体处理</strong>：基于Linux的嵌入式播放器配合GPU硬件加速，确保高清内容和复杂H5页面的流畅播放
           </li>
-          <li>
+          <li data-tina-field="content-product-advantages.item4">
             <strong>几何校正专业能力</strong>：内置专业的画面几何校正功能，解决异形投影面的图像失真问题
           </li>
-          <li>
+          <li data-tina-field="content-product-advantages.item5">
             <strong>灵活部署与扩展</strong>：支持从单一展项到大型展览馆的灵活扩展，适应不同规模和需求的展览场景
           </li>
         </ol>
       </section>
 
       <section>
-        <h2 data-tina-field="title-specifications">系统规格</h2>
+        <h2>系统规格</h2>
 
-        <div data-tina-field="content-specifications" data-tina-path="specifications" className="tina-editable-content">
-          <div className="spec-grid">
-            <div className="spec-section">
-              <h3>硬件规格</h3>
+        <div className="spec-grid">
+          <div className="spec-section">
+            <h3>硬件规格</h3>
+            <ul>
+              <li><strong>主控设备</strong>：</li>
               <ul>
-                <li><strong>主控设备</strong>：</li>
-                <ul>
-                  <li>ESP32双核处理器，支持BLE 5.0和WiFi 4/5</li>
-                  <li>触摸控制面板，提供直观的操作界面</li>
-                </ul>
-                <li><strong>控制节点</strong>：</li>
-                <ul>
-                  <li>ESP32继电器模块：控制电源开关和通断</li>
-                  <li>ESP32 RS232模块：支持标准串口设备通信</li>
-                  <li>ESP32 HID模块：模拟键盘鼠标操作</li>
-                </ul>
-                <li><strong>播放终端</strong>：</li>
-                <ul>
-                  <li>基于高性能SoC的Linux嵌入式播放器</li>
-                  <li>内置GPU加速和硬件视频解码器</li>
-                  <li>支持4K/8K内容播放</li>
-                  <li>存储容量不低于128GB</li>
-                  <li>支持多HDMI输出，每接口支持4K分辨率</li>
-                </ul>
-                <li><strong>接口规格</strong>：</li>
-                <ul>
-                  <li>控制接口：RS232、USB、蓝牙、WiFi</li>
-                  <li>音频输出：3.5mm音频接口</li>
-                  <li>电源要求：支持220V交流输入</li>
-                </ul>
+                <li>ESP32双核处理器，支持BLE 5.0和WiFi 4/5</li>
+                <li>触摸控制面板，提供直观的操作界面</li>
               </ul>
-            </div>
+              <li><strong>控制节点</strong>：</li>
+              <ul>
+                <li>ESP32继电器模块：控制电源开关和通断</li>
+                <li>ESP32 RS232模块：支持标准串口设备通信</li>
+                <li>ESP32 HID模块：模拟键盘鼠标操作</li>
+              </ul>
+              <li><strong>播放终端</strong>：</li>
+              <ul>
+                <li>基于高性能SoC的Linux嵌入式播放器</li>
+                <li>内置GPU加速和硬件视频解码器</li>
+                <li>支持4K/8K内容播放</li>
+                <li>存储容量不低于128GB</li>
+                <li>支持多HDMI输出，每接口支持4K分辨率</li>
+              </ul>
+              <li><strong>接口规格</strong>：</li>
+              <ul>
+                <li>控制接口：RS232、USB、蓝牙、WiFi</li>
+                <li>音频输出：3.5mm音频接口</li>
+                <li>电源要求：支持220V交流输入</li>
+              </ul>
+            </ul>
+          </div>
 
-            <div className="spec-section">
-              <h3>软件规格</h3>
+          <div className="spec-section">
+            <h3>软件规格</h3>
+            <ul>
+              <li><strong>操作系统</strong>：Linux嵌入式系统</li>
+              <li><strong>核心功能</strong>：</li>
               <ul>
-                <li><strong>操作系统</strong>：Linux嵌入式系统</li>
-                <li><strong>核心功能</strong>：</li>
-                <ul>
-                  <li>内置画面几何校正算法</li>
-                  <li>支持复杂H5页面渲染</li>
-                  <li>硬件加速的媒体播放</li>
-                </ul>
-                <li><strong>通信协议</strong>：</li>
-                <ul>
-                  <li>本地通信：BLE GATT</li>
-                  <li>网络通信：MQTT、WiFi</li>
-                </ul>
-                <li><strong>权限管理</strong>：基于角色的多级权限控制</li>
-                <li><strong>移动控制</strong>：支持平板电脑APP集中控制</li>
+                <li>内置画面几何校正算法</li>
+                <li>支持复杂H5页面渲染</li>
+                <li>硬件加速的媒体播放</li>
               </ul>
-            </div>
+              <li><strong>通信协议</strong>：</li>
+              <ul>
+                <li>本地通信：BLE GATT</li>
+                <li>网络通信：MQTT、WiFi</li>
+              </ul>
+              <li><strong>权限管理</strong>：基于角色的多级权限控制</li>
+              <li><strong>移动控制</strong>：支持平板电脑APP集中控制</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -2026,4 +889,8 @@ const HomeContent = () => {
   );
 };
 
-export default HomeContent;
+export default function HomePage() {
+  return (
+    <HomeContent />
+  );
+}
