@@ -42,7 +42,20 @@ export async function checkPaymentStatus(orderId: string): Promise<string> {
   try {
     const response = await fetch(`/api/alipay/status?orderId=${orderId}`);
     const data = await response.json();
-    return data.status;
+    
+    // Map Alipay status to frontend status
+    switch (data.status) {
+      case 'TRADE_SUCCESS':
+        return 'success';
+      case 'TRADE_FINISHED':
+        return 'paid';
+      case 'TRADE_CLOSED':
+        return 'cancelled';
+      case 'WAIT_BUYER_PAY':
+        return 'pending';
+      default:
+        return 'pending';
+    }
   } catch (error) {
     console.error('Error checking payment status:', error);
     return 'error';

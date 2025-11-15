@@ -70,6 +70,13 @@ export default defineConfig({
             label: "Stock Quantity",
             required: true,
           },
+          {
+            type: "string",
+            name: "slug",
+            label: "Product Slug",
+            required: true,
+            description: "URL-friendly product identifier (e.g., 'wireless-headphones')"
+          },
         ],
         ui: {
           router: ({ document }) => `/products/${document._sys.filename}`,

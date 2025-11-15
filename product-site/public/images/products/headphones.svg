@@ -1,0 +1,32 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="headphonesGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f8fafc"/>
+  
+  <!-- Headphones -->
+  <g transform="translate(200, 200)">
+    <!-- Headband -->
+    <path d="M-80,-60 Q0,-100 80,-60" stroke="url(#headphonesGradient)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    
+    <!-- Left ear cup -->
+    <circle cx="-80" cy="-20" r="35" fill="url(#headphonesGradient)" opacity="0.9"/>
+    <circle cx="-80" cy="-20" r="25" fill="#f8fafc"/>
+    
+    <!-- Right ear cup -->
+    <circle cx="80" cy="-20" r="35" fill="url(#headphonesGradient)" opacity="0.9"/>
+    <circle cx="80" cy="-20" r="25" fill="#f8fafc"/>
+    
+    <!-- Connecting arms -->
+    <line x1="-80" y1="-55" x2="-80" y2="-20" stroke="url(#headphonesGradient)" stroke-width="8" stroke-linecap="round"/>
+    <line x1="80" y1="-55" x2="80" y2="-20" stroke="url(#headphonesGradient)" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#1f2937" font-weight="bold">Premium Headphones</text>
+</svg>
