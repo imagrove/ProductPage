@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import SnipcartProvider from "@/components/SnipcartProvider";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CartSummary from "@/components/CartSummary";
+import TinaProvider from "@/components/TinaProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -80,15 +81,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SnipcartProvider>
-          <GoogleAnalytics />
-          <Header />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <CartSummary />
-        </SnipcartProvider>
+        <TinaProvider>
+          <SnipcartProvider>
+            <GoogleAnalytics />
+            <Header />
+            <main className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+            <CartSummary />
+          </SnipcartProvider>
+        </TinaProvider>
       </body>
     </html>
   );

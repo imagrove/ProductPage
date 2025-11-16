@@ -1,37 +1,41 @@
 import { defineConfig } from "tinacms";
 
-// Your hosting provider likely exposes this as an environment variable
-const branch =
-  process.env.GITHUB_BRANCH ||
-  process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
-  "main";
-
 export default defineConfig({
-  branch,
-
-  // Get this from tina.io
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  // Get this from tina.io
-  token: process.env.TINA_TOKEN,
+  // 本地开发配置
+  clientId: "local-dev-client",
+  token: "local-dev-token",
+  branch: "main",
 
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
+  
   media: {
     tina: {
       mediaRoot: "",
       publicFolder: "public",
     },
   },
-  // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
+
+  // 本地编辑配置
+  isLocalClient: true,
+  
   schema: {
     collections: [
       {
         name: "product",
         label: "Products",
         path: "content/products",
+        format: "md",
+        ui: {
+          router: ({ document }) => `/products/${document._sys.filename}`,
+          allowedActions: {
+            create: true,
+            delete: true,
+            edit: true,
+          },
+        },
         fields: [
           {
             type: "string",
@@ -45,6 +49,9 @@ export default defineConfig({
             name: "description",
             label: "Description",
             required: true,
+            ui: {
+              component: "textarea",
+            },
           },
           {
             type: "number",
@@ -78,14 +85,20 @@ export default defineConfig({
             description: "URL-friendly product identifier (e.g., 'wireless-headphones')"
           },
         ],
-        ui: {
-          router: ({ document }) => `/products/${document._sys.filename}`,
-        },
       },
       {
         name: "page",
         label: "Pages",
         path: "content/pages",
+        format: "md",
+        ui: {
+          router: ({ document }) => `/${document._sys.filename}`,
+          allowedActions: {
+            create: true,
+            delete: true,
+            edit: true,
+          },
+        },
         fields: [
           {
             type: "string",
@@ -101,9 +114,6 @@ export default defineConfig({
             isBody: true,
           },
         ],
-        ui: {
-          router: ({ document }) => `/${document._sys.filename}`,
-        },
       },
     ],
   },
