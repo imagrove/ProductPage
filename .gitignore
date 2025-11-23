@@ -25,3 +25,4 @@ Desktop.ini
 # Build directories
 build/
 dist/
+node_modules
