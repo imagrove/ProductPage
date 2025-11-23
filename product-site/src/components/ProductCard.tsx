@@ -1,6 +1,7 @@
 // components/ProductCard.tsx
 import Link from 'next/link';
 import ProductImage from './ProductImage';
+import AddToCartButton from './AddToCartButton';
 
 interface ProductCardProps {
   product: {
@@ -33,22 +34,28 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </h3>
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
+        {product.slug && (
+          <div className="mb-4">
+            <Link href={`/products/${product.slug}`} className="inline-block bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors text-sm">
+              查看详情
+            </Link>
+          </div>
+        )}
         <div className="flex justify-between items-center">
           <span className="text-xl font-bold text-gray-900">${product.price}</span>
-          <button
-            className="snipcart-add-item bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-            data-item-id={product.sku}
-            data-item-price={product.price}
-            data-item-description={product.description}
-            data-item-image={product.image}
-            data-item-name={product.title}
+          <AddToCartButton
+            id={product.sku}
+            price={product.price}
+            description={product.description}
+            image={product.image}
+            name={product.title}
             disabled={product.stock !== undefined && product.stock <= 0}
           >
-            {product.stock !== undefined && product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
-          </button>
+            {product.stock !== undefined && product.stock <= 0 ? '缺货' : '加入购物车'}
+          </AddToCartButton>
         </div>
         {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
-          <p className="text-sm text-orange-600 mt-2">Only {product.stock} left in stock!</p>
+          <p className="text-sm text-orange-600 mt-2">库存紧张，仅剩 {product.stock} 件</p>
         )}
       </div>
     </div>

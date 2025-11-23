@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>项目案例 - 智能展馆多媒体中控系统</title>
+    <!-- 加载Google Analytics -->
+    <div id="google-analytics-placeholder"></div>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <style>
+      :root {
+        --primary-color: #1a5276;
+        --secondary-color: #3498db;
+        --accent-color: #f4d03f;
+        --text-color: #333333;
+        --light-bg: #faf9f7;
+        --border-color: #e0e0e0;
+        --heading-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --body-font: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--body-font);
+        color: var(--text-color);
+        line-height: 1.6;
+        background-color: var(--light-bg);
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        font-family: var(--heading-font);
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      h2 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent-color);
+      }
+
+      h3 {
+        font-family: var(--heading-font);
+        color: var(--secondary-color);
+        font-size: 1.6rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+
+      h4 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+      }
+
+      .content {
+        flex: 1;
+        padding: 40px 0;
+      }
+
+      /* 案例分类 */
+      .case-categories {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 40px;
+      }
+
+      .category-btn {
+        background-color: #f9f9f9;
+        border: 1px solid var(--border-color);
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        color: var(--text-color);
+      }
+
+      .category-btn:hover,
+      .category-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      /* 案例网格 */
+      .case-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
+      }
+
+      .case-card {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: white;
+      }
+
+      .case-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .case-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .case-card:hover .case-image {
+        transform: scale(1.05);
+      }
+
+      .case-image-container {
+        overflow: hidden;
+        height: 220px;
+      }
+
+      .case-info {
+        padding: 20px;
+      }
+
+      .case-name {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      .case-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .case-description {
+        margin-bottom: 20px;
+        color: #666;
+      }
+
+      .case-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .case-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 82, 118, 0.3);
+      }
+
+      /* 案例详情样式 */
+      .case-detail {
+        margin: 40px 0;
+      }
+
+      .detail-header {
+        margin-bottom: 40px;
+      }
+
+      .detail-gallery {
+        margin: 40px 0;
+      }
+
+      .gallery-main {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .gallery-thumbs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+      }
+
+      .gallery-thumb {
+        width: 100%;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .gallery-thumb:hover,
+      .gallery-thumb.active {
+        border-color: var(--primary-color);
+        transform: scale(1.05);
+      }
+
+      .case-details {
+        margin: 40px 0;
+      }
+
+      .detail-section {
+        margin-bottom: 30px;
+      }
+
+      .detail-list {
+        margin: 20px 0;
+      }
+
+      .detail-list li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .detail-list li::before {
+        content: "▶";
+        position: absolute;
+        left: 0;
+        color: var(--secondary-color);
+        font-size: 0.8rem;
+      }
+
+      /* 页脚样式 */
+      footer {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        padding: 0 20px;
+      }
+
+      .footer-column h3 {
+        color: white;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--accent-color);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #e0e0e0;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--accent-color);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: #e0e0e0;
+      }
+
+      /* 咨询按钮样式 */
+      .consultation-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 82, 118, 0.3);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .consultation-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 82, 118, 0.4);
+      }
+
+      /* 模态框样式 */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: #000;
+      }
+
+      /* 表单样式 */
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 5px rgba(26, 82, 118, 0.3);
+      }
+
+      .submit-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: 0;
+          right: 0;
+          background-color: white;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+          gap: 20px;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          transform: translateY(-150%);
+          transition: transform 0.3s ease;
+        }
+
+
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+        }
+
+        .modal-content {
+          margin: 10% auto;
+          padding: 20px;
+          width: 95%;
+        }
+
+        .gallery-thumbs {
+          grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        }
+
+        .gallery-thumb {
+          height: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+      <header>
+        <h1>项目案例</h1>
+        <p>探索我们的成功案例，了解智能展馆多媒体中控系统的实际应用</p>
+      </header>
+
+      <div class="content">
+        <!-- 案例分类 -->
+        <div class="case-categories">
+          <button class="category-btn active" onclick="filterCategory('all')">全部案例</button>
+          <button class="category-btn" onclick="filterCategory('museum')">博物馆</button>
+          <button class="category-btn" onclick="filterCategory('enterprise')">企业展厅</button>
+          <button class="category-btn" onclick="filterCategory('science')">科技馆</button>
+          <button class="category-btn" onclick="filterCategory('culture')">文化馆</button>
+        </div>
+
+        <!-- 案例展示 -->
+        <div class="case-grid">
+          <!-- 案例1 -->
+          <div class="case-card" data-category="museum">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=国家+博物馆+数字化+改造" alt="国家博物馆数字化改造项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">国家博物馆数字化改造项目</h3>
+              <div class="case-meta">
+                <span>博物馆</span>
+                <span>2022年</span>
+              </div>
+              <p class="case-description">为国家博物馆提供智能展馆多媒体中控系统，实现了20个展厅的设备集中控制和智能化管理。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+
+          <!-- 案例2 -->
+          <div class="case-card" data-category="enterprise">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=科技+企业+展厅" alt="科技企业展厅项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">科技企业展厅项目</h3>
+              <div class="case-meta">
+                <span>企业展厅</span>
+                <span>2023年</span>
+              </div>
+              <p class="case-description">为某知名科技企业打造现代化展厅，集成了多媒体展示、互动体验和智能控制系统。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+
+          <!-- 案例3 -->
+          <div class="case-card" data-category="science">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=科技馆+互动+展区" alt="科技馆互动展区项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">科技馆互动展区项目</h3>
+              <div class="case-meta">
+                <span>科技馆</span>
+                <span>2023年</span>
+              </div>
+              <p class="case-description">为科技馆打造沉浸式互动展区，通过智能中控系统实现多设备联动和场景切换。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+
+          <!-- 案例4 -->
+          <div class="case-card" data-category="culture">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=文化+艺术中心" alt="文化艺术中心项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">文化艺术中心项目</h3>
+              <div class="case-meta">
+                <span>文化馆</span>
+                <span>2022年</span>
+              </div>
+              <p class="case-description">为文化艺术中心提供多媒体展示解决方案，支持各类文化活动和艺术展览的灵活举办。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+
+          <!-- 案例5 -->
+          <div class="case-card" data-category="enterprise">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=汽车+品牌+体验+中心" alt="汽车品牌体验中心项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">汽车品牌体验中心项目</h3>
+              <div class="case-meta">
+                <span>企业展厅</span>
+                <span>2023年</span>
+              </div>
+              <p class="case-description">为知名汽车品牌打造数字化体验中心，集成了多媒体展示、互动体验和智能导览系统。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+
+          <!-- 案例6 -->
+          <div class="case-card" data-category="museum">
+            <div class="case-image-container">
+              <img src="https://via.placeholder.com/600x400?text=历史+博物馆" alt="历史博物馆项目" class="case-image">
+            </div>
+            <div class="case-info">
+              <h3 class="case-name">历史博物馆项目</h3>
+              <div class="case-meta">
+                <span>博物馆</span>
+                <span>2021年</span>
+              </div>
+              <p class="case-description">为历史博物馆提供智能化改造，实现文物展示的数字化和互动化，提升观众体验。</p>
+              <a href="#" class="case-btn">查看详情</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 客户反馈 -->
+        <section>
+          <h2>客户反馈</h2>
+          <div class="testimonials">
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <p>"智能展馆多媒体中控系统极大地提升了我们博物馆的运营效率，系统稳定可靠，操作简便，观众体验也得到了显著提升。"</p>
+                <div class="testimonial-author">
+                  <strong>张馆长</strong> - 国家博物馆
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <p>"感谢团队为我们打造的现代化展厅解决方案，系统的灵活性和可扩展性让我们能够快速响应不同的展示需求。"</p>
+                <div class="testimonial-author">
+                  <strong>李经理</strong> - 科技企业
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 咨询部分 -->
+        <section>
+          <h2>联系我们</h2>
+          <p>如果您对我们的项目案例有任何疑问，或者需要定制解决方案，请随时联系我们的团队。</p>
+          <button class="consultation-btn" onclick="openConsultationForm()">立即咨询</button>
+        </section>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div id="footer-placeholder"></div>
+
+    <!-- 咨询模态框 -->
+    <div id="consultation-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeConsultationForm()">&times;</span>
+        <h3>咨询我们</h3>
+        <form id="consultation-form" action="https://formspree.io/f/xknljwjd" method="POST">
+           <!-- 1. 隐藏字段：防止垃圾邮件（可选但推荐） -->
+            <input type="hidden" name="_subject" value="新的产品咨询！" />
+            <!-- TODO:还没有配置好提交后跳转页面 -->
+            <!-- <input
+              type="hidden"
+              name="_next"
+              value="https://www.imagrove.com/thanks.html"
+            /> -->
+            <!-- 提交后跳转页面 -->
+            <input type="hidden" name="_captcha" value="true" />
+            <!-- 开启默认验证码 -->
+          <div class="form-group">
+            <label for="name">姓名 *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="country-code">国家/地区代码 *</label>
+            <input type="text" id="country-code" name="country-code" placeholder="例如：86（中国）" required>
+          </div>
+          <div class="form-group">
+            <label for="phone-number">电话号码 *</label>
+            <input type="tel" id="phone-number" name="phone-number" required>
+          </div>
+          <div class="form-group">
+            <label for="email">电子邮箱</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="message">咨询内容 *</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">提交</button>
+          <!-- 2. 在表单结束标签后添加 reCAPTCHA 脚本 配合开启默认验证码 -->
+            <script
+              src="https://js.formspree.io/v2/formbutton-v3.js"
+              defer
+            ></script>
+        </form>
+      </div>
+    </div>
+
+    <!-- 加载通用JavaScript -->
+    <script src="assets/js/common.js"></script>
+    <script>
+      // 页面加载完成后执行
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('页面DOM加载完成，开始加载共享组件')
+        
+        // 加载共享组件
+        if (typeof loadSharedComponents === 'function') {
+          console.log('调用loadSharedComponents函数...')
+          loadSharedComponents()
+        } else {
+          console.error('loadSharedComponents函数未定义！')
+        }
+        
+        // 项目案例分类筛选功能
+        const initPage = function() {
+          // 项目分类筛选
+          function filterCases(category) {
+            const caseCards = document.querySelectorAll('.case-card');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            // 更新按钮样式
+            categoryButtons.forEach(btn => {
+              btn.classList.remove('active');
+            });
+            
+            // 找到当前点击的按钮并激活
+            categoryButtons.forEach(btn => {
+              if (btn.getAttribute('onclick') === `filterCategory('${category}')`) {
+                btn.classList.add('active');
+              }
+            });
+            
+            // 筛选案例
+            caseCards.forEach(card => {
+              if (category === 'all' || card.dataset.category === category) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          }
+          
+          // 添加筛选按钮点击事件
+          const categoryButtons = document.querySelectorAll('.category-btn');
+          categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+              const category = this.getAttribute('onclick').match(/filterCategory\('(.*?)'\)/)[1];
+              filterCases(category);
+            });
+          });
+        };
+        
+        // 使用统一的导航栏初始化函数
+        // 确保在导航栏加载完成后初始化移动端菜单
+        setTimeout(() => {
+          if (typeof initNavbar === 'function') {
+            initNavbar();
+          } else {
+            // 如果initNavbar函数不存在，直接调用initMobileMenu
+            if (typeof initMobileMenu === 'function') {
+              setTimeout(initMobileMenu, 500);
+            }
+          }
+        }, 500);
+        
+        // 延迟执行页面初始化，确保菜单事件绑定完成
+        setTimeout(() => {
+          initPage();
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

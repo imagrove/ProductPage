@@ -1,80 +1,98 @@
 // app/about/page.tsx
+import ContactModal from '@/components/ContactModal';
+import ContactCTASection from '@/components/ContactCTASection';
 export default function AboutPage() {
+  const site = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '智能展馆多媒体中控系统',
+    url: `${site}/about`,
+  };
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${site}/` },
+      { '@type': 'ListItem', position: 2, name: '关于我们', item: `${site}/about` },
+    ],
+  };
+
   return (
-    <div className="min-h-screen py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-4xl font-bold text-center mb-8">About Us</h1>
-        
-        <div className="prose prose-lg mx-auto">
-          <p className="text-lg text-gray-700 mb-6">
-            Welcome to Product Store, your trusted destination for quality products and exceptional customer service. 
-            We are passionate about providing our customers with the best shopping experience possible.
-          </p>
-
-          <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-          <p className="text-gray-700 mb-6">
-            Our mission is to deliver high-quality products that enhance your daily life. We carefully curate our 
-            selection to ensure that every item meets our strict standards for quality, functionality, and value.
-          </p>
-
-          <h2 className="text-2xl font-semibold mb-4">Why Choose Us?</h2>
-          <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-            <li><strong>Quality Assurance:</strong> Every product is thoroughly tested and vetted</li>
-            <li><strong>Fast Shipping:</strong> We offer worldwide shipping with tracking</li>
-            <li><strong>Customer Support:</strong> Our dedicated team is here to help you</li>
-            <li><strong>Secure Payments:</strong> Multiple payment options including international methods</li>
-            <li><strong>Satisfaction Guarantee:</strong> Easy returns and exchanges</li>
-          </ul>
-
-          <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <h3 className="text-xl font-medium mb-2">Customer First</h3>
-              <p className="text-gray-700">
-                Your satisfaction is our top priority. We strive to exceed your expectations 
-                with every interaction.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Quality Focus</h3>
-              <p className="text-gray-700">
-                We never compromise on quality. Every product in our catalog is selected 
-                with care and attention to detail.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Innovation</h3>
-              <p className="text-gray-700">
-                We continuously seek out innovative products that solve real problems 
-                and improve your daily life.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Global Reach</h3>
-              <p className="text-gray-700">
-                We serve customers worldwide with international shipping and 
-                multi-currency support.
-              </p>
-            </div>
-          </div>
-
-          <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-          <p className="text-gray-700 mb-4">
-            Have questions or need assistance? We're here to help! Reach out to us through our 
-            <a href="/contact" className="text-blue-600 hover:underline"> contact form</a> 
-            and we'll get back to you within 24 hours.
-          </p>
-
-          <div className="bg-gray-50 p-6 rounded-lg mt-8">
-            <h3 className="text-xl font-semibold mb-2">Business Information</h3>
-            <p className="text-gray-700">
-              <strong>Email:</strong> info@productstore.com<br />
-              <strong>Business Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM (EST)<br />
-              <strong>Response Time:</strong> Within 24 hours
-            </p>
-          </div>
+    <div className="min-h-screen">
+      <div className="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold mb-3">关于我们</h1>
+          <p className="text-lg opacity-90">专业的智能展馆解决方案提供商</p>
         </div>
       </div>
+      <div className="container mx-auto px-4 max-w-5xl py-10">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">公司简介</h2>
+          <p className="text-gray-700 mb-4">我们是一家专注于智能展馆多媒体中控系统研发、生产和销售的高科技企业。凭借多年的行业经验和技术积累，我们致力于为各类展览馆、博物馆、企业展厅等场所提供专业的智能化解决方案。</p>
+          <p className="text-gray-700">我们的核心团队由行业资深专家组成，拥有丰富的项目实施经验和创新研发能力。通过不断技术创新和产品优化，我们已成功为众多国内外客户提供了高质量的产品和服务，赢得了广泛的市场认可。</p>
+        </section>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">我们的使命</h2>
+          <p className="text-gray-700">通过创新技术，打造智能、高效、便捷的展馆多媒体控制体验，助力客户提升展览效果和运营效率，为观众带来沉浸式的参观体验。</p>
+        </section>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">我们的愿景</h2>
+          <p className="text-gray-700">成为全球领先的智能展馆解决方案提供商，引领行业技术发展方向，推动展览展示行业的数字化、智能化转型。</p>
+        </section>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">核心团队</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-6 rounded bg-gray-50">
+              <img src="https://via.placeholder.com/150" alt="团队成员" className="w-36 h-36 rounded-full mx-auto mb-4" />
+              <div className="text-lg font-semibold text-blue-700">张三</div>
+              <div className="text-blue-500 mb-2">技术总监</div>
+              <p className="text-gray-700 text-sm">拥有10年智能控制系统开发经验，曾主导多个大型展馆项目的技术方案设计和实施。</p>
+            </div>
+            <div className="text-center p-6 rounded bg-gray-50">
+              <img src="https://via.placeholder.com/150" alt="团队成员" className="w-36 h-36 rounded-full mx-auto mb-4" />
+              <div className="text-lg font-semibold text-blue-700">李四</div>
+              <div className="text-blue-500 mb-2">产品经理</div>
+              <p className="text-gray-700 text-sm">专注于用户体验研究和产品设计，致力于打造符合客户需求的智能展馆产品。</p>
+            </div>
+            <div className="text-center p-6 rounded bg-gray-50">
+              <img src="https://via.placeholder.com/150" alt="团队成员" className="w-36 h-36 rounded-full mx-auto mb-4" />
+              <div className="text-lg font-semibold text-blue-700">王五</div>
+              <div className="text-blue-500 mb-2">项目经理</div>
+              <p className="text-gray-700 text-sm">负责项目规划、协调和管理，确保项目按时高质量完成，客户满意度达到100%。</p>
+            </div>
+          </div>
+        </section>
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold mb-4">发展历程</h2>
+          <div className="space-y-4">
+            <div className="border-l-4 border-blue-500 pl-4">
+              <div className="font-semibold text-blue-700">2010年</div>
+              <p className="text-gray-700">公司成立，专注于展览展示行业技术服务。</p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4">
+              <div className="font-semibold text-blue-700">2013年</div>
+              <p className="text-gray-700">推出第一代展馆多媒体控制系统，获得市场认可。</p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4">
+              <div className="font-semibold text-blue-700">2016年</div>
+              <p className="text-gray-700">完成A轮融资，扩大研发团队，加速产品创新。</p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4">
+              <div className="font-semibold text-blue-700">2018年</div>
+              <p className="text-gray-700">推出基于ESP32技术的新一代智能展馆多媒体中控系统。</p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4">
+              <div className="font-semibold text-blue-700">2021年</div>
+              <p className="text-gray-700">成功实施100+大型展馆项目，服务客户遍布全球。</p>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+      <ContactCTASection />
     </div>
   );
 }

@@ -1,0 +1,41 @@
+<!-- 联系表单组件 -->
+<div class="contact-form">
+  <h3>联系我们</h3>
+  <form action="https://formspree.io/f/xgvpgzny" method="POST" id="contact-form">
+    <div class="form-group">
+      <label for="name">姓名 *</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+    
+    <div class="form-group">
+      <label>电话号码 *</label>
+      <div style="display: flex; gap: 10px; align-items: center">
+        <div style="flex: 0 0 auto; font-size: 16px; font-weight: 500; color: #333;">+</div>
+        <div style="flex: 0 0 100px">
+          <input type="text" id="country-code" name="country-code" placeholder="国家代码" required style="width: 100%" />
+        </div>
+        <div style="flex: 1">
+          <input type="tel" id="phone-number" name="phone-number" placeholder="电话号码" required style="width: 100%" />
+        </div>
+      </div>
+      <small style="color: #666; font-size: 12px">例如：+1 1234567890 或 +44 1234567890</small>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">邮箱地址</label>
+      <input type="email" id="email" name="email" />
+    </div>
+    
+    <div class="form-group">
+      <label for="company">公司名称</label>
+      <input type="text" id="company" name="company" />
+    </div>
+    
+    <div class="form-group">
+      <label for="message">咨询内容 *</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+    
+    <button type="submit" class="submit-btn">提交咨询</button>
+  </form>
+</div>

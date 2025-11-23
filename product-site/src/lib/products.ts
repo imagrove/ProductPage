@@ -10,10 +10,13 @@ export interface Product {
   sku: string;
   stock: number;
   slug: string;
+  excerpt?: string;
+  category?: string;
+  published?: boolean;
 }
 
 // TinaCMS client functions - now using actual TinaCMS data
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts(onlyPublished: boolean = true): Promise<Product[]> {
   try {
     console.log('Fetching products from TinaCMS...');
     
@@ -33,7 +36,7 @@ export async function getProducts(): Promise<Product[]> {
         .filter(edge => edge?.node)
         .map(edge => {
           const node = edge!.node!;
-          return {
+          const base: Product = {
             id: node.id,
             title: node.title,
             description: node.description,
@@ -42,11 +45,15 @@ export async function getProducts(): Promise<Product[]> {
             sku: node.sku,
             stock: node.stock,
             slug: node.slug,
+            excerpt: (node as any).excerpt || (node.description ? String(node.description).slice(0, 120) : ''),
+            category: (node as any).category,
+            published: (node as any).published ?? true,
           };
+          return base;
         });
-      
+      const filtered = onlyPublished ? products.filter(p => p.published) : products;
       console.log(`Successfully fetched ${products.length} products from TinaCMS`);
-      return products;
+      return filtered;
     }
     
     console.log('No products found in TinaCMS, using mock data');
@@ -63,7 +70,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     console.log(`Fetching product with slug: ${slug} from TinaCMS...`);
     
     // First try to get all products and find by slug
-    const products = await getProducts();
+    const products = await getProducts(false);
     const product = products.find(p => p.slug === slug);
     
     if (product) {
@@ -83,53 +90,81 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 // Fallback mock products for development when TinaCMS is not available
 export const mockProducts: Product[] = [
   {
-    id: '1',
-    title: 'Premium Wireless Headphones',
-    description: 'High-quality wireless headphones with noise cancellation and 30-hour battery life.',
-    price: 199.99,
-    image: '/images/products/headphones.svg',
-    sku: 'WH-001',
-    stock: 25,
-    slug: 'wireless-headphones',
-  },
-  {
-    id: '2',
-    title: 'Smart Fitness Watch',
-    description: 'Advanced fitness tracker with heart rate monitoring, GPS, and 7-day battery life.',
-    price: 299.99,
-    image: '/images/products/smartwatch.svg',
-    sku: 'SW-002',
-    stock: 15,
-    slug: 'smart-fitness-watch',
-  },
-  {
-    id: '3',
-    title: 'Portable Bluetooth Speaker',
-    description: 'Compact and powerful Bluetooth speaker with 360-degree sound and waterproof design.',
-    price: 79.99,
-    image: '/images/products/speaker.svg',
-    sku: 'BS-003',
-    stock: 32,
-    slug: 'portable-bluetooth-speaker',
-  },
-  {
-    id: '4',
-    title: 'Wireless Gaming Mouse',
-    description: 'High-precision wireless gaming mouse with customizable RGB lighting and 16,000 DPI sensor.',
-    price: 89.99,
-    image: '/images/products/gaming-mouse.svg',
-    sku: 'GM-004',
-    stock: 20,
-    slug: 'wireless-gaming-mouse',
-  },
-  {
-    id: '5',
-    title: '4K Webcam',
-    description: 'Professional 4K webcam with auto-focus, noise cancellation microphone, and wide-angle lens.',
-    price: 149.99,
+    id: 'p-ctrl-001',
+    title: '智能展馆多媒体中控系统',
+    description: '基于 ESP32 的高性能、高可靠的展馆设备集中控制解决方案。',
+    excerpt: '高性能中控，集中管理展馆设备，支持群组与场景联动。',
+    price: 9999,
     image: '/images/products/webcam.svg',
-    sku: 'WC-005',
-    stock: 18,
-    slug: '4k-webcam',
+    sku: 'CTRL-001',
+    stock: 10,
+    slug: 'central-control-system',
+    category: 'control',
+    published: true,
+  },
+  {
+    id: 'p-ctrl-002',
+    title: 'ESP32 智能控制面板',
+    description: '高性能触控控制面板，支持多设备控制和场景切换。',
+    excerpt: '7 英寸触屏，WiFi+BLE 通信，IP65 防护，支持离线运行。',
+    price: 2999,
+    image: '/images/products/smartwatch.svg',
+    sku: 'CTRL-002',
+    stock: 30,
+    slug: 'esp32-control-panel',
+    category: 'control',
+    published: true,
+  },
+  {
+    id: 'p-disp-001',
+    title: '智能投影系统',
+    description: '支持几何校正与边缘融合的高性能投影系统。',
+    excerpt: '4K 超清，自动几何校正，多机联动，激光光源。',
+    price: 39999,
+    image: '/images/products/gaming-mouse.svg',
+    sku: 'DISP-001',
+    stock: 8,
+    slug: 'smart-projection-system',
+    category: 'display',
+    published: true,
+  },
+  {
+    id: 'p-term-001',
+    title: '嵌入式播放终端',
+    description: 'Linux 播放器，内置 GPU 硬件加速与 H5 页面渲染。',
+    excerpt: '支持 4K 解码，7x24 稳定运行，远程内容更新。',
+    price: 5999,
+    image: '/images/products/speaker.svg',
+    sku: 'TERM-001',
+    stock: 25,
+    slug: 'embedded-player',
+    category: 'terminal',
+    published: true,
+  },
+  {
+    id: 'p-app-001',
+    title: '平板控制应用',
+    description: '面向管理人员的集中控制应用，支持多展项管理。',
+    excerpt: '可视化界面，多级权限，场景一键切换，设备状态监控。',
+    price: 0,
+    image: '/images/products/headphones.svg',
+    sku: 'APP-001',
+    stock: 9999,
+    slug: 'tablet-control-app',
+    category: 'app',
+    published: true,
+  },
+  {
+    id: 'p-ctrl-003',
+    title: '智能设备控制模块',
+    description: '支持多协议的设备控制模块，适配多种展览设备。',
+    excerpt: '继电器电源控制、RS232、红外发射、WiFi 远程控制。',
+    price: 1299,
+    image: '/images/products/webcam.svg',
+    sku: 'CTRL-003',
+    stock: 40,
+    slug: 'device-control-module',
+    category: 'control',
+    published: true,
   },
 ];

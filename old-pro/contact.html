@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>联系方式 - 智能展馆多媒体中控系统</title>
+    <!-- 加载Google Analytics -->
+    <div id="google-analytics-placeholder"></div>
+    <link rel="stylesheet" href="assets/css/common.css" />
+    <style>
+      :root {
+        --primary-color: #1a5276;
+        --secondary-color: #3498db;
+        --accent-color: #f4d03f;
+        --text-color: #333333;
+        --light-bg: #faf9f7;
+        --border-color: #e0e0e0;
+        --heading-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --body-font: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--body-font);
+        color: var(--text-color);
+        line-height: 1.6;
+        background-color: var(--light-bg);
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+        margin-bottom: 40px;
+        border-radius: 8px;
+      }
+
+      h1 {
+        font-family: var(--heading-font);
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      h2 {
+        font-family: var(--heading-font);
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent-color);
+      }
+
+      h3 {
+        font-family: var(--heading-font);
+        color: var(--secondary-color);
+        font-size: 1.6rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+      }
+
+      p {
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+      }
+
+      .content {
+        flex: 1;
+        padding: 40px 0;
+      }
+
+      /* 联系方式部分 */
+      .contact-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin: 40px 0;
+        align-items: start;
+      }
+
+      @media (max-width: 992px) {
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .contact-info {
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .contact-info h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+      }
+
+      .contact-details {
+        margin-top: 20px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .contact-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .contact-content h4 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        color: var(--primary-color);
+      }
+
+      .contact-content p {
+        margin: 0;
+        color: #666;
+      }
+
+      /* 社交媒体链接 */
+      .social-contact {
+        margin-top: 30px;
+      }
+
+      .social-contact h4 {
+        margin-bottom: 15px;
+        color: var(--primary-color);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 18px;
+      }
+
+      .social-links a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(26, 82, 118, 0.3);
+      }
+
+      /* 地图部分 */
+      .map-container {
+        margin-top: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .map-placeholder {
+        width: 100%;
+        height: 250px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .map-placeholder p {
+        color: #666;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* 联系表单 */
+      .contact-form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .contact-form h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 15px;
+        font-family: inherit;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 5px rgba(26, 82, 118, 0.3);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      .form-group.inline {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .form-group.inline {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+
+      .submit-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 82, 118, 0.4);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: 0;
+          right: 0;
+          background-color: white;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+          gap: 20px;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          transform: translateY(-150%);
+          transition: transform 0.3s ease;
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+        }
+
+        .contact-container {
+          gap: 20px;
+        }
+
+        .contact-info,
+        .contact-form {
+          padding: 20px;
+        }
+      }
+
+      /* 页脚样式 */
+      footer {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        padding: 0 20px;
+      }
+
+      .footer-column h3 {
+        color: white;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--accent-color);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #e0e0e0;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--accent-color);
+      }
+
+      .footer-social {
+        margin-top: 20px;
+      }
+
+      .footer-social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        margin-right: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .footer-social a:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: #e0e0e0;
+      }
+
+      /* 咨询按钮样式 */
+      .consultation-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 82, 118, 0.3);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .consultation-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 82, 118, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+      <header>
+        <h1>联系我们</h1>
+        <p>如果您对我们的产品和服务有任何疑问，请随时与我们联系</p>
+      </header>
+
+      <div class="content">
+        <div class="contact-container">
+          <!-- 联系信息 -->
+          <div class="contact-info">
+            <h3>联系方式</h3>
+            <p>
+              感谢您对我们的关注。无论您是需要产品咨询、技术支持还是商务合作，我们的团队都会为您提供专业、高效的服务。
+            </p>
+
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-icon">🏢</div>
+                <div class="contact-content">
+                  <h4>公司地址</h4>
+                  <p>北京市海淀区中关村科技园区8号楼</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div class="contact-content">
+                  <h4>电话咨询</h4>
+                  <p>400-123-4567<br />工作时间：周一至周五 9:00-18:00</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-content">
+                  <h4>电子邮箱</h4>
+                  <p>
+                    sales@example.com (销售咨询)<br />support@example.com
+                    (技术支持)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-contact">
+              <h4>关注我们</h4>
+              <div class="social-links">
+                <a href="#" title="微信">📱</a>
+                <a href="#" title="微博">🔹</a>
+                <a href="#" title="LinkedIn">💼</a>
+                <a href="#" title="YouTube">▶️</a>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <h4>地图位置</h4>
+              <div class="map-placeholder">
+                <p>
+                  地图加载中...<br /><br />
+                  实际使用时，这里将显示公司的地理位置地图。<br />
+                  北京市海淀区中关村科技园区8号楼
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 联系表单 -->
+          <div id="contact-form-placeholder"></div>
+        </div>
+
+        <!-- 常见问题 -->
+        <section>
+          <h2>常见问题</h2>
+          <div class="faq-container">
+            <div class="faq-item">
+              <h3>如何获取产品报价？</h3>
+              <p>
+                您可以通过联系表单提交需求，或者直接拨打我们的销售热线400-123-4567，我们的销售团队会根据您的具体需求提供详细报价。
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>产品支持哪些地区的服务？</h3>
+              <p>
+                我们的服务覆盖全国各地区，同时也支持海外项目的实施和维护。具体服务内容可以根据项目需求进行定制。
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>售后服务包含哪些内容？</h3>
+              <p>
+                我们提供7×24小时技术支持热线、远程协助、定期维护保养、系统升级服务等全方位的售后支持，确保系统稳定运行。
+              </p>
+            </div>
+
+            <div class="faq-item">
+              <h3>项目实施周期是多久？</h3>
+              <p>
+                项目实施周期根据项目规模和复杂程度而定，一般来说，小型项目1-2周，中型项目1-2个月，大型项目2-6个月。我们会在项目开始前提供详细的时间规划。
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div id="footer-placeholder"></div>
+
+    <!-- 加载通用JavaScript -->
+    <script src="assets/js/common.js"></script>
+
+    <!-- 确保联系方式标签激活 -->
+    <script>
+      // 页面加载完成后执行
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('页面DOM加载完成，开始加载共享组件')
+        
+        // 加载共享组件
+        if (typeof loadSharedComponents === 'function') {
+          loadSharedComponents()
+        }
+        
+        // 设置联系方式标签激活状态
+        const setContactActive = function() {
+          const navLinks = document.querySelectorAll(".nav-links a")
+          navLinks.forEach((link) => {
+            link.classList.remove("active")
+            if (link.getAttribute("href") === "contact.html") {
+              link.classList.add("active")
+              console.log("✅ 联系方式标签已激活")
+            }
+          })
+
+          // 延迟再次检查，确保激活状态正确设置
+          setTimeout(() => {
+            const activeLink = document.querySelector(".nav-links a.active")
+            if (
+              activeLink &&
+              activeLink.getAttribute("href") === "contact.html"
+            ) {
+              console.log("✅ 确认联系方式标签激活状态正确")
+            } else {
+              console.log("❌ 联系方式标签激活状态异常，重新设置")
+              navLinks.forEach((link) => {
+                link.classList.remove("active")
+                if (link.getAttribute("href") === "contact.html") {
+                  link.classList.add("active")
+                }
+              })
+            }
+          }, 100)
+        }
+        
+        // 确保loadSharedComponents函数存在并调用
+        if (typeof loadSharedComponents === 'function') {
+          console.log('Calling loadSharedComponents for contact page');
+          loadSharedComponents();
+        } else {
+          console.error('loadSharedComponents function not available!');
+        }
+        
+        // 使用统一的导航栏初始化函数
+        initNavbar();
+        
+        // 设置联系方式标签激活状态
+        setContactActive();
+      })
+    </script>
+  </body>
+</html>

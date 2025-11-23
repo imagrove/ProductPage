@@ -2,6 +2,7 @@
 
 import { useTina } from 'tinacms/dist/react';
 import ProductImage from '@/components/ProductImage';
+import AddToCartButton from '@/components/AddToCartButton';
 
 interface Product {
   title: string;
@@ -63,36 +64,36 @@ export default function ProductPageClient({ product: initialProduct, slug }: Pro
             <div className="border-t border-b py-4">
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-bold text-gray-900">${product.price}</span>
-                <span className="text-sm text-gray-500">SKU: {product.sku}</span>
+                <span className="text-sm text-gray-500">SKU：{product.sku}</span>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600">Stock:</span>
+                <span className="text-sm text-gray-600">库存：</span>
                 <span className={`text-sm font-medium ${
                   product.stock && product.stock > 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
-                  {product.stock && product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                  {product.stock && product.stock > 0 ? `有货（${product.stock} 件）` : '缺货'}
                 </span>
               </div>
 
-              <button
-                className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed snipcart-add-item"
-                data-item-id={product.sku}
-                data-item-price={product.price}
-                data-item-description={product.description}
-                data-item-image={product.image}
-                data-item-name={product.title}
+              <AddToCartButton
+                id={product.sku}
+                price={product.price}
+                description={product.description}
+                image={product.image}
+                name={product.title}
                 disabled={!product.stock || product.stock <= 0}
+                className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                {!product.stock || product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
-              </button>
+                {!product.stock || product.stock <= 0 ? '缺货' : '加入购物车'}
+              </AddToCartButton>
             </div>
 
             {/* Product Description */}
             <div className="prose prose-gray max-w-none">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Product Details</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">产品详情</h3>
               <p className="text-gray-600">
                 {product.description}
               </p>
@@ -100,12 +101,12 @@ export default function ProductPageClient({ product: initialProduct, slug }: Pro
 
             {/* Features */}
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Features</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">核心特性</h3>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>• High-quality materials and construction</li>
-                <li>• Modern design and functionality</li>
-                <li>• Perfect for everyday use</li>
-                <li>• Excellent value for money</li>
+                <li>• 高品质材料与做工</li>
+                <li>• 现代化设计与功能</li>
+                <li>• 适合日常使用场景</li>
+                <li>• 具有出色性价比</li>
               </ul>
             </div>
           </div>

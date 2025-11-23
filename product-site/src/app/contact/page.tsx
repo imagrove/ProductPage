@@ -3,70 +3,87 @@ import ContactForm from '@/components/ContactForm';
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-4xl font-bold text-center mb-8">Contact Us</h1>
-        
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-2xl font-semibold mb-6">Get in Touch</h2>
-            <p className="text-gray-700 mb-6">
-              We'd love to hear from you! Whether you have questions about our products, 
-              need assistance with your order, or just want to say hello, we're here to help.
-            </p>
-
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start space-x-3">
-                <div className="text-blue-600 mt-1">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                  </svg>
+    <div className="min-h-screen">
+      <div className="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold mb-3">联系我们</h1>
+          <p className="text-lg opacity-90">如果您对我们的产品和服务有任何疑问，请随时与我们联系</p>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 max-w-6xl py-10">
+        <div className="grid lg:grid-cols-2 gap-10">
+          <div className="space-y-6">
+            <div className="bg-gray-50 p-6 rounded">
+              <h3 className="text-xl font-semibold text-blue-700">联系方式</h3>
+              <p className="text-gray-700 mt-2">感谢您对我们的关注。无论您是需要产品咨询、技术支持还是商务合作，我们的团队都会为您提供专业、高效的服务。</p>
+              <div className="mt-4 space-y-4">
+                <div className="flex items-start">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center mr-3">🏢</div>
+                  <div>
+                    <div className="font-semibold text-blue-700">公司地址</div>
+                    <div className="text-gray-700">北京市海淀区中关村科技园区8号楼</div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold">Email</h3>
-                  <p className="text-gray-600">info@productstore.com</p>
+                <div className="flex items-start">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center mr-3">📞</div>
+                  <div>
+                    <div className="font-semibold text-blue-700">电话咨询</div>
+                    <div className="text-gray-700">400-123-4567<br />工作时间：周一至周五 9:00-18:00</div>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <div className="text-blue-600 mt-1">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <div className="text-blue-600 mt-1">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold">Business Hours</h3>
-                  <p className="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM (EST)</p>
+                <div className="flex items-start">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center mr-3">✉️</div>
+                  <div>
+                    <div className="font-semibold text-blue-700">电子邮箱</div>
+                    <div className="text-gray-700">sales@example.com（销售咨询）<br />support@example.com（技术支持）</div>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h3 className="font-semibold text-blue-800 mb-2">Response Time</h3>
-              <p className="text-blue-700">
-                We typically respond to all inquiries within 24 hours during business days.
-              </p>
+              <div className="mt-6">
+                <div className="font-semibold text-blue-700 mb-2">关注我们</div>
+                <div className="flex gap-3">
+                  <a href="#" title="微信" className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center">📱</a>
+                  <a href="#" title="微博" className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center">🔹</a>
+                  <a href="#" title="LinkedIn" className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center">💼</a>
+                  <a href="#" title="YouTube" className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 text-white flex items-center justify-center">▶️</a>
+                </div>
+              </div>
+              <div className="mt-6">
+                <div className="font-semibold text-blue-700 mb-2">地图位置</div>
+                <div className="rounded overflow-hidden shadow bg-gray-100 h-64 flex items-center justify-center">
+                  <p className="text-gray-600 text-center px-6">地图加载中...<br /><br />实际使用时，这里将显示公司的地理位置地图。<br />北京市海淀区中关村科技园区8号楼</p>
+                </div>
+              </div>
             </div>
           </div>
-
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Send us a Message</h2>
-            <ContactForm />
+            <div className="bg-white p-6 rounded shadow">
+              <h3 className="text-xl font-semibold text-blue-700 mb-4">联系表单</h3>
+              <ContactForm />
+            </div>
           </div>
         </div>
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold mb-4">常见问题</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">如何获取产品报价？</h3>
+              <p className="text-gray-700">您可以通过联系表单提交需求，或者直接拨打我们的销售热线400-123-4567，我们的销售团队会根据您的具体需求提供详细报价。</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">产品支持哪些地区的服务？</h3>
+              <p className="text-gray-700">我们的服务覆盖全国各地区，同时也支持海外项目的实施和维护。具体服务内容可以根据项目需求进行定制。</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">售后服务包含哪些内容？</h3>
+              <p className="text-gray-700">我们提供7×24小时技术支持热线、远程协助、定期维护保养、系统升级服务等全方位的售后支持，确保系统稳定运行。</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-blue-700 mb-2">项目实施周期是多久？</h3>
+              <p className="text-gray-700">项目实施周期根据项目规模和复杂程度而定，一般来说，小型项目1-2周，中型项目1-2个月，大型项目2-6个月。我们会在项目开始前提供详细的时间规划。</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

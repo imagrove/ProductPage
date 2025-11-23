@@ -2,20 +2,39 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const setH = () => {
+      const el = document.querySelector('header') as HTMLElement | null;
+      const h = el ? el.offsetHeight : 0;
+      document.documentElement.style.setProperty('--header-height', `${h}px`);
+    };
+    setH();
+    window.addEventListener('resize', setH);
+    return () => window.removeEventListener('resize', setH);
+  }, []);
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return pathname === href || pathname.startsWith(href + '/');
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/products', label: 'Products' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/', label: '首页' },
+    { href: '/about', label: '关于我们' },
+    { href: '/products', label: '产品' },
+    { href: '/cases', label: '项目案例' },
+    { href: '/contact', label: '联系方式' },
   ];
 
   return (
@@ -23,7 +42,7 @@ export default function Header() {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link href="/" className="text-xl font-bold text-gray-800">
-            Product Store
+            智能展馆多媒体中控系统
           </Link>
           
           {/* Desktop Navigation */}
@@ -32,7 +51,7 @@ export default function Header() {
               <Link 
                 key={item.href} 
                 href={item.href} 
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className={`${isActive(item.href) ? 'text-blue-600 font-semibold border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-800'} transition-colors pb-1`}
               >
                 {item.label}
               </Link>
@@ -42,7 +61,25 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             {/* Cart Button */}
             <button
-              className="snipcart-checkout text-gray-600 hover:text-gray-800 transition-colors relative"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const w: any = window as any;
+                const opened = !!document.querySelector('#snipcart .snipcart-modal__container') || (location.hash && location.hash.startsWith('#/'));
+                if (opened) {
+                  if (w?.Snipcart?.api?.theme?.cart?.close) {
+                    w.Snipcart.api.theme.cart.close();
+                  }
+                  if (location.hash && location.hash.startsWith('#/')) {
+                    history.replaceState(null, '', location.pathname + location.search);
+                  }
+                } else {
+                  if (w?.Snipcart?.api?.theme?.cart?.open) {
+                    w.Snipcart.api.theme.cart.open();
+                  }
+                }
+              }}
+              className="text-gray-600 hover:text-gray-800 transition-colors relative"
               aria-label="Shopping cart"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +114,7 @@ export default function Header() {
                 <Link 
                   key={item.href} 
                   href={item.href} 
-                  className="text-gray-600 hover:text-gray-800 py-2 transition-colors"
+                  className={`${isActive(item.href) ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-gray-800'} py-2 transition-colors`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}

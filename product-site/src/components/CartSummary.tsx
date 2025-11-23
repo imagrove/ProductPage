@@ -19,9 +19,13 @@ export default function CartSummary() {
   useEffect(() => {
     // Listen for Snipcart events
     const updateCart = () => {
-      if (window.Snipcart) {
-        const cart = window.Snipcart.store.getState().cart;
-        const items = cart.items.items.map((item: any) => ({
+      const w: any = window as any;
+      if (w?.Snipcart?.store?.getState) {
+        const state = w.Snipcart.store.getState();
+        const cart = state?.cart || state?.state?.cart || {};
+        const raw = cart?.items?.items ?? cart?.items ?? [];
+        const list = Array.isArray(raw) ? raw : Object.values(raw || {});
+        const items = list.map((item: any) => ({
           id: item.id,
           name: item.name,
           price: item.price,
@@ -29,7 +33,8 @@ export default function CartSummary() {
           image: item.image,
         }));
         setCartItems(items);
-        setTotal(cart.total);
+        const t = cart?.total ?? cart?.totals?.total ?? 0;
+        setTotal(typeof t === 'number' ? t : Number(t) || 0);
       }
     };
 
@@ -37,16 +42,28 @@ export default function CartSummary() {
     updateCart();
 
     // Listen for cart changes
+    document.addEventListener('snipcart.ready', updateCart);
     document.addEventListener('snipcart.cart.updated', updateCart);
     document.addEventListener('snipcart.item.added', updateCart);
     document.addEventListener('snipcart.item.removed', updateCart);
 
     return () => {
+      document.removeEventListener('snipcart.ready', updateCart);
       document.removeEventListener('snipcart.cart.updated', updateCart);
       document.removeEventListener('snipcart.item.added', updateCart);
       document.removeEventListener('snipcart.item.removed', updateCart);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      const w: any = window as any;
+      if (w?.document) {
+        const evt = new Event('snipcart.cart.updated');
+        w.document.dispatchEvent(evt);
+      }
+    }
+  }, [isOpen]);
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 

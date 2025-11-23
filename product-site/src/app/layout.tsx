@@ -78,6 +78,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const showFloatingCart = process.env.NEXT_PUBLIC_ENABLE_FLOATING_CART === 'true';
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
@@ -89,7 +90,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            <CartSummary />
+            {showFloatingCart && <CartSummary />}
           </SnipcartProvider>
         </TinaProvider>
       </body>
