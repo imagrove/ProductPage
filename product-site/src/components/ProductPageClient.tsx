@@ -1,6 +1,7 @@
 'use client';
 
 import { useTina } from 'tinacms/dist/react';
+import { useEffect, useMemo, useState } from 'react';
 import ProductImage from '@/components/ProductImage';
 import AddToCartButton from '@/components/AddToCartButton';
 
@@ -20,8 +21,13 @@ interface ProductPageClientProps {
 }
 
 export default function ProductPageClient({ product: initialProduct, slug }: ProductPageClientProps) {
-  // 使用TinaCMS的useTina钩子来实现编辑功能
-  const { data: product } = useTina({
+  const [editingEnabled, setEditingEnabled] = useState(false);
+  useEffect(() => {
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+    const viaQuery = params.get('edit') === '1' || params.get('tina') === '1';
+    setEditingEnabled(viaQuery);
+  }, []);
+  const tina = useTina({
     query: `
       query GetProduct($relativePath: String!) {
         product(relativePath: $relativePath) {
@@ -38,6 +44,13 @@ export default function ProductPageClient({ product: initialProduct, slug }: Pro
     variables: { relativePath: `${slug}.md` },
     data: initialProduct,
   });
+  const product = useMemo(() => {
+    if (editingEnabled) {
+      const d = (tina as any)?.data;
+      return d?.product ?? initialProduct;
+    }
+    return initialProduct;
+  }, [editingEnabled, tina, initialProduct]);
 
   return (
     <div className="min-h-screen py-8">

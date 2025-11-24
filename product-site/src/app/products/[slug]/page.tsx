@@ -1,4 +1,6 @@
 // app/products/[slug]/page.tsx
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import { getProductBySlug, mockProducts } from '@/lib/products';
 import ProductPageClient from '@/components/ProductPageClient';
 
@@ -14,11 +16,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Try to get product from TinaCMS, fallback to mock data
   let product = await getProductBySlug(slug);
   
-  if (!product) {
-    // Fallback to mock products for development
-    product = mockProducts.find(p => p.slug === slug) || null;
-  }
-
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">

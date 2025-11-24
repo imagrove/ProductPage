@@ -68,16 +68,79 @@ export async function getProducts(onlyPublished: boolean = true): Promise<Produc
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     console.log(`Fetching product with slug: ${slug} from TinaCMS...`);
-    
-    // First try to get all products and find by slug
-    const products = await getProducts(false);
-    const product = products.find(p => p.slug === slug);
-    
-    if (product) {
-      console.log(`Found product: ${product.title}`);
-      return product;
+    // Prefer direct document lookup to reflect latest saved content
+    try {
+      const doc = await client.product({ relativePath: `${slug}.md` } as any);
+      const node = (doc as any)?.data?.product;
+      if (node) {
+        const base: Product = {
+          id: node.id,
+          title: node.title,
+          description: node.description,
+          price: node.price,
+          image: node.image,
+          sku: node.sku,
+          stock: node.stock,
+          slug: node.slug,
+          excerpt: (node as any).excerpt || (node.description ? String(node.description).slice(0, 120) : ''),
+          category: (node as any).category,
+          published: (node as any).published ?? true,
+        };
+        console.log(`Found product document: ${base.title}`);
+        return base;
+      }
+    } catch (e) {
+      console.log('Direct document query failed, trying list lookup...');
     }
-    
+    // Alternative: generic document query
+    try {
+      const doc2 = await (client as any).document({ collection: 'product', relativePath: `${slug}.md` });
+      const node: any = doc2?.data?.document;
+      if (node && node.__typename === 'Product') {
+        const base: Product = {
+          id: node.id,
+          title: node.title,
+          description: node.description,
+          price: node.price,
+          image: node.image,
+          sku: node.sku,
+          stock: node.stock,
+          slug: node.slug,
+          excerpt: node.excerpt || (node.description ? String(node.description).slice(0, 120) : ''),
+          category: node.category,
+          published: node.published ?? true,
+        };
+        console.log(`Found product via generic document: ${base.title}`);
+        return base;
+      }
+    } catch (e) {
+      console.log('Generic document query failed');
+    }
+    // Fallback: query connection with filter by slug
+    try {
+      const conn = await (client as any).productConnection({ filter: { slug: { eq: slug } } });
+      const edges = conn?.data?.productConnection?.edges || [];
+      const node = edges.find((e: any) => e?.node)?.node;
+      if (node) {
+        const base: Product = {
+          id: node.id,
+          title: node.title,
+          description: node.description,
+          price: node.price,
+          image: node.image,
+          sku: node.sku,
+          stock: node.stock,
+          slug: node.slug,
+          excerpt: (node as any).excerpt || (node.description ? String(node.description).slice(0, 120) : ''),
+          category: (node as any).category,
+          published: (node as any).published ?? true,
+        };
+        console.log(`Found product via filtered connection: ${base.title}`);
+        return base;
+      }
+    } catch (e) {
+      console.log('Filtered connection query failed');
+    }
     console.log(`Product with slug '${slug}' not found`);
     return null;
   } catch (error) {
