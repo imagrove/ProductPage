@@ -302,8 +302,6 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    pattern='[0-9]{11}'
-                    title='请输入11位手机号码'
                     className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                       errors['contactPhone'] ? 'border-red-500' : 'border-gray-300'
                     }`}
