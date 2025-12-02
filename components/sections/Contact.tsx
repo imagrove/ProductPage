@@ -293,24 +293,26 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label className='mb-2 block text-lg font-medium text-gray-700'>
-                      联系电话 <span className='text-red-500'>*</span>
-                    </label>
-                    <input
-                      type='tel'
-                      name='phone'
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      required
-                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                        errors['contactPhone'] ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder='请输入联系电话'
-                    />
-                    {errors['contactPhone'] && (
-                      <p className='mt-1 text-sm text-red-500'>{errors['contactPhone']}</p>
-                    )}
-                  </div>
+                  <label className='mb-2 block text-lg font-medium text-gray-700'>
+                    联系电话 <span className='text-red-500'>*</span>
+                  </label>
+                  <input
+                    type='tel'
+                    name='phone'
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    pattern='[0-9]{11}'
+                    title='请输入11位手机号码'
+                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      errors['contactPhone'] ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder='请输入11位手机号码'
+                  />
+                  {errors['contactPhone'] && (
+                    <p className='mt-1 text-sm text-red-500'>{errors['contactPhone']}</p>
+                  )}
+                </div>
                 </div>
 
                 <div>
@@ -357,6 +359,7 @@ export default function Contact() {
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
                 <input type='hidden' name='_replyto' value={formData.phone} />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
+                <input type='hidden' name='phone' value={formData.phone} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
