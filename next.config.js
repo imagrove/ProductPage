@@ -16,7 +16,8 @@ const nextConfig = {
   reactStrictMode: false,
   // 启用SWC编译器
   experimental: {
-    optimizeCss: true,
+    // 禁用CSS优化以避免静态导出时的critters错误
+    // optimizeCss: true,
     // 启用部分预渲染优化
     isrMemoryCacheSize: 50,
   },

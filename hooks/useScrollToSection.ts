@@ -22,7 +22,6 @@ export const useScrollToSection = (): ScrollToSectionHook => {
       // 使用utils中的scrollToElement函数实现平滑滚动
       scrollToElement(targetSection, {
         behavior: 'smooth',
-        block: 'start',
         ...options,
       })
       console.log('113001 - scrollToElement called')
