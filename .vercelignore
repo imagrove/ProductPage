@@ -1,3 +1,11 @@
+# 忽略旧的HTML文件目录
+0-docs/OLD-HTML/**
+
+# 忽略开发相关文件
+.next/
+out/
+node_modules/
+
 # 开发文档和配置 - 生产环境不需要
 0-docs/
 *.md
@@ -19,9 +27,6 @@ readme.md
 *.spec.*
 coverage/
 .nyc_output/
-
-# 开发脚本 - 生产环境不需要（但保留可能的构建脚本）
-# scripts/
 
 # 开发工具和缓存文件 - 生产环境不需要
 .cache/
@@ -74,16 +79,9 @@ $RECYCLE.BIN/
 .env.production
 .env.staging
 
-# 开发脚本 - 生产环境不需要
-scripts/
-
 # TypeScript 构建缓存 - 生产环境会重新构建
 *.tsbuildinfo
 
 # 包管理器缓存 - 生产环境会重新安装依赖
 .npm
 .node_repl_history
-
-# 可选：如果你希望Vercel构建时重新生成依赖，可以取消注释下面几行
-node_modules/
-package-lock.json
