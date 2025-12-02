@@ -35,7 +35,7 @@ export default function Contact() {
     const errorKey =
       name === 'name'
         ? 'contactName'
-        : name === 'phone_number'
+        : name === 'tel'
           ? 'contactPhone'
           : name === 'message'
             ? 'projectDesc'
@@ -298,7 +298,7 @@ export default function Contact() {
                   </label>
                   <input
                     type='tel'
-                    name='phone_number'
+                    name='tel'
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
@@ -359,7 +359,7 @@ export default function Contact() {
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
                 <input type='hidden' name='_replyto' value='contact@yourdomain.com' />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
-                <input type='hidden' name='phone_number' value={formData.phone} />
+                <input type='hidden' name='tel' value={formData.phone} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
