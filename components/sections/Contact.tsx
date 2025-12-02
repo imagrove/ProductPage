@@ -360,6 +360,23 @@ export default function Contact() {
                 </div>
 
                 <div>
+                  <label className='mb-2 block text-lg font-medium text-gray-700'>邮箱</label>
+                  <input
+                    type='email'
+                    name='email'
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      errors['email'] ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder='请输入您的邮箱地址（可选）'
+                  />
+                  {errors['email'] && (
+                    <p className='mt-1 text-sm text-red-500'>{errors['email']}</p>
+                  )}
+                </div>
+
+                <div>
                   <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
                   <select
                     name='projectType'
@@ -403,7 +420,6 @@ export default function Contact() {
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
                 <input type='hidden' name='_replyto' value={formData.email || formData.phone} />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
-                <input type='hidden' name='email' value={formData.email} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
