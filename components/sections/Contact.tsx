@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useFormValidation, useScrollToSection } from '@/hooks'
 import { SuccessMessage } from '../common/SuccessMessage'
@@ -405,12 +406,15 @@ export default function Contact() {
             >
               <h4 className='mb-4 font-semibold text-gray-900'>微信扫码咨询</h4>
 
-              {/* 二维码占位图 */}
-              <div className='mx-auto mb-4 flex h-40 w-40 items-center justify-center rounded-lg bg-gray-200'>
-                <div className='text-center text-gray-500'>
-                  <div className='mb-1 text-sm'>微信二维码</div>
-                  <div className='text-xs'>400x400px</div>
-                </div>
+              {/* 微信二维码图片 */}
+              <div className='mx-auto mb-4 flex h-40 w-40 items-center justify-center rounded-lg bg-white'>
+                <Image
+                  src="/images/qywx-qrcode.jpg"
+                  alt="企业微信二维码"
+                  width={160}
+                  height={160}
+                  className="rounded-lg object-cover"
+                />
               </div>
 
               <p className='text-sm text-gray-600'>扫描二维码添加微信，专业工程师在线为您解答</p>

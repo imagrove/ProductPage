@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# 禁止爬取管理页面和API
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+
+# 站点地图
+Sitemap: https://multimedia-control-system.com/sitemap.xml
+
+# 爬取延迟
+Crawl-delay: 1
