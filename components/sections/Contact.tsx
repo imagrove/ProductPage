@@ -26,10 +26,19 @@ export default function Contact() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }))
+    // 特殊处理电话字段，无论name是phone还是tel都更新formData.phone
+    if (name === 'phone' || name === 'tel') {
+      setFormData(prev => ({
+        ...prev,
+        phone: value,
+      }))
+    }else{
+       setFormData(prev => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
+   
 
     // 清除对应字段的错误信息
     const errorKey =
