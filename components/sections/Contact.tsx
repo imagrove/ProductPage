@@ -33,19 +33,18 @@ export default function Contact() {
         ...prev,
         phone: value,
       }))
-    }else{
-       setFormData(prev => ({
+    } else {
+      setFormData(prev => ({
         ...prev,
         [name]: value,
       }))
     }
-   
 
     // 清除对应字段的错误信息
     const errorKey =
       name === 'name'
         ? 'contactName'
-        : name === 'tel'
+        : name === 'phone'
           ? 'contactPhone'
           : name === 'message'
             ? 'projectDesc'
@@ -70,6 +69,30 @@ export default function Contact() {
     e.preventDefault()
 
     // 表单验证
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.name.trim()) {
+      newErrors['contactName'] = '请输入您的姓名'
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors['contactPhone'] = '请输入联系电话'
+    } else if (!/^1[3-9]\d{9}$/.test(formData.phone)) {
+      newErrors['contactPhone'] = '请输入有效的11位手机号码'
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors['email'] = '请输入有效的邮箱地址'
+    }
+
+    if (!formData.projectType) {
+      newErrors['projectType'] = '请选择项目类型'
+    }
+
+    if (!formData.message.trim()) {
+      newErrors['message'] = '请输入您的需求描述'
+    }
+
     const isValid = validateForm({
       contactName: formData.name,
       contactPhone: formData.phone,
@@ -178,7 +201,14 @@ export default function Contact() {
       })
       console.log('📧 邮件主题:', `多媒体播控系统咨询 - ${formData.name}`)
       console.log('📞 电话:', formData.phone)
-      console.log('📧 邮箱:', formData.email)
+      // 开发环境：打印表单数据
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📧 邮箱:', formData.email)
+        console.log('📱 手机号:', formData.phone)
+        console.log('👤 姓名:', formData.name)
+        console.log('📋 项目类型:', formData.projectType)
+        console.log('💬 需求描述:', formData.message)
+      }
       console.log('🌐 当前环境:', process.env.NEXT_PUBLIC_ENV || '未设置')
       
       // 模拟提交成功
@@ -329,45 +359,26 @@ export default function Contact() {
                 </div>
                 </div>
 
-                <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-                  <div>
-                    <label className='mb-2 block text-lg font-medium text-gray-700'>邮箱</label>
-                    <input
-                      type='email'
-                      name='email'
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                        errors['email'] ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder='请输入您的邮箱（可选）'
-                    />
-                    {errors['email'] && (
-                      <p className='mt-1 text-sm text-red-500'>{errors['email']}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
-                    <select
-                      name='projectType'
-                      value={formData.projectType}
-                      onChange={handleInputChange}
-                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                        errors['projectType'] ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                    >
-                      <option value=''>请选择项目类型</option>
-                      {projectTypes.map(type => (
-                        <option key={type} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                    {errors['projectType'] && (
-                      <p className='mt-1 text-sm text-red-500'>{errors['projectType']}</p>
-                    )}
-                  </div>
+                <div>
+                  <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
+                  <select
+                    name='projectType'
+                    value={formData.projectType}
+                    onChange={handleInputChange}
+                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      errors['projectType'] ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  >
+                    <option value=''>请选择项目类型</option>
+                    {projectTypes.map(type => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                  {errors['projectType'] && (
+                    <p className='mt-1 text-sm text-red-500'>{errors['projectType']}</p>
+                  )}
                 </div>
 
                 <div>
@@ -392,7 +403,7 @@ export default function Contact() {
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
                 <input type='hidden' name='_replyto' value={formData.email || formData.phone} />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
-                <input type='hidden' name='phone' value={formData.phone} />
+                <input type='hidden' name='email' value={formData.email} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
