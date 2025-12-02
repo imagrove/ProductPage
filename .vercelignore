@@ -1,8 +1,89 @@
-#忽略 0-docs/ 文件夹
+# 开发文档和配置 - 生产环境不需要
 0-docs/
-
-#忽略 .gitignore 文件
-.gitignore
-
 *.md
 *.md~
+
+# 项目配置和指南文件 - 生产环境不需要
+.gitignore
+.prettierignore
+.prettierrc
+FORMSPREE_CONFIG.md
+GOOGLE_ANALYTICS_CONFIG.md
+README-PRO.md
+VERCEL_DEPLOYMENT_GUIDE.md
+readme.md
+*.xlsx
+
+# 测试和开发相关文件 - 生产环境不需要
+*.test.*
+*.spec.*
+coverage/
+.nyc_output/
+
+# 开发脚本 - 生产环境不需要（但保留可能的构建脚本）
+# scripts/
+
+# 开发工具和缓存文件 - 生产环境不需要
+.cache/
+.parcel-cache/
+.eslintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# 日志和临时文件 - 生产环境不需要
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+
+# IDE和编辑器文件 - 生产环境不需要
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+*.tmproj
+*.tmproject
+
+# 系统文件 - 生产环境不需要
+.DS_Store
+.DS_Store?
+.AppleDouble
+.AppleDB
+.AppleDesktop
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# 环境变量文件 - 生产环境使用Vercel的环境变量配置
+.env
+.env.local
+.env.example
+.env.development
+.env.production
+.env.staging
+
+# 开发脚本 - 生产环境不需要
+scripts/
+
+# TypeScript 构建缓存 - 生产环境会重新构建
+*.tsbuildinfo
+
+# 包管理器缓存 - 生产环境会重新安装依赖
+.npm
+.node_repl_history
+
+# 可选：如果你希望Vercel构建时重新生成依赖，可以取消注释下面几行
+node_modules/
+package-lock.json
