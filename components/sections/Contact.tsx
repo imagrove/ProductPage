@@ -298,7 +298,7 @@ export default function Contact() {
                   </label>
                   <input
                     type='tel'
-                    name='phone'
+                    name='telephone'
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
@@ -357,9 +357,9 @@ export default function Contact() {
 
                 {/* 隐藏字段用于Formspree配置 */}
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
-                <input type='hidden' name='_replyto' value={formData.phone} />
+                <input type='hidden' name='_replyto' value='contact@yourdomain.com' />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
-                <input type='hidden' name='phone' value={formData.phone} />
+                <input type='hidden' name='telephone' value={formData.phone} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
