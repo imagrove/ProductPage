@@ -1,0 +1,54 @@
+{
+  "name": "multimedia-control-system-ad-page",
+  "version": "1.0.0",
+  "description": "专业多媒体播控系统广告页 - 响应式单页应用",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
+    "validate": "npm run type-check && npm run format:check",
+    "export": "next build && next export"
+  },
+  "dependencies": {
+    "@next/third-parties": "^16.0.6",
+    "@types/node": "^20",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.0.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^10.16.4",
+    "lucide-react": "^0.292.0",
+    "next": "14.0.0",
+    "postcss": "^8",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "16.0.5",
+    "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.9"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "multimedia",
+    "control-system",
+    "responsive-design"
+  ],
+  "author": "多媒体播控系统团队",
+  "license": "MIT"
+}
