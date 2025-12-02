@@ -11,6 +11,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    email: '',
     projectType: '',
     message: '',
   })
@@ -108,7 +109,7 @@ export default function Contact() {
         const replyToField = form.querySelector('input[name="_replyto"]') as HTMLInputElement
         
         if (subjectField) subjectField.value = `多媒体播控系统咨询 - ${formData.name}`
-        if (replyToField) replyToField.value = formData.phone
+        if (replyToField) replyToField.value = formData.email || formData.phone
 
         // 让表单正常提交
         form.submit()
@@ -145,6 +146,7 @@ export default function Contact() {
           setFormData({
             name: '',
             phone: '',
+            email: '',
             projectType: '',
             message: '',
           })
@@ -170,11 +172,13 @@ export default function Contact() {
       console.log('📋 表单数据:', {
         姓名: formData.name,
         电话: formData.phone,
+        邮箱: formData.email,
         项目类型: formData.projectType,
         需求描述: formData.message,
       })
       console.log('📧 邮件主题:', `多媒体播控系统咨询 - ${formData.name}`)
       console.log('📞 电话:', formData.phone)
+      console.log('📧 邮箱:', formData.email)
       console.log('🌐 当前环境:', process.env.NEXT_PUBLIC_ENV || '未设置')
       
       // 模拟提交成功
@@ -194,6 +198,7 @@ export default function Contact() {
         setFormData({
           name: '',
           phone: '',
+          email: '',
           projectType: '',
           message: '',
         })
@@ -307,7 +312,7 @@ export default function Contact() {
                   </label>
                   <input
                     type='tel'
-                    name='tel'
+                    name='phone'
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
@@ -324,26 +329,45 @@ export default function Contact() {
                 </div>
                 </div>
 
-                <div>
-                  <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
-                  <select
-                    name='projectType'
-                    value={formData.projectType}
-                    onChange={handleInputChange}
-                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                      errors['projectType'] ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                  >
-                    <option value=''>请选择项目类型</option>
-                    {projectTypes.map(type => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                  {errors['projectType'] && (
-                    <p className='mt-1 text-sm text-red-500'>{errors['projectType']}</p>
-                  )}
+                <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+                  <div>
+                    <label className='mb-2 block text-lg font-medium text-gray-700'>邮箱</label>
+                    <input
+                      type='email'
+                      name='email'
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                        errors['email'] ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder='请输入您的邮箱（可选）'
+                    />
+                    {errors['email'] && (
+                      <p className='mt-1 text-sm text-red-500'>{errors['email']}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
+                    <select
+                      name='projectType'
+                      value={formData.projectType}
+                      onChange={handleInputChange}
+                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                        errors['projectType'] ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                    >
+                      <option value=''>请选择项目类型</option>
+                      {projectTypes.map(type => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                    {errors['projectType'] && (
+                      <p className='mt-1 text-sm text-red-500'>{errors['projectType']}</p>
+                    )}
+                  </div>
                 </div>
 
                 <div>
@@ -366,9 +390,9 @@ export default function Contact() {
 
                 {/* 隐藏字段用于Formspree配置 */}
                 <input type='hidden' name='_subject' value={`多媒体播控系统咨询 - ${formData.name}`} />
-                <input type='hidden' name='_replyto' value='contact@yourdomain.com' />
+                <input type='hidden' name='_replyto' value={formData.email || formData.phone} />
                 <input type='hidden' name='_next' value='https://yourdomain.com/thank-you' />
-                <input type='hidden' name='tel' value={formData.phone} />
+                <input type='hidden' name='phone' value={formData.phone} />
                 
                 {/* 防骚扰设置 */}
                 <input type='hidden' name='_gotcha' style={{display: 'none'}} />
