@@ -6,7 +6,8 @@ import { useState } from 'react'
 
 export default function Hero() {
   const { scrollToSection } = useScrollToSection()
-  const [showVideo, setShowVideo] = useState(false)
+  const [showVideo, setShowVideo] = useState(true)
+  const [videoKey, setVideoKey] = useState(0) // 用于强制重播
 
   // 动画变体 - 优化性能
   const containerVariants = {
@@ -120,14 +121,29 @@ export default function Hero() {
               {showVideo ? (
                 <div className="relative h-full w-full">
                   <iframe
-                    src="https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1"
+                    key={videoKey}
+                    src="https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1&page=1"
                     scrolling="no"
                     style={{ border: 'none' }}
                     allowFullScreen
                     className="absolute inset-0 h-full w-full"
                     title="展馆多媒体播控系统演示视频"
                     allow="autoplay; fullscreen"
+                    referrerPolicy="no-referrer"
                   ></iframe>
+                  {/* 重播按钮 */}
+                  <div className="absolute bottom-4 left-4 z-10">
+                    <button
+                      onClick={() => setVideoKey(prev => prev + 1)}
+                      className="inline-flex items-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-primary-700 hover:shadow-xl"
+                    >
+                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 5V1L7 6l5 5V7a6 6 0 0 1 6 6 6 6 0 0 1-6 6 6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z"/>
+                      </svg>
+                      重播视频
+                    </button>
+                  </div>
+                  
                   {/* 跳转到B站的覆盖层 */}
                   <div className="absolute bottom-4 right-4 z-10">
                     <a
@@ -209,29 +225,7 @@ export default function Hero() {
             <div className='absolute inset-0 bg-gradient-to-r from-primary-500/5 via-accent-500/5 to-primary-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
           </motion.div>
 
-          {/* 滚动指示器 */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-            className='absolute bottom-8 left-1/2 -translate-x-1/2 transform'
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className='flex flex-col items-center text-gray-400'
-            >
-              <span className='mb-2 text-sm'>向下滚动</span>
-              <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M19 14l-7 7m0 0l-7-7m7 7V3'
-                />
-              </svg>
-            </motion.div>
-          </motion.div>
+
         </motion.div>
       </div>
     </section>
