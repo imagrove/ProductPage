@@ -75,7 +75,7 @@ export default function HomePage() {
             <Hero />
           </section>
 
-          {/* 客户痛点 */}
+          {/* 常见挑战 */}
           <section id='pain-points' className='bg-white'>
             <PainPoints />
           </section>

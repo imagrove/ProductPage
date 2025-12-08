@@ -6,7 +6,7 @@ import { useScrollToSection, useMobileMenu, useScroll } from '@/hooks'
 // 导航项配置
 const navItems = [
   { id: 'hero', label: '首页', href: '#hero' },
-  { id: 'pain-points', label: '客户痛点', href: '#pain-points' },
+  { id: 'pain-points', label: '常见挑战', href: '#pain-points' },
   { id: 'solution', label: '解决方案', href: '#solution' },
   { id: 'advantages', label: '核心优势', href: '#advantages' },
   { id: 'case-studies', label: '成功案例', href: '#case-studies' },
