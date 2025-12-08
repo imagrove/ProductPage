@@ -2,9 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { useScrollToSection } from '@/hooks'
+import { useState } from 'react'
 
 export default function Hero() {
   const { scrollToSection } = useScrollToSection()
+  const [showVideo, setShowVideo] = useState(false)
 
   // 动画变体 - 优化性能
   const containerVariants = {
@@ -114,54 +116,96 @@ export default function Hero() {
             whileHover={{ scale: 1.02, shadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
           >
             <div className='relative flex aspect-video items-center justify-center overflow-hidden bg-gradient-to-r from-blue-500/20 to-purple-500/20'>
+              {/* 视频播放器 */}
+              {showVideo ? (
+                <div className="relative h-full w-full">
+                  <iframe
+                    src="https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1"
+                    scrolling="no"
+                    border="0"
+                    frameBorder="no"
+                    framespacing="0"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                    title="展馆多媒体播控系统演示视频"
+                    allow="autoplay; fullscreen"
+                  ></iframe>
+                  {/* 跳转到B站的覆盖层 */}
+                  <div className="absolute bottom-4 right-4 z-10">
+                    <a
+                      href="https://www.bilibili.com/video/BV1dL4y177kZ/?vd_source=0afccb388f9974d57e7fdf61618ed837"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center rounded-lg bg-bilibili-blue px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-bilibili-blue-dark hover:shadow-xl"
+                    >
+                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 3.29a1 1 0 0 0-1.42 0L9 11.59V8a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2h-3.59l8.3-8.29a1 1 0 0 0 0-1.42z"/>
+                      </svg>
+                      前往B站观看高清版
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div 
+                  className="absolute inset-0 flex cursor-pointer items-center justify-center"
+                  onClick={() => setShowVideo(true)}
+                >
+                  {/* 视频预览图 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
+                  
+                  {/* 播放按钮 */}
+                  <motion.div
+                    className="relative z-10 text-center"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <motion.div
+                      className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-primary-500 to-accent-500 shadow-lg"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <svg
+                        className='h-8 w-8 text-white'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z'
+                        />
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                        />
+                      </svg>
+                    </motion.div>
+                    <motion.p
+                      className='mb-2 font-medium text-gray-700'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1 }}
+                    >
+                      点击播放演示视频
+                    </motion.p>
+                    <motion.p
+                      className='text-sm text-gray-500'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1.2 }}
+                    >
+                      展馆多媒体播控系统演示
+                    </motion.p>
+                  </motion.div>
+                </div>
+              )}
+              
               {/* 动态网格背景 - 优化性能 */}
               <div className='absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[size:20px_20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
-
-              {/* 加载占位符 */}
-              <div className='absolute inset-0 animate-pulse bg-gray-100 opacity-0 transition-opacity duration-300 group-hover:opacity-0'></div>
-
-              <div className='relative z-10 text-center'>
-                <motion.div
-                  className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-primary-500 to-accent-500 shadow-lg'
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <svg
-                    className='h-8 w-8 text-white'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z'
-                    />
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                    />
-                  </svg>
-                </motion.div>
-                <motion.p
-                  className='mb-2 font-medium text-gray-700'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
-                >
-                  多媒体系统演示预览
-                </motion.p>
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className='mt-2 rounded-lg bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:from-primary-700 hover:to-primary-800 hover:shadow-xl'
-                >
-                  播放演示
-                </motion.button>
-              </div>
             </div>
             {/* 动态背景效果 */}
             <div className='absolute inset-0 bg-gradient-to-r from-primary-500/5 via-accent-500/5 to-primary-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>

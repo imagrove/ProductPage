@@ -20,6 +20,10 @@ module.exports = {
           800: "#1e40af",
           900: "#1e3a8a",
         },
+        'bilibili-blue': {
+          DEFAULT: "#00A1D6",
+          dark: "#0088B5",
+        },
         secondary: {
           50: "#f8fafc",
           100: "#f1f5f9",
