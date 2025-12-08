@@ -122,9 +122,7 @@ export default function Hero() {
                   <iframe
                     src="https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1"
                     scrolling="no"
-                    border="0"
-                    frameBorder="no"
-                    framespacing="0"
+                    style={{ border: 'none' }}
                     allowFullScreen
                     className="absolute inset-0 h-full w-full"
                     title="展馆多媒体播控系统演示视频"
