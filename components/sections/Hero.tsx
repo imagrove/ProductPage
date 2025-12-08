@@ -147,7 +147,7 @@ export default function Hero() {
                   {/* 跳转到B站的覆盖层 */}
                   <div className="absolute bottom-4 right-4 z-10">
                     <a
-                      href="https://www.bilibili.com/video/BV1dL4y177kZ/?vd_source=0afccb388f9974d57e7fdf61618ed837"
+                      href="https://www.bilibili.com/video/BV1Cm2kBVEd9/?share_source=copy_web&vd_source=99efd5b2b7c66214eaf3bfc18a284cab"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center rounded-lg bg-bilibili-blue px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-bilibili-blue-dark hover:shadow-xl"
