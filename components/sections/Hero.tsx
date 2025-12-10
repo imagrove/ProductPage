@@ -57,7 +57,7 @@ export default function Hero() {
 
           {/* 特色标签 */}
           <motion.div variants={itemVariants} className='mb-12 flex flex-wrap justify-center gap-4'>
-            {['10 年+行业经验', '全流程定制开发', '稳定可靠交付', '24/7 技术支持'].map(
+            {['10 年+行业经验', '全流程定制开发', '稳定可靠交付', '7×24小时技术支持'].map(
               (tag, index) => (
                 <motion.span
                   key={tag}

@@ -8,34 +8,26 @@ const serviceProcess = [
   {
     step: 1,
     title: '需求分析',
-    description: '深入了解项目需求和现场环境，分析设备兼容性和技术可行性，制定初步技术方案和预算',
     icon: '🔍',
-    details: ['项目需求调研', '现场环境分析', '技术可行性评估', '初步方案制定'],
-    duration: '1-3个工作日',
+    details: ['深入了解项目需求和现场环境', '分析设备兼容性和技术可行性', '制定初步技术方案和预算']
   },
   {
     step: 2,
     title: '方案设计',
-    description: '详细技术方案设计，系统架构和界面原型设计，硬件选型和配置方案',
     icon: '📋',
-    details: ['技术方案设计', '系统架构规划', '界面原型设计', '硬件配置方案'],
-    duration: '3-7个工作日',
+    details: ['技术方案设计', '系统架构规划', '界面原型设计', '硬件配置方案']
   },
   {
     step: 3,
     title: '部署实施',
-    description: '系统正式上线运行，技术文档交付，运维团队培训',
     icon: '🚀',
-    details: ['系统部署实施', '技术文档交付', '运维团队培训', '系统测试验收'],
-    duration: '7-14个工作日',
+    details: ['系统部署实施', '技术文档交付', '运维团队培训', '系统测试验收']
   },
   {
     step: 4,
     title: '售后支持',
-    description: '7×24小时技术支持，定期系统维护和升级，远程监控和故障预警',
     icon: '🛡️',
-    details: ['7×24小时技术支持', '定期系统维护', '远程监控管理', '故障预警处理'],
-    duration: '长期支持',
+    details: ['7×24小时技术支持', '定期系统维护', '远程监控管理', '故障预警处理']
   },
 ]
 
@@ -63,10 +55,10 @@ export default function ServiceProcess() {
 
         {/* 服务流程时间线 */}
         <div className='relative'>
-          {/* 时间线 */}
-          <div className='absolute left-1/2 hidden h-full w-1 -translate-x-1/2 transform bg-gradient-to-b from-primary-500 to-secondary-500 lg:block'></div>
+          {/* 时间线 - 只在桌面端显示 */}
+          <div className='absolute left-1/2 hidden h-full w-1 -translate-x-1/2 transform bg-gradient-to-b from-primary-500 to-secondary-500 lg:block' style={{ zIndex: 0 }}></div>
 
-          <div className='space-y-12 lg:space-y-16'>
+          <div className='space-y-12 lg:space-y-16' style={{ position: 'relative', zIndex: 10 }}>
             {serviceProcess.map((process, index) => (
               <motion.div
                 key={process.step}
@@ -91,30 +83,25 @@ export default function ServiceProcess() {
                       {process.step}
                     </div>
 
-                    {/* 时间线节点 */}
+                    {/* 时间线节点 - 只在桌面端显示 */}
                     <div className='absolute left-1/2 hidden h-4 w-4 -translate-x-1/2 transform rounded-full border-4 border-white bg-primary-500 shadow-lg lg:block'></div>
                   </motion.div>
                 </div>
 
                 {/* 流程内容 */}
-                <div className='lg:w-2/3'>
+                <div className='w-full lg:w-2/3'>
                   <motion.div
                     initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }}
                     viewport={{ once: true }}
-                    className='transform rounded-xl border border-gray-100 bg-white p-6 shadow-lg transition-all transition-all duration-300 duration-300 hover:-translate-y-2 hover:shadow-xl lg:p-8'
+                    className='w-full max-w-md mx-auto transform rounded-xl border border-gray-100 bg-white p-6 shadow-lg transition-all transition-all duration-300 duration-300 hover:-translate-y-2 hover:shadow-xl lg:p-8 lg:max-w-none lg:mx-0'
                   >
                     <div className='mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between'>
                       <h3 className='mb-2 text-xl font-bold text-gray-900 lg:mb-0 lg:text-2xl'>
                         {process.title}
                       </h3>
-                      <span className='inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700'>
-                        ⏱️ {process.duration}
-                      </span>
                     </div>
-
-                    <p className='mb-6 leading-relaxed text-gray-600'>{process.description}</p>
 
                     {/* 详细步骤 */}
                     <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
