@@ -150,7 +150,7 @@ export default function Hero() {
                 <div className="relative h-full w-full">
                   <iframe
                     key={videoKey}
-                    src={`https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1&page=1&muted=0`}
+                    src={`https://player.bilibili.com/player.html?bvid=BV1Cm2kBVEd9&vd_source=99efd5b2b7c66214eaf3bfc18a284cab&high_quality=1&autoplay=1&page=1&muted=0`}
                     scrolling="no"
                     style={{ border: 'none' }}
                     allowFullScreen
