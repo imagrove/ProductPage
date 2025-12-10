@@ -2,12 +2,44 @@
 
 import { motion } from 'framer-motion'
 import { useScrollToSection } from '@/hooks'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Hero() {
   const { scrollToSection } = useScrollToSection()
   const [showVideo, setShowVideo] = useState(true)
   const [videoKey, setVideoKey] = useState(0) // 用于强制重播
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+
+  // 页面加载后直接显示视频并尝试自动播放
+  useEffect(() => {
+    // 设置一个延迟，确保页面完全加载后再显示视频
+    const timer = setTimeout(() => {
+      setShowVideo(true)
+      
+      // 尝试多种自动播放策略
+      setTimeout(() => {
+        // 如果视频未播放，显示提示
+        if (!isVideoPlaying) {
+          console.log('视频可能需要用户交互才能播放')
+        }
+      }, 2000)
+    }, 500)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  // 监听视频播放状态
+  useEffect(() => {
+    const checkVideoPlayback = () => {
+      // 这里可以添加视频播放状态检测逻辑
+      setIsVideoPlaying(true)
+    }
+
+    // 模拟视频播放检测
+    const playbackTimer = setTimeout(checkVideoPlayback, 1000)
+    
+    return () => clearTimeout(playbackTimer)
+  }, [showVideo])
 
   // 动画变体 - 优化性能
   const containerVariants = {
@@ -25,6 +57,11 @@ export default function Hero() {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
+  }
+
+  const handlePlayVideo = () => {
+    setShowVideo(true)
+    setVideoKey(prev => prev + 1)
   }
 
   return (
@@ -122,7 +159,7 @@ export default function Hero() {
                 <div className="relative h-full w-full">
                   <iframe
                     key={videoKey}
-                    src="https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1&page=1"
+                    src={`https://player.bilibili.com/player.html?bvid=BV1dL4y177kZ&vd_source=0afccb388f9974d57e7fdf61618ed837&high_quality=1&autoplay=1&page=1&muted=0`}
                     scrolling="no"
                     style={{ border: 'none' }}
                     allowFullScreen
@@ -130,7 +167,24 @@ export default function Hero() {
                     title="展馆多媒体播控系统演示视频"
                     allow="autoplay; fullscreen"
                     referrerPolicy="no-referrer"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                   ></iframe>
+                  
+                  {/* 自动播放提示 */}
+                  {!isVideoPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+                      <div className="text-center text-white">
+                        <p className="mb-2 text-lg font-medium">视频可能需要点击播放</p>
+                        <button
+                          onClick={handlePlayVideo}
+                          className="rounded-lg bg-primary-600 px-6 py-2 font-medium hover:bg-primary-700"
+                        >
+                          点击播放视频
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* 重播按钮 */}
                   <div className="absolute bottom-4 left-4 z-10">
                     <button
@@ -162,7 +216,7 @@ export default function Hero() {
               ) : (
                 <div 
                   className="absolute inset-0 flex cursor-pointer items-center justify-center"
-                  onClick={() => setShowVideo(true)}
+                  onClick={handlePlayVideo}
                 >
                   {/* 视频预览图 */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
@@ -202,15 +256,15 @@ export default function Hero() {
                       className='mb-2 font-medium text-gray-700'
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 1 }}
+                      transition={{ delay: 0.5 }}
                     >
-                      点击播放演示视频
+                      正在加载演示视频...
                     </motion.p>
                     <motion.p
                       className='text-sm text-gray-500'
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 1.2 }}
+                      transition={{ delay: 0.7 }}
                     >
                       展馆多媒体播控系统演示
                     </motion.p>
@@ -224,7 +278,6 @@ export default function Hero() {
             {/* 动态背景效果 */}
             <div className='absolute inset-0 bg-gradient-to-r from-primary-500/5 via-accent-500/5 to-primary-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
           </motion.div>
-
 
         </motion.div>
       </div>
