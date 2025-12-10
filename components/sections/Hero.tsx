@@ -78,19 +78,10 @@ export default function Hero() {
             variants={itemVariants}
             className='mb-6 font-display text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl xl:text-7xl'
           >
-            全场景多媒体播控系统
-            <span className='block bg-gradient-to-r from-primary-700 via-accent-600 to-primary-700 bg-clip-text text-transparent'>
-              专业定制解决方案
-            </span>
+            多媒体播控一站式解决方案
           </motion.h1>
 
-          {/* 副标题 */}
-          <motion.p
-            variants={itemVariants}
-            className='mx-auto mb-8 max-w-4xl text-xl leading-relaxed text-gray-600 sm:text-2xl lg:text-3xl'
-          >
-            提供一站式技术解决方案
-          </motion.p>
+
 
           {/* 特色标签 */}
           <motion.div variants={itemVariants} className='mb-12 flex flex-wrap justify-center gap-4'>
