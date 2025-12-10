@@ -80,9 +80,6 @@ export default function Solution() {
           <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
             全场景多媒体播控系统定制方案
           </h2>
-          <p className='mx-auto max-w-3xl text-center text-lg text-gray-600 sm:text-xl'>
-            基于先进技术架构，为数字展馆、博物馆、企业展厅提供专业的多媒体播控解决方案
-          </p>
         </motion.div>
 
         {/* 核心架构展示 */}

@@ -271,10 +271,10 @@ export default function Contact() {
           className='mb-20 text-center'
         >
           <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
-            联系我们
+            立即咨询 → 免费获取专属定制方案
           </h2>
           <p className='mx-auto max-w-3xl text-center text-lg text-gray-600 sm:text-xl'>
-            立即获取专业的多媒体播控系统解决方案，让您的项目更专业、更高效
+            项目咨询/方案定制/现场考察
           </p>
         </motion.div>
 
@@ -288,7 +288,7 @@ export default function Contact() {
             className='rounded-xl border border-gray-200 bg-white p-8 shadow-lg lg:p-10'
             whileHover={{ scale: 1.01 }}
           >
-            <h3 className='mb-8 text-center text-3xl font-bold text-gray-900'>项目咨询</h3>
+            <h3 className='mb-8 text-center text-3xl font-bold text-gray-900'>在线咨询表单</h3>
 
             {submitStatus === 'success' ? (
               <motion.div
@@ -444,7 +444,7 @@ export default function Contact() {
                       提交中...
                     </div>
                   ) : (
-                    '立即提交咨询'
+                    '立即咨询'
                   )}
                 </motion.button>
               </form>
@@ -480,7 +480,7 @@ export default function Contact() {
                 />
               </div>
 
-              <p className='text-sm text-gray-600'>扫描二维码添加微信，专业工程师在线为您解答</p>
+              <p className='text-sm text-gray-600'>扫码对接技术专家，免费获取 1V1 项目评估与落地路径规划</p>
             </motion.div>
           </motion.div>
         </div>

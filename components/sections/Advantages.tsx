@@ -30,7 +30,7 @@ export default function Advantages() {
         {/* 章节标题 */}
         <FadeInUp className='mb-16 text-center' delay={0.1}>
           <h2 className='mb-6 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
-            三大核心优势，助力您的多媒体项目成功
+            三大核心优势驱动高效落地
           </h2>
         </FadeInUp>
 

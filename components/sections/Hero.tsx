@@ -132,16 +132,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              立即咨询方案
-            </motion.button>
-
-            <motion.button
-              onClick={() => scrollToSection('solution')}
-              className='transform rounded-lg border border-primary-200 bg-white px-10 py-4 text-lg font-medium text-primary-600 shadow-sm transition-all duration-300 hover:scale-105 hover:border-primary-300 hover:shadow-md active:scale-95'
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              了解解决方案
+              立即咨询
             </motion.button>
           </motion.div>
 
