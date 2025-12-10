@@ -1,4 +1,5 @@
 // 站点配置信息
+import { TargetIcon, TrophyIcon, RocketIcon, ShieldIcon, PuzzleIcon } from '@/components/ui/MinimalIcons'
 
 export const siteConfig = {
   // 基本信息
@@ -99,17 +100,17 @@ export const featuresConfig = {
     {
       title: '深度定制能力',
       description: '提供从需求分析到售后支持的全流程定制服务',
-      icon: '🎯',
+      icon: TargetIcon,
     },
     {
       title: '丰富项目经验',
       description: '服务多个行业领域，具备丰富的展馆多媒体项目经验',
-      icon: '🏆',
+      icon: TrophyIcon,
     },
     {
       title: '技术领先优势',
       description: '基于先进技术架构，确保系统长期稳定运行',
-      icon: '🚀',
+      icon: RocketIcon,
     },
   ],
 
@@ -117,22 +118,22 @@ export const featuresConfig = {
     {
       title: '模块化架构',
       description: '灵活组合，按需定制',
-      icon: '🧩',
+      icon: PuzzleIcon,
     },
     {
       title: '高性能渲染',
       description: 'WebGL硬件加速，流畅体验',
-      icon: '⚡',
+      icon: RocketIcon,
     },
     {
       title: '安全稳定',
       description: '多重保障，可靠运行',
-      icon: '🛡️',
+      icon: ShieldIcon,
     },
     {
       title: '快速部署',
       description: '专业团队，高效实施',
-      icon: '🚀',
+      icon: RocketIcon,
     },
   ],
 }

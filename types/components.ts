@@ -1,9 +1,10 @@
 // 组件相关类型定义
+import React from 'react'
 
 export interface FeatureItem {
   title: string
   description: string
-  icon: string
+  icon: React.ReactNode
   features?: string[]
   gradient?: string
   color?: string
@@ -12,7 +13,7 @@ export interface FeatureItem {
 export interface TechFeature {
   title: string
   description: string
-  icon: string
+  icon: React.ReactNode
 }
 
 export interface NavigationItem {

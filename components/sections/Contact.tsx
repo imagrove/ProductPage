@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useFormValidation, useScrollToSection } from '@/hooks'
 import { SuccessMessage } from '../common/SuccessMessage'
 import { sendGAEvent, setCustomDimensions, GAEvents } from '@/components/analytics/GoogleAnalytics'
+import { MessageIcon, CheckCircleIcon } from '@/components/ui/MinimalIcons'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -191,25 +192,25 @@ export default function Contact() {
       }
     } else {
       // 开发环境：只打印日志，不实际提交
-      console.log('🚧 开发环境表单提交日志（不实际提交到Formspree）:')
-      console.log('📋 表单数据:', {
+      console.log('开发环境表单提交日志（不实际提交到Formspree）:')
+      console.log('表单数据:', {
         姓名: formData.name,
         电话: formData.phone,
         邮箱: formData.email,
         项目类型: formData.projectType,
         需求描述: formData.message,
       })
-      console.log('📧 邮件主题:', `多媒体播控系统咨询 - ${formData.name}`)
-      console.log('📞 电话:', formData.phone)
+      console.log('邮件主题:', `多媒体播控系统咨询 - ${formData.name}`)
+      console.log('电话:', formData.phone)
       // 开发环境：打印表单数据
       if (process.env.NODE_ENV === 'development') {
-        console.log('📧 邮箱:', formData.email)
-        console.log('📱 手机号:', formData.phone)
-        console.log('👤 姓名:', formData.name)
-        console.log('📋 项目类型:', formData.projectType)
-        console.log('💬 需求描述:', formData.message)
+        console.log('邮箱:', formData.email)
+        console.log('手机号:', formData.phone)
+        console.log('姓名:', formData.name)
+        console.log('项目类型:', formData.projectType)
+        console.log('需求描述:', formData.message)
       }
-      console.log('🌐 当前环境:', process.env.NEXT_PUBLIC_ENV || '未设置')
+      console.log('当前环境:', process.env.NEXT_PUBLIC_ENV || '未设置')
       
       // 模拟提交成功
       setTimeout(() => {
@@ -233,7 +234,7 @@ export default function Contact() {
           message: '',
         })
         setIsSubmitting(false)
-        console.log('✅ 开发环境：表单提交模拟成功')
+        console.log('开发环境：表单提交模拟成功')
       }, 1000)
     }
   }
@@ -252,7 +253,7 @@ export default function Contact() {
   // 联系信息
   const contactInfo = [
     {
-      icon: '💬',
+      icon: <MessageIcon className='h-6 w-6' color='white' />,
       title: '在线客服',
       value: '微信扫码咨询',
       description: '专业工程师在线解答',
@@ -260,22 +261,19 @@ export default function Contact() {
   ]
 
   return (
-    <section id='contact' className='bg-gradient-to-br from-gray-50 to-white py-24 lg:py-32'>
+    <section id='contact' className='py-28 lg:py-36 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'>
       <div className='container'>
         {/* 章节标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          viewport={{ once: true, margin: '-30px' }}
-          className='mb-20 text-center'
+          viewport={{ once: true }}
+          className='mb-24 text-center'
         >
-          <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
-            立即咨询 → 免费获取专属定制方案
+          <h2 className='mb-6 text-center text-4xl font-bold text-white sm:text-5xl lg:text-6xl'>
+            联系我们
           </h2>
-          <p className='mx-auto max-w-3xl text-center text-lg text-gray-600 sm:text-xl'>
-            项目咨询/方案定制/现场考察
-          </p>
         </motion.div>
 
         <div className='grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16'>
@@ -285,10 +283,10 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true, margin: '-20px' }}
-            className='rounded-xl border border-gray-200 bg-white p-8 shadow-lg lg:p-10'
+            className='rounded-xl border border-gray-200 bg-white p-8 shadow-md lg:p-10'
             whileHover={{ scale: 1.01 }}
           >
-            <h3 className='mb-8 text-center text-3xl font-bold text-gray-900'>在线咨询表单</h3>
+            <h3 className='mb-8 text-center text-3xl font-bold text-gray-800'>在线咨询表单</h3>
 
             {submitStatus === 'success' ? (
               <motion.div
@@ -296,16 +294,16 @@ export default function Contact() {
                 animate={{ opacity: 1, scale: 1 }}
                 className='py-12 text-center'
               >
-                <div className='mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600'>
-                  ✅
+                <div className='mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100'>
+                  <CheckCircleIcon className='h-10 w-10 text-primary-600' />
                 </div>
-                <h4 className='mb-2 text-xl font-semibold text-gray-900'>提交成功！</h4>
+                <h4 className='mb-2 text-xl font-semibold text-gray-800'>提交成功！</h4>
                 <p className='mb-6 text-gray-600'>
                   我们已收到您的咨询信息，专业工程师将在24小时内与您联系。
                 </p>
                 <button
                   onClick={() => setSubmitStatus('idle')}
-                  className='rounded-lg border border-primary-200 bg-white px-8 py-3 font-medium text-primary-600 shadow-sm transition-all duration-300 hover:border-primary-300 hover:shadow-md'
+                  className='rounded-lg border border-primary-200 bg-white px-12 py-3 font-medium text-primary-600 shadow-md transition-all duration-300 hover:border-primary-300 hover:bg-primary-50 hover:shadow-lg hover:scale-102'
                 >
                   继续咨询
                 </button>
@@ -319,14 +317,14 @@ export default function Contact() {
               >
                 <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
                   <div>
-                    <label className='mb-2 block text-lg font-medium text-gray-700'>姓名 <span className='text-red-500'>*</span></label>
+                    <label className='mb-2 block text-sm font-medium text-gray-600 mt-2'>姓名 <span className='text-red-500'>*</span></label>
                     <input
                       type='text'
                       name='name'
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      className={`h-12 w-full rounded-lg border px-4 text-base transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                         errors['contactName'] ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder='请输入您的姓名'
@@ -337,7 +335,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                  <label className='mb-2 block text-lg font-medium text-gray-700'>
+                  <label className='mb-2 block text-sm font-medium text-gray-600 mt-2'>
                     联系电话 <span className='text-red-500'>*</span>
                   </label>
                   <input
@@ -348,7 +346,7 @@ export default function Contact() {
                     required
                     pattern='[0-9]{11}'
                     title='请输入11位手机号码'
-                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`h-12 w-full rounded-lg border px-4 text-base transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                       errors['contactPhone'] ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder='请输入11位手机号码'
@@ -360,13 +358,13 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className='mb-2 block text-lg font-medium text-gray-700'>邮箱</label>
+                  <label className='mb-2 block text-sm font-medium text-gray-600 mt-2'>邮箱</label>
                   <input
                     type='email'
                     name='email'
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`h-12 w-full rounded-lg border px-4 text-base transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                       errors['email'] ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder='请输入您的邮箱地址（可选）'
@@ -377,12 +375,12 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className='mb-2 block text-lg font-medium text-gray-700'>项目类型</label>
+                  <label className='mb-2 block text-sm font-medium text-gray-600 mt-2'>项目类型</label>
                   <select
                     name='projectType'
                     value={formData.projectType}
                     onChange={handleInputChange}
-                    className={`w-full rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`h-12 w-full rounded-lg border px-4 text-base transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                       errors['projectType'] ? 'border-red-500' : 'border-gray-300'
                     }`}
                   >
@@ -399,13 +397,13 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className='mb-2 block text-lg font-medium text-gray-700'>需求描述 <span className='text-red-500'>*</span></label>
+                  <label className='mb-2 block text-sm font-medium text-gray-600 mt-2'>需求描述 <span className='text-red-500'>*</span></label>
                   <textarea
                     name='message'
                     value={formData.message}
                     onChange={handleInputChange}
                     rows={6}
-                    className={`min-h-[150px] w-full resize-none rounded-lg border px-4 py-3 text-lg transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`min-h-[150px] w-full resize-none rounded-lg border px-4 py-3 text-base transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                       errors['projectDesc'] ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder='请详细描述您的项目需求、设备数量、控制场景等信息...'
@@ -430,10 +428,10 @@ export default function Contact() {
                 <motion.button
                   type='submit'
                   disabled={isSubmitting}
-                  className={`w-full rounded-lg py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 ${
+                  className={`w-full rounded-lg py-3 text-base font-semibold text-white shadow-md transition-all duration-300 ${
                     isSubmitting
                       ? 'cursor-not-allowed bg-gray-600'
-                      : 'transform bg-gradient-to-r from-primary-700 to-primary-800 hover:-translate-y-1 hover:from-primary-800 hover:to-primary-900 hover:shadow-xl'
+                      : 'bg-primary-600 hover:bg-primary-500 hover:shadow-lg'
                   }`}
                   whileHover={isSubmitting ? {} : { scale: 1.02 }}
                   whileTap={isSubmitting ? {} : { scale: 0.98 }}

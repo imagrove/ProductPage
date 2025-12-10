@@ -64,7 +64,7 @@ export default function Footer() {
                 <li key={service}>
                   <motion.a
                     href='#'
-                    className='text-gray-300 transition-colors duration-200 hover:text-white'
+                    className='text-gray-300 transition-colors duration-200 hover:text-primary-300'
                     whileHover={{ x: 5 }}
                   >
                     {service}
@@ -87,7 +87,7 @@ export default function Footer() {
                 <li key={tech}>
                   <motion.a
                     href='#'
-                    className='text-gray-300 transition-colors duration-200 hover:text-white'
+                    className='text-gray-300 transition-colors duration-200 hover:text-primary-300'
                     whileHover={{ x: 5 }}
                   >
                     {tech}
@@ -110,7 +110,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <motion.a
                     href={link.href}
-                    className='text-gray-300 transition-colors duration-200 hover:text-white'
+                    className='text-gray-300 transition-colors duration-200 hover:text-primary-300'
                     whileHover={{ x: 5 }}
                   >
                     {link.name}

@@ -2,31 +2,32 @@
 
 import { motion } from 'framer-motion'
 import { useScrollToSection } from '@/hooks'
+import { SearchIcon, DocumentIcon, RocketIcon, ShieldIcon, CheckCircleIcon } from '@/components/ui/MinimalIcons'
 
 // 服务流程数据
 const serviceProcess = [
   {
     step: 1,
     title: '需求分析',
-    icon: '🔍',
+    icon: <SearchIcon className='h-8 w-8' color='white' />,
     details: ['深入了解项目需求和现场环境', '分析设备兼容性和技术可行性', '制定初步技术方案和预算']
   },
   {
     step: 2,
     title: '方案设计',
-    icon: '📋',
+    icon: <DocumentIcon className='h-8 w-8' color='white' />,
     details: ['技术方案设计', '系统架构规划', '界面原型设计', '硬件配置方案']
   },
   {
     step: 3,
     title: '部署实施',
-    icon: '🚀',
+    icon: <RocketIcon className='h-8 w-8' color='white' />,
     details: ['系统部署实施', '技术文档交付', '运维团队培训', '系统测试验收']
   },
   {
     step: 4,
     title: '售后支持',
-    icon: '🛡️',
+    icon: <ShieldIcon className='h-8 w-8' color='white' />,
     details: ['7×24小时技术支持', '定期系统维护', '远程监控管理', '故障预警处理']
   },
 ]
@@ -35,17 +36,17 @@ export default function ServiceProcess() {
   const { scrollToSection } = useScrollToSection()
 
   return (
-    <section className='py-24 lg:py-32'>
-      <div className='container'>
+    <section className="py-28 lg:py-36 bg-white">
+      <div className="container">
         {/* 章节标题 */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-50px' }}
-          className='mb-20 text-center'
+          transition={{ duration: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-24 text-center"
         >
-          <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
+          <h2 className="mb-6 text-center text-4xl font-bold text-gray-800 sm:text-5xl lg:text-6xl">
             专业定制服务全流程
           </h2>
           
@@ -105,17 +106,7 @@ export default function ServiceProcess() {
                     <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
                       {process.details.map((detail, detailIndex) => (
                         <div key={detail} className='flex items-center text-sm text-gray-700'>
-                          <svg
-                            className='mr-2 h-4 w-4 text-primary-500'
-                            fill='currentColor'
-                            viewBox='0 0 20 20'
-                          >
-                            <path
-                              fillRule='evenodd'
-                              d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                              clipRule='evenodd'
-                            />
-                          </svg>
+                          <CheckCircleIcon className='mr-2 h-4 w-4 text-primary-500' />
                           {detail}
                         </div>
                       ))}

@@ -71,37 +71,37 @@ export default function HomePage() {
         {/* 主要内容区域 */}
         <main>
           {/* 英雄区域 */}
-          <section id='hero' className='hero-gradient'>
+          <section id='hero'>
             <Hero />
           </section>
 
           {/* 常见挑战 */}
-          <section id='pain-points' className='bg-white'>
+          <section id='pain-points'>
             <PainPoints />
           </section>
 
           {/* 解决方案 */}
-          <section id='solution' className='bg-gray-50'>
+          <section id='solution'>
             <Solution />
           </section>
 
           {/* 核心优势 */}
-          <section id='advantages' className='bg-white'>
+          <section id='advantages'>
             <Advantages />
           </section>
 
           {/* 成功案例 */}
-          <section id='case-studies' className='bg-gray-50'>
+          <section id='case-studies'>
             <CaseStudies />
           </section>
 
           {/* 服务流程 */}
-          <section id='service-process' className='bg-white'>
+          <section id='service-process'>
             <ServiceProcess />
           </section>
 
           {/* 咨询入口 */}
-          <section id='contact' className='bg-gradient-to-br from-primary-500 to-secondary-600'>
+          <section id='contact'>
             <Contact />
           </section>
         </main>

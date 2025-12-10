@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { CheckIcon } from '@/components/ui/MinimalIcons'
 
 // 成功案例数据
 const caseStudies = [
@@ -50,24 +51,24 @@ const caseStudies = [
 
 export default function CaseStudies() {
   return (
-    <section className='py-24 lg:py-32'>
-      <div className='container'>
+    <section className="py-28 lg:py-36 bg-white">
+      <div className="container">
         {/* 章节标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          viewport={{ once: true, margin: '-30px' }}
-          className='mb-20 text-center'
+          viewport={{ once: true }}
+          className="mb-24 text-center"
         >
-          <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
-            成功案例
+          <h2 className="mb-6 text-center text-4xl font-bold text-gray-800 sm:text-5xl lg:text-6xl">
+            成功案例展示
           </h2>
           
         </motion.div>
 
         {/* 成功案例展示 */}
-        <div className='space-y-12 lg:space-y-16'>
+        <div className='grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3'>
           {caseStudies.map((caseStudy, index) => (
             <motion.div
               key={caseStudy.title}
@@ -75,80 +76,62 @@ export default function CaseStudies() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               viewport={{ once: true, margin: '-30px' }}
-              className={`flex flex-col items-center gap-8 lg:flex-row lg:gap-12 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-              whileHover={{ scale: 1.01 }}
+              className='bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl'
+              whileHover={{ scale: 1.02 }}
             >
               {/* 案例图片区域 */}
-              <div className='w-full lg:w-1/2'>
-                <motion.div
-                  whileHover={{ scale: 1.01 }}
-                  className='relative overflow-hidden rounded-2xl shadow-xl'
-                >
-                  {/* 图片占位符 */}
-                  <div className='flex h-64 w-full items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 lg:h-80'>
-                    <div className='text-center text-gray-500'>
-                      <div className='mb-2 text-4xl'>🏛️</div>
-                      <div className='text-sm'>案例展示图片</div>
-                      <div className='mt-1 text-xs'>1200x800px 灰色占位图</div>
-                    </div>
+              <div className='relative overflow-hidden'>
+                {/* 图片占位符 */}
+                <div className='flex h-48 w-full items-center justify-center bg-gray-100'>
+                  <div className='text-center text-gray-500'>
+                    <div className='mb-2 text-4xl'>🏛️</div>
+                    <div className='text-sm'>案例展示图片</div>
                   </div>
+                </div>
 
-                  {/* 技术标签 */}
-                  <div className='absolute bottom-4 left-4 right-4 flex flex-wrap gap-2'>
-                    {caseStudy.technologies.map(tech => (
-                      <span
-                        key={tech}
-                        className='rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-primary-600 backdrop-blur-sm'
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
+                {/* 技术标签 */}
+                <div className='absolute bottom-4 left-4 right-4 flex flex-wrap gap-2'>
+                  {caseStudy.technologies.map(tech => (
+                    <span
+                      key={tech}
+                      className='rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-primary-600 backdrop-blur-sm shadow-sm'
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {/* 案例内容区域 */}
-              <div className='lg:w-1/2'>
+              <div className='p-6'>
+                <h3 className='mb-3 text-xl font-bold text-gray-800'>
+                  {caseStudy.title}
+                </h3>
+
+                <p className='mb-4 text-gray-600 text-sm leading-relaxed'>{caseStudy.description}</p>
+
+                {/* 项目统计 */}
+                <div className='mb-4 grid grid-cols-2 gap-3'>
+                  {Object.entries(caseStudy.stats).map(([key, value]) => (
+                    <div key={key} className='rounded-lg bg-primary-50 p-3 text-center'>
+                      <div className='text-lg font-semibold text-primary-600'>{value}</div>
+                      <div className='text-xs capitalize text-gray-500'>
+                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 项目成果 */}
                 <div>
-                  <h3 className='mb-4 text-2xl font-bold text-gray-900 lg:text-3xl'>
-                    {caseStudy.title}
-                  </h3>
-
-                  <p className='mb-6 leading-relaxed text-gray-600'>{caseStudy.description}</p>
-
-                  {/* 项目统计 */}
-                  <div className='mb-6 grid grid-cols-2 gap-4'>
-                    {Object.entries(caseStudy.stats).map(([key, value]) => (
-                      <div key={key} className='rounded-lg bg-gray-50 p-3 text-center'>
-                        <div className='text-lg font-semibold text-primary-600'>{value}</div>
-                        <div className='text-xs capitalize text-gray-500'>
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </div>
+                  <h4 className='mb-2 font-semibold text-gray-800 text-sm'>项目成果：</h4>
+                  <div className='space-y-2'>
+                    {caseStudy.results.map((result, resultIndex) => (
+                      <div key={resultIndex} className='flex items-center text-sm text-gray-700'>
+                        <CheckIcon className='mr-2 h-4 w-4 text-primary-500' />
+                        {result}
                       </div>
                     ))}
-                  </div>
-
-                  {/* 项目成果 */}
-                  <div className='mb-6'>
-                    <h4 className='mb-3 font-semibold text-gray-900'>项目成果：</h4>
-                    <div className='space-y-2'>
-                      {caseStudy.results.map((result, resultIndex) => (
-                        <div key={resultIndex} className='flex items-center text-sm text-gray-700'>
-                          <svg
-                            className='mr-2 h-4 w-4 text-green-500'
-                            fill='currentColor'
-                            viewBox='0 0 20 20'
-                          >
-                            <path
-                              fillRule='evenodd'
-                              d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                              clipRule='evenodd'
-                            />
-                          </svg>
-                          {result}
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>

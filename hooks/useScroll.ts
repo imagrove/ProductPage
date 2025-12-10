@@ -49,12 +49,9 @@ export const useScroll = (options?: ScrollOptions): ScrollHook => {
     options?.onScroll?.(currentScrollY, currentScrollX, direction)
 
     // 设置滚动结束检测
-    const scrollTimeout = setTimeout(() => {
+    setTimeout(() => {
       setIsScrolling(false)
     }, 100)
-
-    // 清理函数
-    return () => clearTimeout(scrollTimeout)
   }, [lastScrollY, options])
 
   useEffect(() => {

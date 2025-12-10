@@ -76,7 +76,7 @@ export function sendGAEvent(event: GAEvent) {
 
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'pro'
   if (!isProduction) {
-    console.log('📊 GA Event (开发环境):', event)
+    console.log('GA Event (开发环境):', event)
     return
   }
 
@@ -96,7 +96,7 @@ export function sendConversionEvent(conversionId: string, value?: number) {
 
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'pro'
   if (!isProduction) {
-    console.log('🎯 转化事件 (开发环境):', { conversionId, value })
+    console.log('转化事件 (开发环境):', { conversionId, value })
     return
   }
 
@@ -115,7 +115,7 @@ export function setUserProperties(properties: Record<string, any>) {
 
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'pro'
   if (!isProduction) {
-    console.log('👤 用户属性 (开发环境):', properties)
+    console.log('用户属性 (开发环境):', properties)
     return
   }
 
@@ -130,7 +130,7 @@ export function setCustomDimensions(dimensions: CustomDimensions) {
 
   const isProduction = process.env.NEXT_PUBLIC_ENV === 'pro'
   if (!isProduction) {
-    console.log('📈 自定义维度 (开发环境):', dimensions)
+    console.log('自定义维度 (开发环境):', dimensions)
     return
   }
 

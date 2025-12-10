@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
+import { LightbulbIcon, RocketIcon } from '../ui/MinimalIcons'
 
 const painPoints = [
   { 
@@ -11,7 +12,7 @@ const painPoints = [
     x: '4%',
     y: '18%',
     size: 'lg',
-    color: 'from-blue-400 to-blue-600'
+    color: 'from-primary-500 to-primary-700'
   },
   { 
     id: 2, 
@@ -20,7 +21,7 @@ const painPoints = [
     x: '70%',
     y: '20%',
     size: 'lg',
-    color: 'from-purple-400 to-purple-600'
+    color: 'from-primary-600 to-primary-800'
   },
   { 
     id: 3, 
@@ -29,7 +30,7 @@ const painPoints = [
     x: '-2%',
     y: '47%',
     size: 'md',
-    color: 'from-green-400 to-green-600'
+    color: 'from-primary-500 to-primary-700'
   },
   { 
     id: 4, 
@@ -38,7 +39,7 @@ const painPoints = [
     x: '61%',
     y: '72%',
     size: 'md',
-    color: 'from-orange-400 to-orange-600'
+    color: 'from-primary-600 to-primary-800'
   },
   { 
     id: 5, 
@@ -47,7 +48,7 @@ const painPoints = [
     x: '71%',
     y: '50%',
     size: 'sm',
-    color: 'from-red-400 to-red-600'
+    color: 'from-gray-500 to-gray-700'
   },
   { 
     id: 6, 
@@ -56,7 +57,7 @@ const painPoints = [
     x: '27%',
     y: '32%',
     size: 'sm',
-    color: 'from-indigo-400 to-indigo-600'
+    color: 'from-primary-400 to-primary-600'
   },
   { 
     id: 7, 
@@ -65,7 +66,7 @@ const painPoints = [
     x: '48%',
     y: '27%',
     size: 'md',
-    color: 'from-teal-400 to-teal-600'
+    color: 'from-primary-500 to-primary-700'
   },
   { 
     id: 8, 
@@ -74,7 +75,7 @@ const painPoints = [
     x: '10%',
     y: '64%',
     size: 'sm',
-    color: 'from-pink-400 to-pink-600'
+    color: 'from-primary-600 to-primary-800'
   },
   { 
     id: 9, 
@@ -83,14 +84,14 @@ const painPoints = [
     x: '12%',
     y: '81%',
     size: 'sm',
-    color: 'from-yellow-400 to-yellow-600'
+    color: 'from-gray-500 to-gray-700'
   }
 ]
 
 const sizeMap = {
-  sm: 'w-48 h-48 text-sm',
-  md: 'w-56 h-56 text-base',
-  lg: 'w-64 h-64 text-lg'
+  sm: 'w-52 h-52 text-base',
+  md: 'w-60 h-60 text-lg',
+  lg: 'w-68 h-68 text-xl'
 }
 
 export default function PainPoints() {
@@ -134,28 +135,28 @@ export default function PainPoints() {
   }
 
   return (
-      <section className="pt-0 pb-32 bg-gradient-to-br from-blue-50/30 via-white to-purple-50/30 relative overflow-hidden min-h-screen">
-        {/* 中心主题节点 - 优化设计 */}
+      <section className="pt-0 pb-32 bg-white relative overflow-hidden min-h-screen">
+        {/* 中心主题节点 - 根据UI设计文档 */}
         <motion.div 
-          className="absolute top-1/2 left-1/2 w-56 h-56 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-3xl shadow-2xl flex items-center justify-center z-40 border-4 border-white/90 backdrop-blur-xl"
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl shadow-2xl flex items-center justify-center z-40 border-4 border-white/90 backdrop-blur-xl"
         initial={{ scale: 0, opacity: 0, rotateY: -180, x: '-50%', y: '-50%' }}
         whileInView={{ scale: 1, opacity: 1, rotateY: 0, x: '-50%', y: '-50%' }}
         transition={{ 
           type: "spring",
-          stiffness: 180,
-          damping: 8,
-          delay: 0.3
+          stiffness: 200,
+          damping: 10,
+          delay: 0.2
         }}
         whileHover={{ 
-          scale: 1.12,
-          boxShadow: "0 0 100px rgba(34, 211, 238, 0.5)",
-          borderColor: "rgba(255, 255, 255, 0.8)",
-          background: "linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #8b5cf6 100%)"
+          scale: 1.05,
+          boxShadow: "0 0 80px rgba(10, 36, 99, 0.4)",
+          borderColor: "rgba(255, 255, 255, 0.9)",
+          background: "linear-gradient(135deg, #0A2463 0%, #3E7BFA 50%, #0A2463 100%)"
         }}
       >
         <div className="text-center px-8">
-          <div className="mb-4 text-5xl">💡</div>
-          <span className="text-white font-black text-3xl leading-tight block drop-shadow-2xl">您是否面临这些挑战？</span>
+          <div className="mb-4 flex justify-center"><LightbulbIcon className="w-16 h-16 text-white" /></div>
+          <span className="text-white font-black text-4xl leading-tight block drop-shadow-2xl">您是否面临这些挑战？</span>
         </div>
       </motion.div>
 
@@ -188,7 +189,7 @@ export default function PainPoints() {
             >
               <div className={`bg-gradient-to-r ${point.color} w-full h-full rounded-full flex flex-col items-center justify-center p-4 text-white`}>
                 <h3 className="font-bold mb-2 leading-tight">{point.title}</h3>
-                <p className="text-white/90 text-sm leading-relaxed">{point.description}</p>
+                <p className="text-white/90 text-sm leading-relaxed font-normal">{point.description}</p>
               </div>
             </motion.div>
           ))}
@@ -201,12 +202,14 @@ export default function PainPoints() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center mt-40"
         >
-          <button 
+          <motion.button
             onClick={handleExploreSolutions}
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 transform"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-12 py-4 rounded-full font-bold text-lg hover:from-primary-700 hover:to-primary-800 hover:shadow-xl transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            🚀 探索创新解决方案
-          </button>
+            <RocketIcon className="w-5 h-5" /> 探索创新解决方案
+          </motion.button>
         </motion.div>
       </div>
     </section>

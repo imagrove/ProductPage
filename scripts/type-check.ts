@@ -85,7 +85,7 @@ const testUseScrollDetection = (): ScrollDetectionHook => {
 
 // 类型兼容性测试
 const testTypeCompatibility = () => {
-  console.log('🔍 开始类型兼容性检查...')
+  console.log('开始类型兼容性检查...')
 
   // 测试返回值类型
   const formValidation = testUseFormValidation()
@@ -138,24 +138,24 @@ const testTypeCompatibility = () => {
     const hasAllProps = test.requiredProps.every(prop => prop in test.hook)
 
     if (hasAllProps) {
-      console.log(`✅ ${test.name} - 类型检查通过`)
+      console.log(`${test.name} - 类型检查通过`)
       passed++
     } else {
-      console.log(`❌ ${test.name} - 类型检查失败`)
+      console.log(`${test.name} - 类型检查失败`)
       failed++
     }
   })
 
-  console.log('\n📊 类型检查结果:')
-  console.log(`✅ 通过: ${passed}`)
-  console.log(`❌ 失败: ${failed}`)
-  console.log(`📈 成功率: ${((passed / tests.length) * 100).toFixed(1)}%`)
+  console.log('\n类型检查结果:')
+  console.log(`通过: ${passed}`)
+  console.log(`失败: ${failed}`)
+  console.log(`成功率: ${((passed / tests.length) * 100).toFixed(1)}%`)
 
   if (failed === 0) {
-    console.log('\n🎉 所有 hooks 类型检查通过!')
+    console.log('\n所有 hooks 类型检查通过!')
     process.exit(0)
   } else {
-    console.log('\n⚠️  存在类型检查失败的项目')
+    console.log('\n存在类型检查失败的项目')
     process.exit(1)
   }
 }

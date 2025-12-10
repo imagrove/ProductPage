@@ -1,4 +1,5 @@
 // 项目通用类型定义
+import React from 'react'
 
 export interface ContactFormData {
   name: string
@@ -25,14 +26,14 @@ export interface ProjectType {
 }
 
 export interface ContactInfo {
-  icon: string
+  icon: React.ReactNode
   title: string
   value: string
   description: string
 }
 
 export interface ServiceFeature {
-  icon: string
+  icon: React.ReactNode
   title: string
   description: string
 }
@@ -40,7 +41,7 @@ export interface ServiceFeature {
 export interface TechnologyStack {
   name: string
   description: string
-  icon: string
+  icon: React.ReactNode
 }
 
 export interface UseCase {

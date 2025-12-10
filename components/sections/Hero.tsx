@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useScrollToSection } from '@/hooks'
 import { useState, useEffect } from 'react'
+import { CheckIcon, PlayIcon } from '@/components/ui/MinimalIcons'
 
 export default function Hero() {
   const { scrollToSection } = useScrollToSection()
@@ -15,14 +16,6 @@ export default function Hero() {
     // 设置一个延迟，确保页面完全加载后再显示视频
     const timer = setTimeout(() => {
       setShowVideo(true)
-      
-      // 尝试多种自动播放策略
-      setTimeout(() => {
-        // 如果视频未播放，显示提示
-        if (!isVideoPlaying) {
-          console.log('视频可能需要用户交互才能播放')
-        }
-      }, 2000)
     }, 500)
 
     return () => clearTimeout(timer)
@@ -30,15 +23,21 @@ export default function Hero() {
 
   // 监听视频播放状态
   useEffect(() => {
+    // 重置播放状态
+    setIsVideoPlaying(false)
+    
+    // 模拟视频播放检测 - 在实际应用中，这应该通过视频事件监听器实现
     const checkVideoPlayback = () => {
-      // 这里可以添加视频播放状态检测逻辑
+      // 这里可以添加实际的视频播放状态检测逻辑
+      // 例如：视频元素的 paused 属性
       setIsVideoPlaying(true)
     }
 
-    // 模拟视频播放检测
-    const playbackTimer = setTimeout(checkVideoPlayback, 1000)
-    
-    return () => clearTimeout(playbackTimer)
+    if (showVideo) {
+      const playbackTimer = setTimeout(checkVideoPlayback, 1500)
+      
+      return () => clearTimeout(playbackTimer)
+    }
   }, [showVideo])
 
   // 动画变体 - 优化性能
@@ -47,16 +46,22 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
+        delayChildren: 0.2,
         staggerChildren: 0.15,
-        duration: 0.6,
-        ease: 'easeOut',
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: 'easeOut',
+      },
+    },
   }
 
   const handlePlayVideo = () => {
@@ -65,7 +70,7 @@ export default function Hero() {
   }
 
   return (
-    <section className='flex min-h-screen items-center justify-center pb-16 pt-20'>
+    <section className='flex min-h-screen items-center justify-center pb-16 pt-24 bg-white'>
       <div className='container'>
         <motion.div
           variants={containerVariants}
@@ -73,192 +78,135 @@ export default function Hero() {
           animate='visible'
           className='mx-auto max-w-6xl text-center'
         >
-          {/* 主标题 */}
+          {/* 主标题 - 根据UI设计文档 h1: 48px/1.2, 字重700 */}
           <motion.h1
             variants={itemVariants}
-            className='mb-6 font-display text-4xl font-bold leading-tight text-gray-900 sm:text-5xl lg:text-6xl xl:text-7xl'
+            className='mb-8 font-display text-4xl font-bold leading-tight text-gray-800 sm:text-5xl lg:text-6xl xl:text-7xl'
           >
             多媒体播控一站式解决方案
           </motion.h1>
 
-
-
-          {/* 特色标签 */}
-          <motion.div variants={itemVariants} className='mb-12 flex flex-wrap justify-center gap-4'>
+          {/* 特色标签 - 根据UI设计文档 */}
+          <motion.div variants={itemVariants} className='mb-16 flex flex-wrap justify-center gap-6'>
             {['10 年+行业经验', '全流程定制开发', '稳定可靠交付', '7×24小时技术支持'].map(
               (tag, index) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 + 0.8 }}
-                  className='inline-flex items-center rounded-full border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm backdrop-blur-sm'
-                  whileHover={{ scale: 1.05, y: -2 }}
+                  transition={{ delay: index * 0.1 + 0.8, duration: 0.2, ease: "easeOut" }}
+                  className='inline-flex items-center rounded-full border border-gray-200 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-md'
+                  whileHover={{ scale: 1.02, y: -2 }}
                 >
-                  <svg
-                    className='mr-2 h-4 w-4 text-primary-500'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                  >
-                    <path
-                      fillRule='evenodd'
-                      d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                      clipRule='evenodd'
-                    />
-                  </svg>
+                  <CheckIcon className='mr-3 h-5 w-5 text-primary-600' />
                   {tag}
                 </motion.span>
               ),
             )}
           </motion.div>
 
-          {/* 行动按钮 */}
+          {/* 行动按钮 - 根据UI设计文档 */}
           <motion.div
             variants={itemVariants}
-            className='mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row'
+            className='mb-16 flex flex-col items-center justify-center gap-6 sm:flex-row'
           >
             <motion.button
               onClick={() => scrollToSection('contact')}
-              className='transform rounded-lg bg-gradient-to-r from-primary-700 to-primary-800 px-10 py-4 text-lg font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-primary-800 hover:to-primary-900 hover:shadow-xl active:scale-95'
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className='rounded-lg bg-primary-600 px-12 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary-700 hover:shadow-xl active:scale-98'
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               立即咨询
             </motion.button>
+            <motion.button
+              onClick={() => scrollToSection('solution')}
+              className='rounded-lg border-2 border-primary-600 bg-white px-12 py-4 text-lg font-semibold text-primary-600 shadow-lg transition-all duration-200 hover:bg-primary-50 hover:shadow-xl active:scale-98'
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              了解方案
+            </motion.button>
           </motion.div>
 
-          {/* 多媒体演示预览 */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className='group relative mb-12 overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-primary-50 via-white to-accent-50 p-8 shadow-2xl lg:p-12'
-            whileHover={{ scale: 1.02, shadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
-          >
-            <div className='relative flex aspect-video items-center justify-center overflow-hidden bg-gradient-to-r from-blue-500/20 to-purple-500/20'>
+          {/* 多媒体演示预览 - 根据UI设计文档 */}
+          <motion.div variants={itemVariants} className='relative'>
+            <div className='relative mx-auto max-w-5xl overflow-hidden rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg'>
               {/* 视频播放器 */}
-              {showVideo ? (
-                <div className="relative h-full w-full">
+              <div className='aspect-video bg-gray-900'>
+                {showVideo ? (
                   <iframe
                     key={videoKey}
                     src={`https://player.bilibili.com/player.html?bvid=BV1Cm2kBVEd9&vd_source=99efd5b2b7c66214eaf3bfc18a284cab&high_quality=1&autoplay=1&page=1&muted=0`}
-                    scrolling="no"
-                    style={{ border: 'none' }}
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full"
-                    title="展馆多媒体播控系统演示视频"
+                    className='h-full w-full'
+                    title='展馆多媒体播控系统演示视频'
                     allow="autoplay; fullscreen"
                     referrerPolicy="no-referrer"
                     sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                  ></iframe>
-                  
-                  {/* 自动播放提示 */}
-                  {!isVideoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
-                      <div className="text-center text-white">
-                        <p className="mb-2 text-lg font-medium">视频可能需要点击播放</p>
-                        <button
-                          onClick={handlePlayVideo}
-                          className="rounded-lg bg-primary-600 px-6 py-2 font-medium hover:bg-primary-700"
-                        >
-                          点击播放视频
-                        </button>
+                  />
+                ) : (
+                  <div className='flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100'>
+                    <div className='text-center'>
+                      <div className='mb-6 flex justify-center'>
+                        <PlayIcon className='h-20 w-20 text-primary-500' />
                       </div>
+                      <button
+                        onClick={handlePlayVideo}
+                        className='rounded-lg bg-primary-600 px-10 py-4 text-lg font-semibold text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-lg'
+                      >
+                        点击播放演示视频
+                      </button>
                     </div>
-                  )}
-                  
-                  {/* 重播按钮 */}
-                  <div className="absolute bottom-4 left-4 z-10">
+                  </div>
+                )}
+              </div>
+
+              {/* 视频控制栏 */}
+              <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8'>
+                <div className='flex items-center justify-between'>
+                  <div className='flex items-center space-x-6'>
+                    <button
+                      onClick={() => setShowVideo(!showVideo)}
+                      className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/30 hover:scale-105'
+                    >
+                      {showVideo ? (
+                        <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
+                          <path
+                            fillRule='evenodd'
+                            d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                      ) : (
+                        <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 20 20'>
+                          <path
+                            fillRule='evenodd'
+                            d='M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z'
+                            clipRule='evenodd'
+                          />
+                        </svg>
+                      )}
+                    </button>
+                    <span className='text-base font-semibold text-white'>展馆多媒体播控系统演示</span>
+                  </div>
+                  <div className='flex items-center space-x-4'>
                     <button
                       onClick={() => setVideoKey(prev => prev + 1)}
-                      className="inline-flex items-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-primary-700 hover:shadow-xl"
+                      className='rounded-lg bg-white/20 px-6 py-3 text-base font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/30 hover:scale-105'
                     >
-                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 5V1L7 6l5 5V7a6 6 0 0 1 6 6 6 6 0 0 1-6 6 6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z"/>
-                      </svg>
-                      重播视频
+                      重播
                     </button>
-                  </div>
-                  
-                  {/* 跳转到B站的覆盖层 */}
-                  <div className="absolute bottom-4 right-4 z-10">
                     <a
-                      href="https://www.bilibili.com/video/BV1Cm2kBVEd9/?share_source=copy_web&vd_source=99efd5b2b7c66214eaf3bfc18a284cab"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center rounded-lg bg-bilibili-blue px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-bilibili-blue-dark hover:shadow-xl"
+                      href='https://www.bilibili.com/video/BV1Cm2kBVEd9/?share_source=copy_web&vd_source=99efd5b2b7c66214eaf3bfc18a284cab'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='rounded-lg bg-primary-600 px-6 py-3 text-base font-medium text-white transition-all duration-200 hover:bg-primary-700 hover:shadow-lg'
                     >
-                      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 3.29a1 1 0 0 0-1.42 0L9 11.59V8a1 1 0 0 0-2 0v8a1 1 0 0 0 1 1h8a1 1 0 0 0 0-2h-3.59l8.3-8.29a1 1 0 0 0 0-1.42z"/>
-                      </svg>
-                      前往B站观看高清版
+                      观看高清版
                     </a>
                   </div>
                 </div>
-              ) : (
-                <div 
-                  className="absolute inset-0 flex cursor-pointer items-center justify-center"
-                  onClick={handlePlayVideo}
-                >
-                  {/* 视频预览图 */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
-                  
-                  {/* 播放按钮 */}
-                  <motion.div
-                    className="relative z-10 text-center"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <motion.div
-                      className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-primary-500 to-accent-500 shadow-lg"
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                    >
-                      <svg
-                        className='h-8 w-8 text-white'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z'
-                        />
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                        />
-                      </svg>
-                    </motion.div>
-                    <motion.p
-                      className='mb-2 font-medium text-gray-700'
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      正在加载演示视频...
-                    </motion.p>
-                    <motion.p
-                      className='text-sm text-gray-500'
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      展馆多媒体播控系统演示
-                    </motion.p>
-                  </motion.div>
-                </div>
-              )}
-              
-              {/* 动态网格背景 - 优化性能 */}
-              <div className='absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[size:20px_20px] opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
+              </div>
             </div>
-            {/* 动态背景效果 */}
-            <div className='absolute inset-0 bg-gradient-to-r from-primary-500/5 via-accent-500/5 to-primary-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
           </motion.div>
 
         </motion.div>
