@@ -48,9 +48,7 @@ export default function ServiceProcess() {
           <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
             专业定制服务全流程
           </h2>
-          <p className='mx-auto max-w-3xl text-center text-lg text-gray-600 sm:text-xl'>
-            从需求分析到售后支持，我们提供完整的服务流程，确保项目成功实施
-          </p>
+          
         </motion.div>
 
         {/* 服务流程时间线 */}

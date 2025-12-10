@@ -63,9 +63,7 @@ export default function CaseStudies() {
           <h2 className='mb-4 text-center text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl'>
             成功案例
           </h2>
-          <p className='mx-auto max-w-3xl text-center text-lg text-gray-600 sm:text-xl'>
-            我们已为多个行业客户提供专业的多媒体播控系统解决方案，获得一致好评
-          </p>
+          
         </motion.div>
 
         {/* 成功案例展示 */}
